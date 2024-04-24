@@ -1,7 +1,9 @@
 ﻿Imports ETABSv1
+Imports Newtonsoft.Json
 Imports pdispauto_20_1
 Imports Piles_Stiffness_Iteration.model
 Imports System.ComponentModel
+Imports System.IO
 Imports System.Windows.Forms
 
 Public Class ufInputs
@@ -199,7 +201,7 @@ Public Class ufInputs
         'EXTRACT BASE POINT REACTIONS
 
         Dim groupObjsNum As Integer, groupObjsTypes As Integer(), groupObjsNames As String()
-        Dim pointNames As List(Of String)
+        Dim pointNames As List(Of String) = New List(Of String)
         ret = SapModel.GroupDef.GetAssignments(groupName, groupObjsNum, groupObjsTypes, groupObjsNames)
         For i As Integer = 0 To groupObjsTypes.Length - 1 Step 1
             If groupObjsTypes(i) = 1 Then
@@ -231,61 +233,64 @@ Public Class ufInputs
 
         pDispModel.setVisibility(True)
 
-        Dim loadsPuller As LoadsPuller = New LoadsPuller(pDispModel, PDispLoadType.RECT)
+        Dim loadsPuller As LoadsPuller = New LoadsPuller(pDispModel)
+        Dim loadsPusher As LoadsPusher = New LoadsPusher(pDispModel)
+        Dim resultsPuller As ResultsPuller = New ResultsPuller(pDispModel)
         Dim pDispRectLoads As List(Of PDispRectLoad)
-        pDispRectLoads = loadsPuller.pull().Cast(Of PDispRectLoad)
+        pDispRectLoads = loadsPuller.pull(PDispLoadType.RECT).Cast(Of PDispRectLoad)
 
         'Update RectLoads based on new loads from ETABS
-        pRectLoads.ForEach(Function(rectLoad)
-                               Dim ppLoad As Double
-                               ppLoad = ppDataSet.Where(Function(ppData) ppData.getPoint().getName() = rectLoad.Name).
+        pDispRectLoads.ForEach(Function(pDispRectLoad)
+                                   Dim ppLoad As Double
+                                   ppLoad = ppDataSet.Where(Function(ppData) ppData.getPoint().getName() = pDispRectLoad.getLoad().Name).
                                                                  Select(Function(ppData) ppData.getReactions.getF3()(0)).
                                                                  First()
-                               ppLoad = ppLoad / (rectLoad.Width * rectLoad.Length)
-                               rectLoad.Normal = ppLoad
-                           End Function)
+                                   ppLoad = ppLoad / (pDispRectLoad.getLoad().Width * pDispRectLoad.getLoad().Length)
+                                   Dim rectLoad As RectLoad
+                                   rectLoad = pDispRectLoad.getLoad()
+                                   rectLoad.Normal = ppLoad
+                                   pDispRectLoad.setLoad(rectLoad)
+                               End Function)
+
         'Push updated RectLoads back in PDisp
-        For i As Integer = 0 To nDisps - 1
-            ret = PdispObj.SetRectLoad(i + 1, pRectLoads(i))
-        Next
+        loadsPusher.push(pDispRectLoads.Cast(Of PDispLoad), True)
         'Perform Analysis
-        ret = PdispObj.Analyse()
+        pDispModel.analyse()
 
         'Get Disp Point Boussinesq/Mindlin Result
-        Dim pMethodCode As Short
-        Dim pMethodName As String
-        Dim pDispResM As PdispMindlinResult
-        Dim pDispResB As PDispBSQResult
-        PdispObj.AnalysisMethod(pMethodCode)
-        If pMethodCode = 0 Then
-            pMethodName = "Mindlin"
-            For i As Integer = 0 To nDisps - 1
-                ret = PdispObj.GetMindlinResult_DispPoint(i + 1, pDispResM)
-                ppDataSet.ForEach(Function(ppData)
-                                      If ppData.getPoint().getName() = pDispResM.Name Then
-                                          Dim springName = "Spring_" + ppData.getPoint().getName()
-                                          Dim zStiffness As Double = CDbl(pDispResM.DispZ)
-                                          Dim stiffnessValues() As Double = {0, 0, zStiffness, 0, 0, 0}
-                                          ppData.setSpringProperty(New SpringProperty(springName, stiffnessValues))
+        Dim pMethod As PDispAnalysisMethod
+        pDispModel.getPDispApp().AnalysisMethod(pMethod)
 
-                                      End If
-                                  End Function)
-            Next
-        Else
-            pMethodName = "Boussinesq"
-            For i As Integer = 0 To nDisps - 1
-                ret = PdispObj.GetBoussResult_DispPoint(i + 1, pDispResB)
+        Select Case pMethod
+            Case PDispAnalysisMethod.MINDLIN
+                Dim MLDispPoints As List(Of PDispMLDispResult) = resultsPuller.pull(PDispResultType.DISPLACEMENT, PDispAnalysisMethod.MINDLIN).Cast(Of PDispMLDispResult)
+                Dim mldpNames As List(Of String) = MLDispPoints.Select(Function(mldp) (mldp.getResult().Name)).ToList()
                 ppDataSet.ForEach(Function(ppData)
-                                      If ppData.getPoint().getName() = pDispResB.Name Then
+                                      If (mldpNames.Contains(ppData.getPoint().getName())) Then
                                           Dim springName = "Spring_" + ppData.getPoint().getName()
-                                          Dim dispZ As Double = CDbl(pDispResB.DispZ)
-                                          Dim zStiffness As Double = CDbl(ppData.getReactions.getF3()(0) / dispZ)
+                                          Dim nameIndex As Integer = mldpNames.IndexOf(ppData.getPoint().getName())
+                                          Dim zStiffness As Double = CDbl(ppData.getReactions().getF3().First()) / CDbl(MLDispPoints(nameIndex).getResult().DispZ)
                                           Dim stiffnessValues() As Double = {0, 0, zStiffness, 0, 0, 0}
                                           ppData.setSpringProperty(New SpringProperty(springName, stiffnessValues))
                                       End If
                                   End Function)
-            Next
-        End If
+            Case PDispAnalysisMethod.BOUSSINESQ
+                Dim BSQDispPoints As List(Of PDispBSQDispResult) = resultsPuller.pull(PDispResultType.DISPLACEMENT, PDispAnalysisMethod.BOUSSINESQ).Cast(Of PDispBSQDispResult)
+                Dim bsqdpNames As List(Of String) = BSQDispPoints.Select(Function(bsqdp) (bsqdp.getResult().Name)).ToList()
+                ppDataSet.ForEach(Function(ppData)
+                                      If (bsqdpNames.Contains(ppData.getPoint().getName())) Then
+                                          Dim springName = "Spring_" + ppData.getPoint().getName()
+                                          Dim nameIndex As Integer = bsqdpNames.IndexOf(ppData.getPoint().getName())
+                                          Dim zStiffness As Double = CDbl(ppData.getReactions().getF3().First()) / CDbl(BSQDispPoints(nameIndex).getResult().DispZ)
+                                          Dim stiffnessValues() As Double = {0, 0, zStiffness, 0, 0, 0}
+                                          ppData.setSpringProperty(New SpringProperty(springName, stiffnessValues))
+                                      End If
+                                  End Function)
+        End Select
+
+        Dim jsonText As String = JsonConvert.SerializeObject(ppDataSet)
+        Dim jsonFilePath As String = "c:\\Users\\galbieri\\Desktop\\PointDataSet.json"
+        File.WriteAllText(jsonFilePath, jsonText)
 
         ppDataSet.ForEach(Function(ppData)
                               ret = SapModel.PointObj.DeleteRestraint(ppData.getPoint.getName())

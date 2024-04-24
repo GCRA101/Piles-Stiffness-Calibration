@@ -3,6 +3,7 @@
     'ATTRIBUTES
     Protected ret As Integer
     Protected pushBehaviour As PushBehaviour
+    Protected pDispModel As PDispModel
 
     'CONSTRUCTORS
     'Default

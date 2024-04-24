@@ -1,4 +1,6 @@
-﻿Public Class PushCircLoads
+﻿Imports pdispauto_20_1
+
+Public Class PushCircLoads
     Inherits PushBehaviour
     Implements PushData
 
@@ -8,6 +10,10 @@
     'CONSTRUCTORS
     Public Sub New(pDispModel As PDispModel)
         MyBase.New(pDispModel)
+    End Sub
+    Public Sub New(pDispModel As PDispModel, circLoads As List(Of PDispCircLoad))
+        MyBase.New(pDispModel)
+        Me.circLoads = circLoads
     End Sub
 
     'method

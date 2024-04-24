@@ -5,7 +5,13 @@
     'All protected attributes inherited from the superclass
 
     'CONSTRUCTOR
-    Public Sub New(pDispModel As PDispModel, resultType As PDispResultType, analysisMethod As PDispAnalysisMethod)
+    Public Sub New(pDispModel As PDispModel)
+        MyBase.New(pDispModel)
+    End Sub
+
+
+    'METHODS
+    Public Function pull(resultType As PDispResultType, analysisMethod As PDispAnalysisMethod) As List(Of PDispData)
 
         Select Case analysisMethod
             Case PDispAnalysisMethod.BOUSSINESQ
@@ -24,11 +30,6 @@
                 End Select
         End Select
 
-    End Sub
-
-
-    'METHODS
-    Public Function pull() As List(Of PDispData)
         Return Me.pullBehaviour.pull()
     End Function
 

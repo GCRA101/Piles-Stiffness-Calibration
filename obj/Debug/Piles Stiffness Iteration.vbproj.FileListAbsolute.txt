@@ -14,3 +14,5 @@ C:\Users\galbieri\Buro Happold\P059950 Project Domino (2023) - 03_Models\07_Dev\
 C:\Users\galbieri\Buro Happold\P059950 Project Domino (2023) - 03_Models\07_Dev\Piles Stiffness Iteration\Piles Stiffness Iteration\obj\Debug\Piles_Stiffness_Iteration.dll
 C:\Users\galbieri\Buro Happold\P059950 Project Domino (2023) - 03_Models\07_Dev\Piles Stiffness Iteration\Piles Stiffness Iteration\obj\Debug\Piles_Stiffness_Iteration.xml
 C:\Users\galbieri\Buro Happold\P059950 Project Domino (2023) - 03_Models\07_Dev\Piles Stiffness Iteration\Piles Stiffness Iteration\obj\Debug\Piles_Stiffness_Iteration.pdb
+C:\Users\galbieri\Buro Happold\P059950 Project Domino (2023) - 03_Models\07_Dev\Piles Stiffness Iteration\Piles Stiffness Iteration\bin\Debug\Newtonsoft.Json.dll
+C:\Users\galbieri\Buro Happold\P059950 Project Domino (2023) - 03_Models\07_Dev\Piles Stiffness Iteration\Piles Stiffness Iteration\bin\Debug\Newtonsoft.Json.xml

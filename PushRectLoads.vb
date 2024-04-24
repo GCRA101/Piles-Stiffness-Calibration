@@ -11,6 +11,10 @@ Public Class PushRectLoads
     Public Sub New(pDispModel As PDispModel)
         MyBase.New(pDispModel)
     End Sub
+    Public Sub New(pDispModel As PDispModel, rectLoads As List(Of PDispRectLoad))
+        MyBase.New(pDispModel)
+        Me.rectLoads = rectLoads
+    End Sub
 
     'method
     Public Sub setRectLoads(rectLoads As List(Of PDispRectLoad))

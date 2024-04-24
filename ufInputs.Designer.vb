@@ -41,6 +41,10 @@ Partial Class ufInputs
         Me.pbPDispInputs = New System.Windows.Forms.PictureBox()
         Me.gbPDispInputs = New System.Windows.Forms.GroupBox()
         Me.gbETABSInputs = New System.Windows.Forms.GroupBox()
+        Me.rbRigid = New System.Windows.Forms.RadioButton()
+        Me.rbSpring = New System.Windows.Forms.RadioButton()
+        Me.rbImportFromFile = New System.Windows.Forms.RadioButton()
+        Me.lblInitialStiffness = New System.Windows.Forms.Label()
         CType(Me.pbETABSInputs, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pbPDispInputs, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.gbPDispInputs.SuspendLayout()
@@ -49,7 +53,7 @@ Partial Class ufInputs
         '
         'btnRunIteration
         '
-        Me.btnRunIteration.Location = New System.Drawing.Point(120, 500)
+        Me.btnRunIteration.Location = New System.Drawing.Point(110, 628)
         Me.btnRunIteration.Margin = New System.Windows.Forms.Padding(4)
         Me.btnRunIteration.Name = "btnRunIteration"
         Me.btnRunIteration.Size = New System.Drawing.Size(165, 47)
@@ -60,7 +64,7 @@ Partial Class ufInputs
         'lblProgrBar
         '
         Me.lblProgrBar.AutoSize = True
-        Me.lblProgrBar.Location = New System.Drawing.Point(37, 569)
+        Me.lblProgrBar.Location = New System.Drawing.Point(28, 697)
         Me.lblProgrBar.Name = "lblProgrBar"
         Me.lblProgrBar.Size = New System.Drawing.Size(134, 16)
         Me.lblProgrBar.TabIndex = 28
@@ -68,7 +72,7 @@ Partial Class ufInputs
         '
         'progrBar
         '
-        Me.progrBar.Location = New System.Drawing.Point(38, 589)
+        Me.progrBar.Location = New System.Drawing.Point(29, 717)
         Me.progrBar.Margin = New System.Windows.Forms.Padding(4)
         Me.progrBar.Maximum = 100000
         Me.progrBar.Name = "progrBar"
@@ -102,7 +106,7 @@ Partial Class ufInputs
         '
         Me.cbDispVariation.Font = New System.Drawing.Font("Segoe UI", 7.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cbDispVariation.FormattingEnabled = True
-        Me.cbDispVariation.Items.AddRange(New Object() {"1%", "2%", "3%", "5%", "10%", "15%", "20%"})
+        Me.cbDispVariation.Items.AddRange(New Object() {"5%", "10%", "15%", "20%"})
         Me.cbDispVariation.Location = New System.Drawing.Point(205, 80)
         Me.cbDispVariation.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.cbDispVariation.Name = "cbDispVariation"
@@ -225,7 +229,7 @@ Partial Class ufInputs
         Me.gbPDispInputs.Controls.Add(Me.cbIterations)
         Me.gbPDispInputs.Controls.Add(Me.lblIterations)
         Me.gbPDispInputs.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.gbPDispInputs.Location = New System.Drawing.Point(31, 326)
+        Me.gbPDispInputs.Location = New System.Drawing.Point(24, 447)
         Me.gbPDispInputs.Name = "gbPDispInputs"
         Me.gbPDispInputs.RightToLeft = System.Windows.Forms.RightToLeft.Yes
         Me.gbPDispInputs.Size = New System.Drawing.Size(336, 152)
@@ -235,25 +239,76 @@ Partial Class ufInputs
         '
         'gbETABSInputs
         '
+        Me.gbETABSInputs.Controls.Add(Me.lblInitialStiffness)
+        Me.gbETABSInputs.Controls.Add(Me.rbImportFromFile)
+        Me.gbETABSInputs.Controls.Add(Me.rbSpring)
+        Me.gbETABSInputs.Controls.Add(Me.rbRigid)
         Me.gbETABSInputs.Controls.Add(Me.cklbLoadCombos)
         Me.gbETABSInputs.Controls.Add(Me.lblLoadCombos)
         Me.gbETABSInputs.Controls.Add(Me.pbETABSInputs)
         Me.gbETABSInputs.Controls.Add(Me.cklbGroups)
         Me.gbETABSInputs.Controls.Add(Me.lblGroups)
         Me.gbETABSInputs.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.gbETABSInputs.Location = New System.Drawing.Point(31, 28)
+        Me.gbETABSInputs.Location = New System.Drawing.Point(24, 32)
         Me.gbETABSInputs.Name = "gbETABSInputs"
         Me.gbETABSInputs.RightToLeft = System.Windows.Forms.RightToLeft.Yes
-        Me.gbETABSInputs.Size = New System.Drawing.Size(336, 283)
+        Me.gbETABSInputs.Size = New System.Drawing.Size(336, 400)
         Me.gbETABSInputs.TabIndex = 43
         Me.gbETABSInputs.TabStop = False
         Me.gbETABSInputs.Text = "ETABS Inputs"
+        '
+        'rbRigid
+        '
+        Me.rbRigid.AutoSize = True
+        Me.rbRigid.CheckAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.rbRigid.Location = New System.Drawing.Point(11, 306)
+        Me.rbRigid.Name = "rbRigid"
+        Me.rbRigid.Size = New System.Drawing.Size(156, 24)
+        Me.rbRigid.TabIndex = 39
+        Me.rbRigid.TabStop = True
+        Me.rbRigid.Text = "All Rigid Supports"
+        Me.rbRigid.UseVisualStyleBackColor = True
+        '
+        'rbSpring
+        '
+        Me.rbSpring.AutoSize = True
+        Me.rbSpring.CheckAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.rbSpring.Location = New System.Drawing.Point(11, 336)
+        Me.rbSpring.Name = "rbSpring"
+        Me.rbSpring.Size = New System.Drawing.Size(156, 24)
+        Me.rbSpring.TabIndex = 40
+        Me.rbSpring.TabStop = True
+        Me.rbSpring.Text = "All Same Stiffness"
+        Me.rbSpring.UseVisualStyleBackColor = True
+        '
+        'rbImportFromFile
+        '
+        Me.rbImportFromFile.AutoSize = True
+        Me.rbImportFromFile.CheckAlign = System.Drawing.ContentAlignment.MiddleRight
+        Me.rbImportFromFile.Location = New System.Drawing.Point(11, 366)
+        Me.rbImportFromFile.Name = "rbImportFromFile"
+        Me.rbImportFromFile.Size = New System.Drawing.Size(216, 24)
+        Me.rbImportFromFile.TabIndex = 41
+        Me.rbImportFromFile.TabStop = True
+        Me.rbImportFromFile.Text = "Import from Serialized File"
+        Me.rbImportFromFile.UseVisualStyleBackColor = True
+        '
+        'lblInitialStiffness
+        '
+        Me.lblInitialStiffness.AutoSize = True
+        Me.lblInitialStiffness.Font = New System.Drawing.Font("Segoe UI", 7.8!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblInitialStiffness.Location = New System.Drawing.Point(9, 286)
+        Me.lblInitialStiffness.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.lblInitialStiffness.Name = "lblInitialStiffness"
+        Me.lblInitialStiffness.Size = New System.Drawing.Size(230, 17)
+        Me.lblInitialStiffness.TabIndex = 42
+        Me.lblInitialStiffness.Text = "INITIAL PILES STIFFNESS ASSUMPTION"
         '
         'ufInputs
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(391, 643)
+        Me.ClientSize = New System.Drawing.Size(391, 780)
         Me.Controls.Add(Me.gbETABSInputs)
         Me.Controls.Add(Me.gbPDispInputs)
         Me.Controls.Add(Me.btnRunIteration)
@@ -291,4 +346,8 @@ Partial Class ufInputs
     Friend WithEvents pbPDispInputs As Windows.Forms.PictureBox
     Friend WithEvents gbPDispInputs As Windows.Forms.GroupBox
     Friend WithEvents gbETABSInputs As Windows.Forms.GroupBox
+    Friend WithEvents lblInitialStiffness As Windows.Forms.Label
+    Friend WithEvents rbImportFromFile As Windows.Forms.RadioButton
+    Friend WithEvents rbSpring As Windows.Forms.RadioButton
+    Friend WithEvents rbRigid As Windows.Forms.RadioButton
 End Class

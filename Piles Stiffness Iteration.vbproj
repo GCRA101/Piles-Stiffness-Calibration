@@ -50,6 +50,9 @@
     <Reference Include="ETABSv1">
       <HintPath>..\..\..\..\..\..\..\Program Files\Computers and Structures\ETABS 20\ETABSv1.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -72,6 +75,8 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LoadsPuller.vb" />
+    <Compile Include="LoadsPusher.vb" />
     <Compile Include="PDispAnalysisMethod.vb" />
     <Compile Include="Color.vb" />
     <Compile Include="ColorInterface.vb" />
@@ -98,6 +103,8 @@
     <Compile Include="PDispBSQLoadResult.vb" />
     <Compile Include="PDispBSQResult.vb" />
     <Compile Include="PDispCircLoad.vb" />
+    <Compile Include="PDispConnection.vb" />
+    <Compile Include="PDispConnector.vb" />
     <Compile Include="PDispData.vb" />
     <Compile Include="PDispLoad.vb" />
     <Compile Include="PDispLoadType.vb" />
@@ -114,12 +121,23 @@
     <Compile Include="PointReactions.vb" />
     <Compile Include="PullBehaviour.vb" />
     <Compile Include="PullBSQDispResults.vb" />
+    <Compile Include="PullBSQLoadResults.vb" />
     <Compile Include="PullCircLoads.vb" />
     <Compile Include="PullData.vb" />
     <Compile Include="PullBSQResults.vb" />
+    <Compile Include="Puller.vb" />
+    <Compile Include="PullMLDispResults.vb" />
+    <Compile Include="PullMLLoadResults.vb" />
     <Compile Include="PullMLResults.vb" />
     <Compile Include="PullPolyLoads.vb" />
     <Compile Include="PullRectLoads.vb" />
+    <Compile Include="PushBehaviour.vb" />
+    <Compile Include="PushCircLoads.vb" />
+    <Compile Include="PushData.vb" />
+    <Compile Include="Pusher.vb" />
+    <Compile Include="PushPolyLoads.vb" />
+    <Compile Include="PushRectLoads.vb" />
+    <Compile Include="ResultsPuller.vb" />
     <Compile Include="SpringProperty.vb" />
     <Compile Include="ufInputs.Designer.vb">
       <DependentUpon>ufInputs.vb</DependentUpon>
@@ -149,6 +167,7 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="pdispauto_20_1">

@@ -1,4 +1,5 @@
 ﻿Public Interface PullData
 
-    Function Getpull() As List(Of PDispData)
+    Function pull() As List(Of PDispData)
+
 End Interface

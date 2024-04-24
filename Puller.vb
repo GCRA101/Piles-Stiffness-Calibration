@@ -3,9 +3,13 @@
     'ATTRIBUTES
     Protected ret As Integer
     Protected pullBehaviour As PullBehaviour
+    Protected pDispModel As PDispModel
 
     'CONSTRUCTORS
-    'Default
+    'Overloaded
+    Public Sub New(pDispModel As PDispModel)
+        Me.pDispModel = pDispModel
+    End Sub
 
     'METHODS
     'Setters and Getters

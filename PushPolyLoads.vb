@@ -9,6 +9,10 @@
     Public Sub New(pDispModel As PDispModel)
         MyBase.New(pDispModel)
     End Sub
+    Public Sub New(pDispModel As PDispModel, polyLoads As List(Of PDispPolyLoad))
+        MyBase.New(pDispModel)
+        Me.polyLoads = polyLoads
+    End Sub
 
     'method
     Public Sub setPolyLoads(polyLoads As List(Of PDispPolyLoad))

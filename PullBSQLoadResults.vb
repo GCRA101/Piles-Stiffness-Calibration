@@ -26,6 +26,7 @@ Public Class PullBSQLoadResults
         Next
 
         Return pDispBSQLoadResults
+
     End Function
 
 End Class

@@ -9,6 +9,7 @@ Public Class PullBSQDispResults
         MyBase.New(pDispModel)
     End Sub
 
+
     'METHODS
     Public Function pull() As List(Of PDispBSQDispResult)
 
@@ -26,4 +27,5 @@ Public Class PullBSQDispResults
 
         Return pDispBSQDispResults
     End Function
+
 End Class

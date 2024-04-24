@@ -11,6 +11,6 @@
         Me.pDispModel = pDispModel
     End Sub
 
-    Public Overridable Function Getpull() As List(Of PDispData) Implements PullData.Getpull
+    Public Overridable Function pull() As List(Of PDispData) Implements PullData.pull
     End Function
 End Class

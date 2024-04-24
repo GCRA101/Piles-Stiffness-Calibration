@@ -16,7 +16,7 @@
 
 
     'METHODS
-    Public Sub push(overwrite As Boolean) Implements PushData.push
+    Public Overridable Sub push(overwrite As Boolean) Implements PushData.push
         Throw New NotImplementedException()
     End Sub
 End Class
