@@ -1,7 +1,6 @@
 ﻿Imports pdispauto_20_1
 
-Public Class PullMLLoadResults
-
+Public Class PullBSQDispResults
     Inherits PullBSQResults
     Implements PullData
 
@@ -12,22 +11,21 @@ Public Class PullMLLoadResults
 
 
     'METHODS
-    Public Function pull() As List(Of PDispMLLoadResult)
+    Public Function pull() As List(Of PDispBSQDispResult)
 
         '1. Get Number of Results
         Dim numResults As Short
         ret = Me.pDispModel.getPDispApp().NumResults(numResults)
 
         '2. Get RectLoads
-        Dim pDispMLLoadResults As List(Of PDispMLLoadResult)
+        Dim pDispBSQDispResults As List(Of PDispBSQDispResult) = New List(Of PDispBSQDispResult)
         For i As Integer = 0 To numResults - 1 Step 1
-            Dim pDispMLLoadResult As PdispMindlinResult
-            Me.pDispModel.getPDispApp().GetMindlinResult_RectLoad(i, pDispMLLoadResult)
-            pDispMLLoadResults.Add(New PDispMLLoadResult(pDispMLLoadResult))
+            Dim pDispBSQDispResult As PdispBoussinesqResult
+            Me.pDispModel.getPDispApp().GetBoussResult_DispPoint(i + 1, pDispBSQDispResult)
+            pDispBSQDispResults.Add(New PDispBSQDispResult(pDispBSQDispResult))
         Next
 
-        Return pDispMLLoadResults
-
+        Return pDispBSQDispResults
     End Function
 
 End Class

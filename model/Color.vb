@@ -9,9 +9,11 @@ Public Class Color
     Implements ColorInterface
 
     'ATTRIBUTES
-    Private red,green, blue As Byte
-    Private RGB As Byte()
-    Private etabsIntValue As Integer
+    Property red As Byte
+    Property green As Byte
+    Property blue As Byte
+    Property RGB As Byte()
+    Property etabsIntValue As Integer
 
     'CONSTRUCTOR
     'Overloaded

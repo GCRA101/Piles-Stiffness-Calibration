@@ -4,13 +4,20 @@
     ' ATTRIBUTES  **********************************************************************
     Private name As String
     Private stiffnessValues As Double()
-    Private u1, u2, u3, r1, r2, r3 As Double
+    Private u1 As Double
+    Private u2 As Double
+    Private u3 As Double
+    Private r1 As Double
+    Private r2 As Double
+    Private r3 As Double
     Private color As ColorInterface
     Private description As String
 
 
     ' CONSTRUCTORS  ********************************************************************
-
+    'Default
+    Public Sub New()
+    End Sub
     'Overloaded 1
     Public Sub New(name As String)
         Me.name = name

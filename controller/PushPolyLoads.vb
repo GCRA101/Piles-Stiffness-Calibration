@@ -27,7 +27,7 @@
                 Dim numPolyLoads As Short
                 .NumPolyLoads(numPolyLoads)
                 For i As Integer = 0 To (numPolyLoads - 1) Step 1
-                    Me.pDispModel.getPDispApp().DeletePolyLoad(i)
+                    Me.pDispModel.getPDispApp().DeletePolyLoad(i + 1)
                 Next
             End If
             '2. ADD NEW RECTLOADS

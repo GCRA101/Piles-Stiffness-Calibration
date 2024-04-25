@@ -4,6 +4,8 @@ Imports pdispauto_20_1
 Imports Piles_Stiffness_Iteration.model
 Imports System.ComponentModel
 Imports System.IO
+Imports System.Runtime.InteropServices
+Imports System.Runtime.Serialization
 Imports System.Windows.Forms
 
 Public Class ufInputs
@@ -25,15 +27,10 @@ Public Class ufInputs
     Public Sub New(ByRef SapModel As cSapModel, ByRef ISapPlugin As cPluginCallback)
         ' This call is required by the designer.
         InitializeComponent()
-
         ' Add any initialization after the InitializeComponent() call.
         Me.SapModel = SapModel
         Me.ISapPlugin = ISapPlugin
     End Sub
-
-
-
-
 
 
     Private Sub ufInputs_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -179,7 +176,6 @@ Public Class ufInputs
 
     Public Sub runIteration() 'T(n)
 
-
         'UNLOCK THE ETABS MODEL
         SapModel.SetModelIsLocked(False)
 
@@ -219,7 +215,7 @@ Public Class ufInputs
         Dim ppX, ppY, ppZ As Double
         Dim ppMatch As Boolean
 
-        Dim ppDataSet As List(Of PointDataSet)
+        Dim ppDataSet As List(Of PointDataSet) = New List(Of PointDataSet)
 
         For i = 0 To pointNames.Count - 1 Step 1
             ret = SapModel.Results.JointReact(pointNames(i), itemTypeElm, numRes, obj, elm, loadCase,
@@ -233,27 +229,27 @@ Public Class ufInputs
 
         pDispModel.setVisibility(True)
 
-        Dim loadsPuller As LoadsPuller = New LoadsPuller(pDispModel)
-        Dim loadsPusher As LoadsPusher = New LoadsPusher(pDispModel)
-        Dim resultsPuller As ResultsPuller = New ResultsPuller(pDispModel)
-        Dim pDispRectLoads As List(Of PDispRectLoad)
-        pDispRectLoads = loadsPuller.pull(PDispLoadType.RECT).Cast(Of PDispRectLoad)
+        Dim rectLoadsPuller As LoadsPuller(Of PDispRectLoad) = New LoadsPuller(Of PDispRectLoad)(pDispModel)
+        Dim loadsPusher As LoadsPusher(Of PDispRectLoad) = New LoadsPusher(Of PDispRectLoad)(pDispModel)
+        Dim pDispRectLoads As List(Of PDispRectLoad) = rectLoadsPuller.pull()
 
         'Update RectLoads based on new loads from ETABS
         pDispRectLoads.ForEach(Function(pDispRectLoad)
                                    Dim ppLoad As Double
                                    ppLoad = ppDataSet.Where(Function(ppData) ppData.getPoint().getName() = pDispRectLoad.getLoad().Name).
                                                                  Select(Function(ppData) ppData.getReactions.getF3()(0)).
-                                                                 First()
-                                   ppLoad = ppLoad / (pDispRectLoad.getLoad().Width * pDispRectLoad.getLoad().Length)
-                                   Dim rectLoad As RectLoad
-                                   rectLoad = pDispRectLoad.getLoad()
-                                   rectLoad.Normal = ppLoad
-                                   pDispRectLoad.setLoad(rectLoad)
+                                                                 FirstOrDefault()
+                                   If ppLoad <> 0 Then
+                                       ppLoad = ppLoad / (pDispRectLoad.getLoad().Width * pDispRectLoad.getLoad().Length)
+                                       Dim rectLoad As RectLoad
+                                       rectLoad = pDispRectLoad.getLoad()
+                                       rectLoad.Normal = ppLoad
+                                       pDispRectLoad.setLoad(rectLoad)
+                                   End If
                                End Function)
 
         'Push updated RectLoads back in PDisp
-        loadsPusher.push(pDispRectLoads.Cast(Of PDispLoad), True)
+        loadsPusher.push(pDispRectLoads, True)
         'Perform Analysis
         pDispModel.analyse()
 
@@ -263,7 +259,7 @@ Public Class ufInputs
 
         Select Case pMethod
             Case PDispAnalysisMethod.MINDLIN
-                Dim MLDispPoints As List(Of PDispMLDispResult) = resultsPuller.pull(PDispResultType.DISPLACEMENT, PDispAnalysisMethod.MINDLIN).Cast(Of PDispMLDispResult)
+                Dim MLDispPoints As List(Of PDispMLDispResult) = New ResultsPuller(Of PDispMLDispResult)(pDispModel).pull()
                 Dim mldpNames As List(Of String) = MLDispPoints.Select(Function(mldp) (mldp.getResult().Name)).ToList()
                 ppDataSet.ForEach(Function(ppData)
                                       If (mldpNames.Contains(ppData.getPoint().getName())) Then
@@ -275,7 +271,7 @@ Public Class ufInputs
                                       End If
                                   End Function)
             Case PDispAnalysisMethod.BOUSSINESQ
-                Dim BSQDispPoints As List(Of PDispBSQDispResult) = resultsPuller.pull(PDispResultType.DISPLACEMENT, PDispAnalysisMethod.BOUSSINESQ).Cast(Of PDispBSQDispResult)
+                Dim BSQDispPoints As List(Of PDispBSQDispResult) = New ResultsPuller(Of PDispBSQDispResult)(pDispModel).pull()
                 Dim bsqdpNames As List(Of String) = BSQDispPoints.Select(Function(bsqdp) (bsqdp.getResult().Name)).ToList()
                 ppDataSet.ForEach(Function(ppData)
                                       If (bsqdpNames.Contains(ppData.getPoint().getName())) Then
@@ -288,9 +284,13 @@ Public Class ufInputs
                                   End Function)
         End Select
 
-        Dim jsonText As String = JsonConvert.SerializeObject(ppDataSet)
+        Dim jsonSettings As New JsonSerializerSettings() With {
+            .ContractResolver = New IncludePrivateResolver()}
+        Dim jsonText As String = JsonConvert.SerializeObject(ppDataSet, Formatting.Indented, jsonSettings)
         Dim jsonFilePath As String = "c:\\Users\\galbieri\\Desktop\\PointDataSet.json"
         File.WriteAllText(jsonFilePath, jsonText)
+
+        ret = SapModel.SetModelIsLocked(False)
 
         ppDataSet.ForEach(Function(ppData)
                               ret = SapModel.PointObj.DeleteRestraint(ppData.getPoint.getName())
@@ -301,10 +301,8 @@ Public Class ufInputs
         'T(n) = θ(n)+θ(1)+n*θ(m*logm)+θ(1)++θ(n)=θ(n*m*logm)
 
 
+        Dim newCharacters As List(Of PointDataSet) = JsonConvert.DeserializeObject(Of List(Of PointDataSet))(jsonText, jsonSettings)
+
     End Sub
-
-
-
-
 
 End Class

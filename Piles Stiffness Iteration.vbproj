@@ -43,6 +43,9 @@
   <PropertyGroup>
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
+  <PropertyGroup>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="CSiDetailAPI">
       <HintPath>..\..\..\..\..\..\..\Program Files\Computers and Structures\ETABS 20\CSiDetailAPI.dll</HintPath>
@@ -54,8 +57,10 @@
       <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
@@ -75,14 +80,16 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LoadsPuller.vb" />
-    <Compile Include="LoadsPusher.vb" />
-    <Compile Include="PDispAnalysisMethod.vb" />
-    <Compile Include="Color.vb" />
-    <Compile Include="ColorInterface.vb" />
-    <Compile Include="cPlugin.vb" />
-    <Compile Include="ETABSData.vb" />
-    <Compile Include="ETABSProperty.vb" />
+    <Compile Include="model\IncludePrivateResolver.vb" />
+    <Compile Include="model\JSONSerializer.vb" />
+    <Compile Include="controller\LoadsPuller.vb" />
+    <Compile Include="controller\LoadsPusher.vb" />
+    <Compile Include="model\PDispAnalysisMethod.vb" />
+    <Compile Include="model\Color.vb" />
+    <Compile Include="model\ColorInterface.vb" />
+    <Compile Include="model\cPlugin.vb" />
+    <Compile Include="model\ETABSData.vb" />
+    <Compile Include="model\ETABSProperty.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -98,51 +105,51 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="NodalForces.vb" />
-    <Compile Include="PDispBSQDispResult.vb" />
-    <Compile Include="PDispBSQLoadResult.vb" />
-    <Compile Include="PDispBSQResult.vb" />
-    <Compile Include="PDispCircLoad.vb" />
-    <Compile Include="PDispConnection.vb" />
-    <Compile Include="PDispConnector.vb" />
-    <Compile Include="PDispData.vb" />
-    <Compile Include="PDispLoad.vb" />
-    <Compile Include="PDispLoadType.vb" />
-    <Compile Include="PDispMLDispResult.vb" />
-    <Compile Include="PDispMLLoadResult.vb" />
-    <Compile Include="PDispMLResult.vb" />
-    <Compile Include="PDispModel.vb" />
-    <Compile Include="PDispPolyLoad.vb" />
-    <Compile Include="PDispRectLoad.vb" />
-    <Compile Include="PDispResult.vb" />
-    <Compile Include="PDispResultType.vb" />
-    <Compile Include="PointDataSet.vb" />
-    <Compile Include="PointObj.vb" />
-    <Compile Include="PointReactions.vb" />
-    <Compile Include="PullBehaviour.vb" />
-    <Compile Include="PullBSQDispResults.vb" />
-    <Compile Include="PullBSQLoadResults.vb" />
-    <Compile Include="PullCircLoads.vb" />
-    <Compile Include="PullData.vb" />
-    <Compile Include="PullBSQResults.vb" />
-    <Compile Include="Puller.vb" />
-    <Compile Include="PullMLDispResults.vb" />
-    <Compile Include="PullMLLoadResults.vb" />
-    <Compile Include="PullMLResults.vb" />
-    <Compile Include="PullPolyLoads.vb" />
-    <Compile Include="PullRectLoads.vb" />
-    <Compile Include="PushBehaviour.vb" />
-    <Compile Include="PushCircLoads.vb" />
-    <Compile Include="PushData.vb" />
-    <Compile Include="Pusher.vb" />
-    <Compile Include="PushPolyLoads.vb" />
-    <Compile Include="PushRectLoads.vb" />
-    <Compile Include="ResultsPuller.vb" />
-    <Compile Include="SpringProperty.vb" />
-    <Compile Include="ufInputs.Designer.vb">
+    <Compile Include="model\NodalForces.vb" />
+    <Compile Include="model\PDispBSQDispResult.vb" />
+    <Compile Include="model\PDispBSQLoadResult.vb" />
+    <Compile Include="model\PDispBSQResult.vb" />
+    <Compile Include="model\PDispCircLoad.vb" />
+    <Compile Include="model\PDispConnection.vb" />
+    <Compile Include="model\PDispConnector.vb" />
+    <Compile Include="model\PDispData.vb" />
+    <Compile Include="model\PDispLoad.vb" />
+    <Compile Include="model\PDispLoadType.vb" />
+    <Compile Include="model\PDispMLDispResult.vb" />
+    <Compile Include="model\PDispMLLoadResult.vb" />
+    <Compile Include="model\PDispMLResult.vb" />
+    <Compile Include="model\PDispModel.vb" />
+    <Compile Include="model\PDispPolyLoad.vb" />
+    <Compile Include="model\PDispRectLoad.vb" />
+    <Compile Include="model\PDispResult.vb" />
+    <Compile Include="model\PDispResultType.vb" />
+    <Compile Include="model\PointDataSet.vb" />
+    <Compile Include="model\PointObj.vb" />
+    <Compile Include="model\PointReactions.vb" />
+    <Compile Include="controller\PullBehaviour.vb" />
+    <Compile Include="controller\PullBSQDispResults.vb" />
+    <Compile Include="controller\PullBSQLoadResults.vb" />
+    <Compile Include="controller\PullCircLoads.vb" />
+    <Compile Include="controller\PullData.vb" />
+    <Compile Include="controller\PullBSQResults.vb" />
+    <Compile Include="controller\Puller.vb" />
+    <Compile Include="controller\PullMLDispResults.vb" />
+    <Compile Include="controller\PullMLLoadResults.vb" />
+    <Compile Include="controller\PullMLResults.vb" />
+    <Compile Include="controller\PullPolyLoads.vb" />
+    <Compile Include="controller\PullRectLoads.vb" />
+    <Compile Include="controller\PushBehaviour.vb" />
+    <Compile Include="controller\PushCircLoads.vb" />
+    <Compile Include="controller\PushData.vb" />
+    <Compile Include="controller\Pusher.vb" />
+    <Compile Include="controller\PushPolyLoads.vb" />
+    <Compile Include="controller\PushRectLoads.vb" />
+    <Compile Include="controller\ResultsPuller.vb" />
+    <Compile Include="model\SpringProperty.vb" />
+    <Compile Include="view\ufInputs.Designer.vb">
       <DependentUpon>ufInputs.vb</DependentUpon>
     </Compile>
-    <Compile Include="ufInputs.vb">
+    <Compile Include="view\ufInputs.vb">
       <SubType>Form</SubType>
     </Compile>
   </ItemGroup>
@@ -153,11 +160,12 @@
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="ufInputs.resx">
+    <EmbeddedResource Include="view\ufInputs.resx">
       <DependentUpon>ufInputs.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
       <LastGenOutput>Application.Designer.vb</LastGenOutput>
@@ -167,7 +175,7 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
-    <None Include="packages.config" />
+    <None Include="model\packages.config" />
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="pdispauto_20_1">
@@ -179,6 +187,9 @@
       <Isolated>False</Isolated>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Icons\PluginIcon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

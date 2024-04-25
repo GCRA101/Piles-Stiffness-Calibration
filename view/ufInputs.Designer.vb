@@ -45,6 +45,7 @@ Partial Class ufInputs
         Me.rbSpring = New System.Windows.Forms.RadioButton()
         Me.rbImportFromFile = New System.Windows.Forms.RadioButton()
         Me.lblInitialStiffness = New System.Windows.Forms.Label()
+        Me.btnOpenJSONFile = New System.Windows.Forms.Button()
         CType(Me.pbETABSInputs, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.pbPDispInputs, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.gbPDispInputs.SuspendLayout()
@@ -239,6 +240,7 @@ Partial Class ufInputs
         '
         'gbETABSInputs
         '
+        Me.gbETABSInputs.Controls.Add(Me.btnOpenJSONFile)
         Me.gbETABSInputs.Controls.Add(Me.lblInitialStiffness)
         Me.gbETABSInputs.Controls.Add(Me.rbImportFromFile)
         Me.gbETABSInputs.Controls.Add(Me.rbSpring)
@@ -304,6 +306,18 @@ Partial Class ufInputs
         Me.lblInitialStiffness.TabIndex = 42
         Me.lblInitialStiffness.Text = "INITIAL PILES STIFFNESS ASSUMPTION"
         '
+        'btnOpenJSONFile
+        '
+        Me.btnOpenJSONFile.Font = New System.Drawing.Font("Segoe UI", 7.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.btnOpenJSONFile.Location = New System.Drawing.Point(251, 367)
+        Me.btnOpenJSONFile.Margin = New System.Windows.Forms.Padding(4)
+        Me.btnOpenJSONFile.Name = "btnOpenJSONFile"
+        Me.btnOpenJSONFile.RightToLeft = System.Windows.Forms.RightToLeft.No
+        Me.btnOpenJSONFile.Size = New System.Drawing.Size(76, 24)
+        Me.btnOpenJSONFile.TabIndex = 40
+        Me.btnOpenJSONFile.Text = "Browse..."
+        Me.btnOpenJSONFile.UseVisualStyleBackColor = True
+        '
         'ufInputs
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
@@ -317,7 +331,7 @@ Partial Class ufInputs
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Name = "ufInputs"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Piles Stiffness Iteration"
+        Me.Text = "a"
         CType(Me.pbETABSInputs, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.pbPDispInputs, System.ComponentModel.ISupportInitialize).EndInit()
         Me.gbPDispInputs.ResumeLayout(False)
@@ -350,4 +364,5 @@ Partial Class ufInputs
     Friend WithEvents rbImportFromFile As Windows.Forms.RadioButton
     Friend WithEvents rbSpring As Windows.Forms.RadioButton
     Friend WithEvents rbRigid As Windows.Forms.RadioButton
+    Friend WithEvents btnOpenJSONFile As Windows.Forms.Button
 End Class

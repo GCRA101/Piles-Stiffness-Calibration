@@ -4,9 +4,9 @@ Namespace model
         Inherits ETABSData
 
         'ATTRIBUTES *****************************************************************************
-        Private Property point As PointObj
-        Private Property reactions As PointReactions
-		Private Property springProperty as SpringProperty
+        Private point As PointObj
+        Private reactions As PointReactions
+        Private springProperty As SpringProperty
 
 
         'CONSTRUCTOR *****************************************************************************

@@ -12,14 +12,14 @@ Public Class PullPolyLoads
     Public Function pull() As List(Of PDispPolyLoad)
 
         '1. Get Number of Results
-        Dim numResults As Short
-        ret = Me.pDispModel.getPDispApp().NumResults(numResults)
+        Dim numLoads As Short
+        ret = Me.pDispModel.getPDispApp().NumPolyLoads(numLoads)
 
         '2. Get RectLoads
         Dim polyLoads As List(Of PDispPolyLoad)
-        For i As Integer = 0 To numResults - 1 Step 1
+        For i As Integer = 0 To numLoads - 1 Step 1
             Dim polyLoad As PolyLoad
-            Me.pDispModel.getPDispApp().GetPolyLoad(i, polyLoad)
+            Me.pDispModel.getPDispApp().GetPolyLoad(i + 1, polyLoad)
             polyLoads.Add(New PDispPolyLoad(polyLoad))
         Next
 

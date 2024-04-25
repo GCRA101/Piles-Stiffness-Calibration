@@ -15,13 +15,13 @@ Public Class PullMLDispResults
 
         '1. Get Number of Results
         Dim numResults As Short
-        ret = Me.pDispModel.getPDispApp().NumResults(numResults)
+        ret = Me.pDispModel.getPDispApp().NumDisplacementPoints(numResults)
 
         '2. Get RectLoads
-        Dim pDispMLDispResults As List(Of PDispMLDispResult)
+        Dim pDispMLDispResults As List(Of PDispMLDispResult) = New List(Of PDispMLDispResult)
         For i As Integer = 0 To numResults - 1 Step 1
             Dim pDispMLDispResult As PdispMindlinResult
-            Me.pDispModel.getPDispApp().GetMindlinResult_DispPoint(i, pDispMLDispResult)
+            Me.pDispModel.getPDispApp().GetMindlinResult_DispPoint(i + 1, pDispMLDispResult)
             pDispMLDispResults.Add(New PDispMLDispResult(pDispMLDispResult))
         Next
 

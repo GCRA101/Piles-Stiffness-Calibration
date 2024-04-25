@@ -2,8 +2,10 @@
     Inherits ETABSData
 
     'ATTRIBUTES  **********************************************************************
-    Private name As String
-    Private x, y, z As Double
+    Private Property name As String
+    Private Property x As Double
+    Private Property y As Double
+    Private Property z As Double
 
 
     'CONSTRUCTOR  *********************************************************************

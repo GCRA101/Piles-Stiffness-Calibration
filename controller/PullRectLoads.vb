@@ -13,14 +13,14 @@ Public Class PullRectLoads
     Public Function pull() As List(Of PDispRectLoad)
 
         '1. Get Number of Results
-        Dim numResults As Short
-        ret = Me.pDispModel.getPDispApp().NumResults(numResults)
+        Dim numLoads As Short
+        ret = Me.pDispModel.getPDispApp().NumRectLoads(numLoads)
 
         '2. Get RectLoads
-        Dim rectLoads As List(Of PDispRectLoad)
-        For i As Integer = 0 To numResults - 1 Step 1
+        Dim rectLoads As List(Of PDispRectLoad) = New List(Of PDispRectLoad)
+        For i As Integer = 0 To numLoads - 1 Step 1
             Dim rectLoad As RectLoad
-            Me.pDispModel.getPDispApp().GetRectLoad(i, rectLoad)
+            Me.pDispModel.getPDispApp().GetRectLoad(i + 1, rectLoad)
             rectLoads.Add(New PDispRectLoad(rectLoad))
         Next
 
