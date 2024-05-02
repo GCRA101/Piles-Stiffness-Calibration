@@ -9,13 +9,13 @@ Imports System.Runtime.InteropServices
 ' Review the values of the assembly attributes
 
 <Assembly: AssemblyTitle("Piles Stiffness Iteration")>
-<Assembly: AssemblyDescription("")>
-<Assembly: AssemblyCompany("")>
+<Assembly: AssemblyDescription("ETABS Plugin Application automating iterative analysis and calibration of piles stiffness in conjunction with PDisp")>
+<Assembly: AssemblyCompany("Buro Happold")>
 <Assembly: AssemblyProduct("Piles Stiffness Iteration")>
 <Assembly: AssemblyCopyright("Copyright ©  2024")>
 <Assembly: AssemblyTrademark("")>
 
-<Assembly: ComVisible(False)>
+<Assembly: ComVisible(True)>
 
 'The following GUID is for the ID of the typelib if this project is exposed to COM
 <Assembly: Guid("5ce595d9-9c71-4043-af8d-d33b24c1799c")>

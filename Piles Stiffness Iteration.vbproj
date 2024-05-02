@@ -44,7 +44,7 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <PropertyGroup>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CSiDetailAPI">
@@ -82,14 +82,20 @@
   <ItemGroup>
     <Compile Include="model\IncludePrivateResolver.vb" />
     <Compile Include="model\JSONSerializer.vb" />
-    <Compile Include="controller\LoadsPuller.vb" />
-    <Compile Include="controller\LoadsPusher.vb" />
-    <Compile Include="model\PDispAnalysisMethod.vb" />
-    <Compile Include="model\Color.vb" />
-    <Compile Include="model\ColorInterface.vb" />
+    <Compile Include="controller\pdisp\LoadsPuller.vb" />
+    <Compile Include="controller\pdisp\LoadsPusher.vb" />
+    <Compile Include="model\pdisp\PDispAnalysisMethod.vb" />
+    <Compile Include="model\physical\Color.vb" />
+    <Compile Include="model\physical\ColorInterface.vb" />
     <Compile Include="model\cPlugin.vb" />
-    <Compile Include="model\ETABSData.vb" />
-    <Compile Include="model\ETABSProperty.vb" />
+    <Compile Include="model\etabs\ETABSData.vb" />
+    <Compile Include="model\etabs\ETABSProperty.vb" />
+    <Compile Include="model\physical\PileObject.vb" />
+    <Compile Include="model\physical\PointDisplacements.vb" />
+    <Compile Include="model\physical\PointLoads.vb" />
+    <Compile Include="model\physical\PointObject.vb" />
+    <Compile Include="model\physical\SpringObject.vb" />
+    <Compile Include="model\etabs\PointResults.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -105,47 +111,59 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="model\NodalForces.vb" />
-    <Compile Include="model\PDispBSQDispResult.vb" />
-    <Compile Include="model\PDispBSQLoadResult.vb" />
-    <Compile Include="model\PDispBSQResult.vb" />
-    <Compile Include="model\PDispCircLoad.vb" />
-    <Compile Include="model\PDispConnection.vb" />
-    <Compile Include="model\PDispConnector.vb" />
-    <Compile Include="model\PDispData.vb" />
-    <Compile Include="model\PDispLoad.vb" />
-    <Compile Include="model\PDispLoadType.vb" />
-    <Compile Include="model\PDispMLDispResult.vb" />
-    <Compile Include="model\PDispMLLoadResult.vb" />
-    <Compile Include="model\PDispMLResult.vb" />
-    <Compile Include="model\PDispModel.vb" />
-    <Compile Include="model\PDispPolyLoad.vb" />
-    <Compile Include="model\PDispRectLoad.vb" />
-    <Compile Include="model\PDispResult.vb" />
-    <Compile Include="model\PDispResultType.vb" />
-    <Compile Include="model\PointDataSet.vb" />
-    <Compile Include="model\PointObj.vb" />
-    <Compile Include="model\PointReactions.vb" />
-    <Compile Include="controller\PullBehaviour.vb" />
-    <Compile Include="controller\PullBSQDispResults.vb" />
-    <Compile Include="controller\PullBSQLoadResults.vb" />
-    <Compile Include="controller\PullCircLoads.vb" />
-    <Compile Include="controller\PullData.vb" />
-    <Compile Include="controller\PullBSQResults.vb" />
-    <Compile Include="controller\Puller.vb" />
-    <Compile Include="controller\PullMLDispResults.vb" />
-    <Compile Include="controller\PullMLLoadResults.vb" />
-    <Compile Include="controller\PullMLResults.vb" />
-    <Compile Include="controller\PullPolyLoads.vb" />
-    <Compile Include="controller\PullRectLoads.vb" />
-    <Compile Include="controller\PushBehaviour.vb" />
-    <Compile Include="controller\PushCircLoads.vb" />
-    <Compile Include="controller\PushData.vb" />
-    <Compile Include="controller\Pusher.vb" />
-    <Compile Include="controller\PushPolyLoads.vb" />
-    <Compile Include="controller\PushRectLoads.vb" />
-    <Compile Include="controller\ResultsPuller.vb" />
-    <Compile Include="model\SpringProperty.vb" />
+    <Compile Include="model\etabs\NodalForces.vb" />
+    <Compile Include="model\pdisp\PDispBSQDispResult.vb" />
+    <Compile Include="model\pdisp\PDispBSQLoadResult.vb" />
+    <Compile Include="model\pdisp\PDispBSQResult.vb" />
+    <Compile Include="model\pdisp\PDispCircLoad.vb" />
+    <Compile Include="controller\pdisp\PDispConnection.vb" />
+    <Compile Include="controller\pdisp\PDispConnector.vb" />
+    <Compile Include="model\pdisp\PDispData.vb" />
+    <Compile Include="model\pdisp\PDispLoad.vb" />
+    <Compile Include="model\pdisp\PDispLoadType.vb" />
+    <Compile Include="model\pdisp\PDispMLDispResult.vb" />
+    <Compile Include="model\pdisp\PDispMLLoadResult.vb" />
+    <Compile Include="model\pdisp\PDispMLResult.vb" />
+    <Compile Include="model\pdisp\PDispModel.vb" />
+    <Compile Include="model\pdisp\PDispPolyLoad.vb" />
+    <Compile Include="model\pdisp\PDispRectLoad.vb" />
+    <Compile Include="model\pdisp\PDispResult.vb" />
+    <Compile Include="model\pdisp\PDispResultType.vb" />
+    <Compile Include="model\etabs\PointDataSet.vb" />
+    <Compile Include="model\etabs\PointObj.vb" />
+    <Compile Include="model\etabs\PointReactions.vb" />
+    <Compile Include="controller\pdisp\PullBehaviour.vb" />
+    <Compile Include="controller\pdisp\PullBSQDispResults.vb" />
+    <Compile Include="controller\pdisp\PullBSQLoadResults.vb" />
+    <Compile Include="controller\pdisp\PullCircLoads.vb" />
+    <Compile Include="controller\pdisp\PullData.vb" />
+    <Compile Include="controller\pdisp\PullBSQResults.vb" />
+    <Compile Include="controller\pdisp\Puller.vb" />
+    <Compile Include="controller\pdisp\PullMLDispResults.vb" />
+    <Compile Include="controller\pdisp\PullMLLoadResults.vb" />
+    <Compile Include="controller\pdisp\PullMLResults.vb" />
+    <Compile Include="controller\pdisp\PullPolyLoads.vb" />
+    <Compile Include="controller\pdisp\PullRectLoads.vb" />
+    <Compile Include="controller\pdisp\PushBehaviour.vb" />
+    <Compile Include="controller\pdisp\PushCircLoads.vb" />
+    <Compile Include="controller\pdisp\PushData.vb" />
+    <Compile Include="controller\pdisp\Pusher.vb" />
+    <Compile Include="controller\pdisp\PushPolyLoads.vb" />
+    <Compile Include="controller\pdisp\PushRectLoads.vb" />
+    <Compile Include="controller\pdisp\ResultsPuller.vb" />
+    <Compile Include="model\etabs\SpringProperty.vb" />
+    <Compile Include="view\aboutBox.Designer.vb">
+      <DependentUpon>aboutBox.vb</DependentUpon>
+    </Compile>
+    <Compile Include="view\aboutBox.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="view\splashScreen.Designer.vb">
+      <DependentUpon>splashScreen.vb</DependentUpon>
+    </Compile>
+    <Compile Include="view\splashScreen.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="view\ufInputs.Designer.vb">
       <DependentUpon>ufInputs.vb</DependentUpon>
     </Compile>
@@ -159,6 +177,12 @@
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="view\aboutBox.resx">
+      <DependentUpon>aboutBox.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="view\splashScreen.resx">
+      <DependentUpon>splashScreen.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="view\ufInputs.resx">
       <DependentUpon>ufInputs.vb</DependentUpon>
@@ -190,6 +214,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Icons\PluginIcon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="controller\etabs\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
