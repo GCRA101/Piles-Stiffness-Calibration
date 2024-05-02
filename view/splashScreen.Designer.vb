@@ -38,9 +38,10 @@ Partial Class splashScreen
         '
         Me.pbAppLogo.BackgroundImage = CType(resources.GetObject("pbAppLogo.BackgroundImage"), System.Drawing.Image)
         Me.pbAppLogo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
+        Me.pbAppLogo.Dock = System.Windows.Forms.DockStyle.Fill
         Me.pbAppLogo.Location = New System.Drawing.Point(3, 3)
         Me.pbAppLogo.Name = "pbAppLogo"
-        Me.pbAppLogo.Size = New System.Drawing.Size(316, 298)
+        Me.pbAppLogo.Size = New System.Drawing.Size(344, 322)
         Me.pbAppLogo.TabIndex = 0
         Me.pbAppLogo.TabStop = False
         '
@@ -56,7 +57,7 @@ Partial Class splashScreen
         Me.tlpLogo.RowCount = 1
         Me.tlpLogo.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.tlpLogo.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.tlpLogo.Size = New System.Drawing.Size(497, 304)
+        Me.tlpLogo.Size = New System.Drawing.Size(539, 328)
         Me.tlpLogo.TabIndex = 1
         '
         'tlpTitle
@@ -67,43 +68,43 @@ Partial Class splashScreen
         Me.tlpTitle.Controls.Add(Me.lblApplicationName, 0, 0)
         Me.tlpTitle.Controls.Add(Me.lblVersion, 0, 1)
         Me.tlpTitle.Controls.Add(Me.lblCopyright, 0, 2)
-        Me.tlpTitle.Location = New System.Drawing.Point(325, 3)
+        Me.tlpTitle.Location = New System.Drawing.Point(353, 3)
         Me.tlpTitle.Name = "tlpTitle"
         Me.tlpTitle.RowCount = 3
         Me.tlpTitle.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 88.99522!))
         Me.tlpTitle.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 11.00478!))
         Me.tlpTitle.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 88.0!))
-        Me.tlpTitle.Size = New System.Drawing.Size(169, 298)
+        Me.tlpTitle.Size = New System.Drawing.Size(183, 322)
         Me.tlpTitle.TabIndex = 1
         '
         'lblApplicationName
         '
-        Me.lblApplicationName.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
         Me.lblApplicationName.AutoSize = True
+        Me.lblApplicationName.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.lblApplicationName.Font = New System.Drawing.Font("Segoe UI Semibold", 18.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblApplicationName.Location = New System.Drawing.Point(3, 122)
+        Me.lblApplicationName.Location = New System.Drawing.Point(3, 144)
         Me.lblApplicationName.Name = "lblApplicationName"
-        Me.lblApplicationName.Size = New System.Drawing.Size(144, 64)
+        Me.lblApplicationName.Size = New System.Drawing.Size(177, 64)
         Me.lblApplicationName.TabIndex = 0
         Me.lblApplicationName.Text = "Application Name"
         '
         'lblVersion
         '
-        Me.lblVersion.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lblVersion.AutoSize = True
+        Me.lblVersion.Dock = System.Windows.Forms.DockStyle.Fill
         Me.lblVersion.Font = New System.Drawing.Font("Segoe UI", 11.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblVersion.Location = New System.Drawing.Point(54, 186)
+        Me.lblVersion.Location = New System.Drawing.Point(3, 208)
         Me.lblVersion.Name = "lblVersion"
-        Me.lblVersion.Size = New System.Drawing.Size(112, 20)
+        Me.lblVersion.Size = New System.Drawing.Size(177, 25)
         Me.lblVersion.TabIndex = 1
-        Me.lblVersion.Text = "Version Number"
+        Me.lblVersion.Text = "Version: "
         '
         'lblCopyright
         '
         Me.lblCopyright.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lblCopyright.AutoSize = True
         Me.lblCopyright.Font = New System.Drawing.Font("Segoe UI", 9.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblCopyright.Location = New System.Drawing.Point(107, 209)
+        Me.lblCopyright.Location = New System.Drawing.Point(121, 233)
         Me.lblCopyright.Name = "lblCopyright"
         Me.lblCopyright.Size = New System.Drawing.Size(59, 15)
         Me.lblCopyright.TabIndex = 2
@@ -114,7 +115,7 @@ Partial Class splashScreen
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.SystemColors.Window
-        Me.ClientSize = New System.Drawing.Size(496, 303)
+        Me.ClientSize = New System.Drawing.Size(538, 328)
         Me.ControlBox = False
         Me.Controls.Add(Me.tlpLogo)
         Me.DoubleBuffered = True
