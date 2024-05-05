@@ -16,3 +16,15 @@ C:\Users\galbieri\Buro Happold\P059950 Project Domino (2023) - 03_Models\07_Dev\
 C:\Users\galbieri\Buro Happold\P059950 Project Domino (2023) - 03_Models\07_Dev\Piles Stiffness Iteration\Piles Stiffness Calibration\obj\Debug\Piles_Stiffness_Calibration.ViewInputs.resources
 C:\Users\galbieri\Buro Happold\P059950 Project Domino (2023) - 03_Models\07_Dev\Piles Stiffness Iteration\Piles Stiffness Calibration\obj\Debug\Piles Stiffness Calibration.vbproj.GenerateResource.cache
 C:\Users\galbieri\Buro Happold\P059950 Project Domino (2023) - 03_Models\07_Dev\Piles Stiffness Iteration\Piles Stiffness Calibration\obj\Debug\Piles Stiffness Calibration.vbproj.CoreCompileInputs.cache
+C:\Users\galbieri\Buro Happold\P059950 Project Domino (2023) - 03_Models\07_Dev\Piles Stiffness Iteration\Piles Stiffness Calibration\bin\Debug\Piles_Stiffness_Calibration.dll.config
+C:\Users\galbieri\Buro Happold\P059950 Project Domino (2023) - 03_Models\07_Dev\Piles Stiffness Iteration\Piles Stiffness Calibration\bin\Debug\Piles_Stiffness_Calibration.dll
+C:\Users\galbieri\Buro Happold\P059950 Project Domino (2023) - 03_Models\07_Dev\Piles Stiffness Iteration\Piles Stiffness Calibration\bin\Debug\Piles_Stiffness_Calibration.pdb
+C:\Users\galbieri\Buro Happold\P059950 Project Domino (2023) - 03_Models\07_Dev\Piles Stiffness Iteration\Piles Stiffness Calibration\bin\Debug\Piles_Stiffness_Calibration.xml
+C:\Users\galbieri\Buro Happold\P059950 Project Domino (2023) - 03_Models\07_Dev\Piles Stiffness Iteration\Piles Stiffness Calibration\bin\Debug\CSiDetailAPI.dll
+C:\Users\galbieri\Buro Happold\P059950 Project Domino (2023) - 03_Models\07_Dev\Piles Stiffness Iteration\Piles Stiffness Calibration\bin\Debug\ETABSv1.dll
+C:\Users\galbieri\Buro Happold\P059950 Project Domino (2023) - 03_Models\07_Dev\Piles Stiffness Iteration\Piles Stiffness Calibration\bin\Debug\Newtonsoft.Json.dll
+C:\Users\galbieri\Buro Happold\P059950 Project Domino (2023) - 03_Models\07_Dev\Piles Stiffness Iteration\Piles Stiffness Calibration\bin\Debug\Newtonsoft.Json.xml
+C:\Users\galbieri\Buro Happold\P059950 Project Domino (2023) - 03_Models\07_Dev\Piles Stiffness Iteration\Piles Stiffness Calibration\obj\Debug\Piles St.680504AA.Up2Date
+C:\Users\galbieri\Buro Happold\P059950 Project Domino (2023) - 03_Models\07_Dev\Piles Stiffness Iteration\Piles Stiffness Calibration\obj\Debug\Piles_Stiffness_Calibration.dll
+C:\Users\galbieri\Buro Happold\P059950 Project Domino (2023) - 03_Models\07_Dev\Piles Stiffness Iteration\Piles Stiffness Calibration\obj\Debug\Piles_Stiffness_Calibration.xml
+C:\Users\galbieri\Buro Happold\P059950 Project Domino (2023) - 03_Models\07_Dev\Piles Stiffness Iteration\Piles Stiffness Calibration\obj\Debug\Piles_Stiffness_Calibration.pdb

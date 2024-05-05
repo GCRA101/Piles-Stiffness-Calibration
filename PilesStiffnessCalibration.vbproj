@@ -82,6 +82,7 @@
   <ItemGroup>
     <Compile Include="controller\AudioManagerInterface.vb" />
     <Compile Include="controller\ControllerInterface.vb" />
+    <Compile Include="controller\EventsListener.vb" />
     <Compile Include="controller\PSC_Controller.vb" />
     <Compile Include="controller\Sound.vb" />
     <Compile Include="controller\SoundManager.vb" />
@@ -180,7 +181,7 @@
     <Compile Include="view\ViewInputs.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="view\View.vb" />
+    <Compile Include="view\PSC_View.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -232,11 +233,11 @@
   <ItemGroup>
     <EmbeddedResource Include="sounds\CHECKBOX.wav" />
     <EmbeddedResource Include="sounds\ENDITERATION.wav" />
-    <EmbeddedResource Include="sounds\PRESSBUTTON.wav" />
+    <EmbeddedResource Include="sounds\CLICKBUTTON.wav" />
     <EmbeddedResource Include="sounds\WARNING.wav" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="sounds\SPLASHSCREEN.wav" />
+    <EmbeddedResource Include="sounds\SPLASHSCREEN.wav" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

@@ -1,0 +1,47 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+Piles_Stiffness_Calibration
+</name>
+</assembly>
+<members>
+<member name="T:Piles_Stiffness_Calibration.My.Resources.Resources">
+<summary>
+  A strongly-typed resource class, for looking up localized strings, etc.
+</summary>
+</member>
+<member name="P:Piles_Stiffness_Calibration.My.Resources.Resources.ResourceManager">
+<summary>
+  Returns the cached ResourceManager instance used by this class.
+</summary>
+</member>
+<member name="P:Piles_Stiffness_Calibration.My.Resources.Resources.Culture">
+<summary>
+  Overrides the current thread's CurrentUICulture property for all
+  resource lookups using this strongly typed resource class.
+</summary>
+</member>
+<member name="P:Piles_Stiffness_Calibration.My.Resources.Resources.PluginIcon">
+<summary>
+  Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+</summary>
+</member>
+<member name="T:Piles_Stiffness_Calibration.PSC_Model">
+ <summary>
+ 
+ MODEL CLASS
+ 
+ Concrete class and main class of the Model Package.
+ The class contains all the main data and methods for the running of the application.
+ The model is updated based on the actions of the user in the View via the MVC Design Pattern while the View
+ is updated based on the changes of the Model via the OBSERVER Design Pattern.
+ 
+ Specific Techniques: 
+ - OBSERVER Design Pattern
+ - MODEL-VIEW-CONTROLLER Design Pattern
+ 
+ </summary>
+</member>
+</members>
+</doc>

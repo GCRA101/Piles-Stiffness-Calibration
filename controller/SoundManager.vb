@@ -1,4 +1,6 @@
 ﻿Imports System.IO
+Imports System.Media
+Imports System.Reflection
 Imports System.Reflection.Emit
 
 Public Class SoundManager
@@ -38,13 +40,21 @@ Public Class SoundManager
 	'the hood by the Static Class SoundPath.
 	'This makes the clode cleaner and easier to extend.
 	Public Sub play(sound As Sound)
-		play(SoundPath.getPath(sound))
-	End Sub
+		Dim resourceName As String = SoundPath.getPath(sound)
 
+		' Get the stream for the embedded resource
+		Dim stream As Stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(resourceName)
+		If stream Is Nothing Then
+			Throw New FileNotFoundException("The specified resource was not found.", resourceName)
+		End If
+
+		' Play the sound
+		Dim player As New SoundPlayer(stream)
+		player.Play()
+	End Sub
 	Private Sub play(filePath As String) Implements AudioManagerInterface.play
 		'Execute this Sub only if the SoundManager is set to active
 		If Me.active = False Then Return
-
 		Try
 			'Play the File in the background without stopping user's interaction
 			My.Computer.Audio.Play(filePath, AudioPlayMode.Background)
@@ -55,7 +65,6 @@ Public Class SoundManager
 		Catch ex3 As Exception
 			MsgBox(ex3.Message, vbOKOnly And MsgBoxStyle.Exclamation, "WARNING")
 		End Try
-
 	End Sub
 
 	Public Sub setActive(active As Boolean) Implements AudioManagerInterface.setActive
@@ -65,5 +74,8 @@ Public Class SoundManager
 	Public Function isActive() As Boolean Implements AudioManagerInterface.isActive
 		Return Me.active
 	End Function
-
 End Class
+
+
+
+

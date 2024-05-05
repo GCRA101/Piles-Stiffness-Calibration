@@ -10,15 +10,15 @@
     Function getPath(sound As Sound) As String
         Select Case sound
             Case Sound.SPLASHSCREEN
-                Return "Piles Stiffness Iteration.sounds.SPLASHSCREEN.wav"
+                Return "Piles_Stiffness_Calibration.SPLASHSCREEN.wav"
             Case Sound.CLICKBUTTON
-                Return "Piles Stiffness Iteration.sounds.CLICKBUTTON.wav"
+                Return "Piles_Stiffness_Calibration.CLICKBUTTON.wav"
             Case Sound.CHECKBOX
-                Return "Piles Stiffness Iteration.sounds.CHECKBOX.wav"
+                Return "Piles_Stiffness_Calibration.CHECKBOX.wav"
             Case Sound.WARNING
-                Return "Piles Stiffness Iteration.sounds.WARNING.wav"
+                Return "Piles_Stiffness_Calibration.WARNING.wav"
             Case Sound.ENDITERATION
-                Return "Piles Stiffness Iteration.sounds.ENDITERATION.wav"
+                Return "Piles_Stiffness_Calibration.ENDITERATION.wav"
             Case Else
                 Return Nothing
         End Select

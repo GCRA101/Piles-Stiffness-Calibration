@@ -1,19 +1,19 @@
 ﻿
 Imports Piles_Stiffness_Iteration.model
-Public Class View
+Public Class PSC_View
 
 	'ATTRIBUTES
 
 	'References to Model and Controller
-	Protected model As Piles_Stiffness_Iteration.model
-	Protected controller As Controller
+	Protected model As PSC_Model
+	Protected controller As PSC_Controller
 	'Main windows of the View
 	Protected splashScreen As SplashScreen
 	Protected aboutBox As AboutBox
 	Protected viewInputs As ViewInputs
 
 	'CONSTRUCTORS
-	Public Sub New(model As model, controller As Controller)
+	Public Sub New(model As PSC_Model, controller As PSC_Controller)
 		Me.model = model
 		Me.controller = controller
 	End Sub
@@ -23,25 +23,24 @@ Public Class View
 	'CREATION of the VIEWS
 	Public Sub createSplashScreen()
 		Me.splashScreen = New SplashScreen()
+		Me.splashScreen.Show()
+		splashScreen.Refresh()
+		Me.controller.getSoundManager().play(Sound.SPLASHSCREEN)
+		System.Threading.Thread.Sleep(5000)
+		splashScreen.Close()
 	End Sub
 
 	Public Sub createAboutBox()
 		Me.aboutBox = New AboutBox()
+		Me.aboutBox.Show()
 	End Sub
 
-	Public void creaViewMenu() {
-		this.viewMenu=New ViewMenu(this.model,this.controller);
-		// Registrazione View come observer di Model		
-		this.model.registerObserver(this.viewMenu);}
-	
-	Public void creaViewGame() {
-		this.viewGame=New ViewGame(this.model, this.controller);
-		// Registrazione View come observer di Model		
-		this.model.registerObserver(this.viewGame);}
-	
-	Public void creaViewColorChoose() {
-		this.viewColorChoose=New ViewColorChoose(this.model,this.controller);}
-	
+	Public Sub createViewInputs()
+		Me.viewInputs = New ViewInputs(Me.controller.getSapModel, Me.controller.getISapPlugIn)
+		Me.viewInputs.Show()
+		Me.aboutBox.Close()
+	End Sub
+
 	'SETTERS and GETTERS
 	Public Sub setAboutBox(aboutBox As AboutBox)
 		Me.aboutBox = aboutBox

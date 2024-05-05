@@ -1,4 +1,5 @@
-﻿Imports System.Windows.Forms
+﻿Imports System.Reflection
+Imports System.Windows.Forms
 Imports ETABSv1
 Imports pdispauto_20_1
 
@@ -8,7 +9,7 @@ Public Class cPlugin
 
     Public Sub Main(ByRef SapModel As cSapModel, ByRef ISapPlugin As cPluginCallback) Implements cPluginContract.Main
 
-        Dim controller As Controller = New Controller()
+        Dim controller As PSC_Controller = New PSC_Controller(SapModel, ISapPlugin)
         controller.initialize()
 
     End Sub
