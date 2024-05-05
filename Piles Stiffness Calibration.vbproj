@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{9B87EC33-233D-48CB-8684-0CCCD5BD32A1}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>Piles_Stiffness_Iteration</RootNamespace>
-    <AssemblyName>Piles_Stiffness_Iteration</AssemblyName>
+    <RootNamespace>Piles_Stiffness_Calibration</RootNamespace>
+    <AssemblyName>Piles_Stiffness_Calibration</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Windows</MyType>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
@@ -19,7 +19,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>Piles_Stiffness_Iteration.xml</DocumentationFile>
+    <DocumentationFile>Piles_Stiffness_Calibration.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -28,7 +28,7 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>Piles_Stiffness_Iteration.xml</DocumentationFile>
+    <DocumentationFile>Piles_Stiffness_Calibration.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
@@ -80,14 +80,23 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="controller\AudioManagerInterface.vb" />
+    <Compile Include="controller\ControllerInterface.vb" />
+    <Compile Include="controller\PSC_Controller.vb" />
+    <Compile Include="controller\Sound.vb" />
+    <Compile Include="controller\SoundManager.vb" />
+    <Compile Include="controller\SoundPath.vb" />
     <Compile Include="model\IncludePrivateResolver.vb" />
     <Compile Include="model\JSONSerializer.vb" />
     <Compile Include="controller\pdisp\LoadsPuller.vb" />
     <Compile Include="controller\pdisp\LoadsPusher.vb" />
+    <Compile Include="model\PSC_Model.vb" />
+    <Compile Include="model\Observable.vb" />
+    <Compile Include="model\Observer.vb" />
     <Compile Include="model\pdisp\PDispAnalysisMethod.vb" />
     <Compile Include="model\physical\Color.vb" />
     <Compile Include="model\physical\ColorInterface.vb" />
-    <Compile Include="model\cPlugin.vb" />
+    <Compile Include="Plugin\cPlugin.vb" />
     <Compile Include="model\etabs\ETABSData.vb" />
     <Compile Include="model\etabs\ETABSProperty.vb" />
     <Compile Include="model\physical\PileObject.vb" />
@@ -100,6 +109,7 @@
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
       <DependentUpon>Application.myapp</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="My Project\Resources.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -152,24 +162,25 @@
     <Compile Include="controller\pdisp\PushRectLoads.vb" />
     <Compile Include="controller\pdisp\ResultsPuller.vb" />
     <Compile Include="model\etabs\SpringProperty.vb" />
-    <Compile Include="view\aboutBox.Designer.vb">
-      <DependentUpon>aboutBox.vb</DependentUpon>
+    <Compile Include="view\AboutBox.Designer.vb">
+      <DependentUpon>AboutBox.vb</DependentUpon>
     </Compile>
-    <Compile Include="view\aboutBox.vb">
+    <Compile Include="view\AboutBox.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="view\splashScreen.Designer.vb">
-      <DependentUpon>splashScreen.vb</DependentUpon>
+    <Compile Include="view\SplashScreen.Designer.vb">
+      <DependentUpon>SplashScreen.vb</DependentUpon>
     </Compile>
-    <Compile Include="view\splashScreen.vb">
+    <Compile Include="view\SplashScreen.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="view\ufInputs.Designer.vb">
-      <DependentUpon>ufInputs.vb</DependentUpon>
+    <Compile Include="view\ViewInputs.Designer.vb">
+      <DependentUpon>ViewInputs.vb</DependentUpon>
     </Compile>
-    <Compile Include="view\ufInputs.vb">
+    <Compile Include="view\ViewInputs.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="view\View.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -178,14 +189,14 @@
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="view\aboutBox.resx">
-      <DependentUpon>aboutBox.vb</DependentUpon>
+    <EmbeddedResource Include="view\AboutBox.resx">
+      <DependentUpon>AboutBox.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="view\splashScreen.resx">
-      <DependentUpon>splashScreen.vb</DependentUpon>
+    <EmbeddedResource Include="view\SplashScreen.resx">
+      <DependentUpon>SplashScreen.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="view\ufInputs.resx">
-      <DependentUpon>ufInputs.vb</DependentUpon>
+    <EmbeddedResource Include="view\ViewInputs.resx">
+      <DependentUpon>ViewInputs.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -217,6 +228,15 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="controller\etabs\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="sounds\CHECKBOX.wav" />
+    <EmbeddedResource Include="sounds\ENDITERATION.wav" />
+    <EmbeddedResource Include="sounds\PRESSBUTTON.wav" />
+    <EmbeddedResource Include="sounds\WARNING.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="sounds\SPLASHSCREEN.wav" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

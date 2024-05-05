@@ -7,14 +7,10 @@ Public Class cPlugin
     Implements ETABSv1.cPluginContract
 
     Public Sub Main(ByRef SapModel As cSapModel, ByRef ISapPlugin As cPluginCallback) Implements cPluginContract.Main
-        Dim splashScreen As splashScreen, aboutBox As aboutBox
-        splashScreen = New splashScreen()
-        aboutBox = New aboutBox()
-        splashScreen.Show()
-        splashScreen.Refresh()
-        System.Threading.Thread.Sleep(4000)
-        splashScreen.Close()
-        aboutBox.Show()
+
+        Dim controller As Controller = New Controller()
+        controller.initialize()
+
     End Sub
 
     Public Function Info(ByRef Text As String) As Integer Implements cPluginContract.Info

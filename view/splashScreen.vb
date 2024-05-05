@@ -1,7 +1,7 @@
 ﻿Imports System.Runtime.Versioning
 Imports Newtonsoft.Json.Converters
 
-Public NotInheritable Class splashScreen
+Public NotInheritable Class SplashScreen
 
     'TODO: This form can easily be set as the splash screen for the application by going to the "Application" tab
     '  of the Project Designer ("Properties" under the "Project" menu).

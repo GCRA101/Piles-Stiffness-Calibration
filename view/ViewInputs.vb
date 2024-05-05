@@ -10,7 +10,7 @@ Imports System.Runtime.Remoting.Contexts
 Imports System.Runtime.Serialization
 Imports System.Windows.Forms
 
-Public Class ufInputs
+Public Class ViewInputs
 
     ' ATTRIBUTES ****************************************************************************************
 

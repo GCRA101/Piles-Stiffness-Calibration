@@ -1,4 +1,4 @@
-﻿Public NotInheritable Class aboutBox
+﻿Public NotInheritable Class AboutBox
 
     Private Sub aboutBox_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         ' Set the title of the form.
@@ -18,7 +18,8 @@
     End Sub
 
     Private Sub OKButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles OKButton.Click
-        Dim ufInputs As ufInputs
+        Dim ufInputs As ViewInputs
+        ufInputs = New ufInputs()
         ufInputs.Show()
         Me.Close()
     End Sub
