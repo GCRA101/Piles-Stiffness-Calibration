@@ -28,7 +28,20 @@ Public Class SoundManager
 		Return instance
 	End Function
 
-	Public Sub play(filePath As String) Implements AudioManagerInterface.play
+	' METHODS
+
+	'Play Method - Overloaded
+
+	'Overloaded play method taking the enum sound as input and calling within it the play method implemented from
+	'the AudioManagerInterface interface that is turned into private in order to keep it hidden from the client.
+	'This allows the client to input just the Sound Enum rather than its filepath, leaving it getting retrieved under
+	'the hood by the Static Class SoundPath.
+	'This makes the clode cleaner and easier to extend.
+	Public Sub play(sound As Sound)
+		play(SoundPath.getPath(sound))
+	End Sub
+
+	Private Sub play(filePath As String) Implements AudioManagerInterface.play
 		'Execute this Sub only if the SoundManager is set to active
 		If Me.active = False Then Return
 
