@@ -13,7 +13,7 @@ Public Class EventsListener
     End Sub
 
 
-    Public Sub initialize()
+    Public Sub initializeAboutBox()
         Me.aboutBoxOKButton = Me.view.getAboutBox().OKButton
     End Sub
 

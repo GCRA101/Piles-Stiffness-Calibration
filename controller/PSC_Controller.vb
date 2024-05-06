@@ -24,6 +24,7 @@ Public Class PSC_Controller
 	'Private ColorButtonListener colorButtonListener;
 	'//ExceptionHandlers
 	'Private MazzoEsauritoHandler mazzoEsauritoHandler;
+	Private eventsListener As EventsListener
 	'AudioManagers
 	Private soundManager As SoundManager
 
@@ -43,6 +44,9 @@ Public Class PSC_Controller
 		'Istantiate AudioManagers
 		Me.soundManager = SoundManager.getInstance()
 
+		'Instantiate EventsListener
+		Me.eventsListener = New EventsListener(Me, Me.view)
+
 		'// 4. Creazione ActionListeners
 		'this.creaListeners();
 		'// 5. Creazione ExceptionHandlers
@@ -53,6 +57,7 @@ Public Class PSC_Controller
 	Public Sub initialize() Implements ControllerInterface.initialize
 		Me.view.createSplashScreen()
 		Me.view.createAboutBox()
+		Me.eventsListener.initializeAboutBox()
 	End Sub
 
 	Public Sub runIteration() Implements ControllerInterface.runIteration
@@ -74,6 +79,10 @@ Public Class PSC_Controller
 	End Function
 	Public Function getSoundManager() As SoundManager
 		Return Me.soundManager
+	End Function
+
+	Public Function getEventsListener() As EventsListener
+		Return Me.eventsListener
 	End Function
 
 End Class
