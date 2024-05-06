@@ -27,6 +27,17 @@ Piles_Stiffness_Calibration
   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
 </summary>
 </member>
+<member name="T:Piles_Stiffness_Calibration.SoundManager">
+ <summary>
+ SOUNDSMANAGER
+ 
+ Concrete Class implementing the interface AudioManagerInterface and that is responsible 
+ for playing the sound effects of the application, when active.
+ 
+ Specific Techniques
+  - SINGLETON Design Pattern
+ </summary>
+</member>
 <member name="T:Piles_Stiffness_Calibration.PSC_Model">
  <summary>
  
@@ -40,6 +51,7 @@ Piles_Stiffness_Calibration
  Specific Techniques: 
  - OBSERVER Design Pattern
  - MODEL-VIEW-CONTROLLER Design Pattern
+ - SINGLETON Design Pattern
  
  </summary>
 </member>

@@ -86,7 +86,7 @@
     <Compile Include="controller\PSC_Controller.vb" />
     <Compile Include="controller\Sound.vb" />
     <Compile Include="controller\SoundManager.vb" />
-    <Compile Include="controller\SoundPath.vb" />
+    <Compile Include="controller\SoundPathRetriever.vb" />
     <Compile Include="model\IncludePrivateResolver.vb" />
     <Compile Include="model\JSONSerializer.vb" />
     <Compile Include="controller\pdisp\LoadsPuller.vb" />

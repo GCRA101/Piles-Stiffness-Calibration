@@ -1,4 +1,4 @@
-﻿Module SoundPath
+﻿Module SoundPathRetriever
 
     'ATTIBUTES
     Private sound As Sound

@@ -11,8 +11,6 @@ Public Class PSC_Controller
 	'References to CSI Plugin Objects
 	Protected SapModel As cSapModel
 	Protected ISapPlugin As cPluginCallback
-	'Serializer'
-	Protected jsonSerializer As JSONSerializer(Of PileObject)
 	'//ActionListeners
 	'Private CaricaProfiloListener caricaProfiloListener;
 	'Private GiocaPartitaListener giocaPartitaListener;
@@ -38,7 +36,7 @@ Public Class PSC_Controller
 		resourceNames = Assembly.GetExecutingAssembly().GetManifestResourceNames()
 
 		'Instantiate the Model
-		Me.model = New PSC_Model()
+		Me.model = PSC_Model.getInstance()
 		'Instantiate the View
 		Me.view = New PSC_View(Me.model, Me)
 		'Istantiate AudioManagers

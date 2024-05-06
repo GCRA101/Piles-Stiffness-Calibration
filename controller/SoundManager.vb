@@ -3,16 +3,18 @@ Imports System.Media
 Imports System.Reflection
 Imports System.Reflection.Emit
 
+''' <summary>
+''' SOUNDSMANAGER
+''' 
+''' Concrete Class implementing the interface AudioManagerInterface and that is responsible 
+''' for playing the sound effects of the application, when active.
+''' 
+''' Specific Techniques
+'''  - SINGLETON Design Pattern
+''' </summary>
+
 Public Class SoundManager
 	Implements AudioManagerInterface
-
-	' SOUNDSMANAGER
-	' 
-	' Concrete Class implementing the interface AudioManagerInterface and that is responsible 
-	' for playing the sound effects of the application, when active.
-	'
-	' Specific Techniques
-	' - SINGLETON Design Pattern
 
 	' ATTRIBUTES
 	Private Shared instance As SoundManager
@@ -40,7 +42,7 @@ Public Class SoundManager
 	'the hood by the Static Class SoundPath.
 	'This makes the clode cleaner and easier to extend.
 	Public Sub play(sound As Sound)
-		Dim resourceName As String = SoundPath.getPath(sound)
+		Dim resourceName As String = SoundPathRetriever.getPath(sound)
 
 		' Get the stream for the embedded resource
 		Dim stream As Stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(resourceName)

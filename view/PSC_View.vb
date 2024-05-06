@@ -24,6 +24,7 @@ Public Class PSC_View
 	Public Sub createSplashScreen()
 		Me.splashScreen = New SplashScreen()
 		Me.controller.getSoundManager().play(Sound.SPLASHSCREEN)
+		System.Threading.Thread.Sleep(1000)
 		Me.splashScreen.Show()
 		splashScreen.Refresh()
 		System.Threading.Thread.Sleep(5000)

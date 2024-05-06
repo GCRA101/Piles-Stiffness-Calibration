@@ -13,7 +13,7 @@
         Me.lblCopyRight.Text = "Copyright @ Buro Happold Ltd Inc.2024"
         Me.lblCompanyName.Text = "Buro Happold Ltd"
         Me.txtDescription.Text = My.Application.Info.Description
-
+        ' Place the AboutBox at the centre of the Screen
         Me.CenterToScreen()
     End Sub
 

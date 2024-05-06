@@ -19,6 +19,7 @@ Public Class EventsListener
 
 
     Private Sub OKButton_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles aboutBoxOKButton.Click
+        Me.controller.getSoundManager().play(Sound.CLICKBUTTON)
         view.createViewInputs()
     End Sub
 

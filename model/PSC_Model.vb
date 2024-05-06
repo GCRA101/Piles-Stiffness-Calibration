@@ -10,13 +10,32 @@
 ''' Specific Techniques: 
 ''' - OBSERVER Design Pattern
 ''' - MODEL-VIEW-CONTROLLER Design Pattern
+''' - SINGLETON Design Pattern
 ''' 
 ''' </summary>
 
 Public Class PSC_Model
     Implements Observable
 
-    Public Sub registerObservers(o As Observer) Implements Observable.registerObservers
+	'ATTRIBUTES
+	Private Shared instance As PSC_Model
+	Private observers As List(Of Observer)
+	Private jsonSerializer As JSONSerializer(Of PileObject)
+
+	' CONSTRUCTOR - Private'
+	Private Sub New()
+	End Sub
+
+	' STATIC METHOD .getInstance() '
+	Public Shared Function getInstance() As PSC_Model
+		If (instance Is Nothing) Then
+			instance = New PSC_Model()
+		End If
+		Return instance
+	End Function
+
+
+	Public Sub registerObservers(o As Observer) Implements Observable.registerObservers
         Throw New NotImplementedException()
     End Sub
 
