@@ -122,7 +122,6 @@ Public Class EventsListener
 
         Me.controller.processInputData()
         Me.controller.runIteration()
-        Me.controller.serialize()
         Me.controller.terminate()
     End Sub
 

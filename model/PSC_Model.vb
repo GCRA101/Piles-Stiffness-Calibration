@@ -160,6 +160,8 @@ Public Class PSC_Model
             stepRun = False
             runIterationStep(Me.iterNum)
             stepRun = True
+            'Serialize DataSet
+            Me.serialize(Me.pileObjs)
             'Notify Observers
             Me.notifyObservers()
             'Increment iter count
@@ -205,17 +207,8 @@ Public Class PSC_Model
         computePileObjsStiffness(Me.pileObjs)
         '7. Add current list of PileObjects to Queue data structure
         pileObjsQueue.Enqueue(Me.pileObjs)
-
-
-
-
-        ' ASSIGN COMPUTED STIFFNESSES TO ETABS BASE POINTS
-        ret = sapModel.SetModelIsLocked(False)
-
-        pileObjs.ForEach(Function(pileObj)
-                             ret = sapModel.PointObj.DeleteRestraint(pileObj.getLocation.getName())
-                             ret = sapModel.PointObj.SetSpring(pileObj.getLocation.getName(), pileObj.getStiffness().getValues())
-                         End Function)
+        '8. Update Etabs Point Springs
+        updatePointSprings(Me.pileObjs)
 
 
     End Sub
@@ -359,6 +352,20 @@ Public Class PSC_Model
         loadsPusher.push(pDispRectLoads, True)
 
     End Sub
+
+
+    Public Sub updatePointSprings(pileObjs As List(Of PileObject))
+
+        ' ASSIGN COMPUTED STIFFNESSES TO ETABS BASE POINTS
+        ret = sapModel.SetModelIsLocked(False)
+
+        pileObjs.ForEach(Function(pileObj)
+                             ret = Me.sapModel.PointObj.DeleteRestraint(pileObj.getLocation.getName())
+                             ret = Me.sapModel.PointObj.SetSpring(pileObj.getLocation.getName(),
+                                                                  pileObj.getStiffness().getValues())
+                         End Function)
+    End Sub
+
 
     Public Sub serialize(pileObjs As List(Of PileObject))
         ' SERIALIZE OUTPUTS IN A JSON FILE
