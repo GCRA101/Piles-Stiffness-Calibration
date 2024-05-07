@@ -361,13 +361,16 @@ Public Class PSC_Model
     Public Sub updatePointSprings(pileObjs As List(Of PileObject))
 
         ' ASSIGN COMPUTED STIFFNESSES TO ETABS BASE POINTS
-        ret = sapModel.SetModelIsLocked(False)
+        Me.sapModel.SetModelIsLocked(False)
 
         pileObjs.ForEach(Function(pileObj)
                              ret = Me.sapModel.PointObj.DeleteRestraint(pileObj.getLocation.getName())
                              ret = Me.sapModel.PointObj.SetSpring(pileObj.getLocation.getName(),
                                                                   pileObj.getStiffness().getValues())
                          End Function)
+
+        Me.sapModel.View.RefreshView()
+
     End Sub
 
 
@@ -394,33 +397,42 @@ Public Class PSC_Model
     Public Sub setEtabsLoadComboNames(etabsLoadComboNames As List(Of String))
         Me.etabsLoadComboNames = etabsLoadComboNames
     End Sub
-    Public Function getEtabsGroupNames() As List(Of String)
-        Return Me.etabsGroupNames
-    End Function
-    Public Function getEtabsLoadComboNames() As List(Of String)
-        Return Me.etabsLoadComboNames
-    End Function
-
     Public Sub setSelEtabsGroupName(selEtabsGroupName As String)
         Me.selEtabsGroupName = selEtabsGroupName
     End Sub
     Public Sub setSelEtabsLoadComboName(selEtabsLoadComboName As String)
         Me.selEtabsLoadComboName = selEtabsLoadComboName
     End Sub
+    Public Sub setEtabsPointNames(etabsPointNames As List(Of String))
+        Me.etabsPointNames = etabsPointNames
+    End Sub
+    Public Sub setIterNumMax(iterNumMax As Integer)
+        Me.iterNumMax = iterNumMax
+    End Sub
+    Public Sub setConvergenceFactor(convergenceFactor As Double)
+        Me.convergenceFactor = convergenceFactor
+    End Sub
+    Public Sub setStepRun(stepRun As Boolean)
+        Me.stepRun = stepRun
+    End Sub
+
+
+
+    Public Function getEtabsGroupNames() As List(Of String)
+        Return Me.etabsGroupNames
+    End Function
+    Public Function getEtabsLoadComboNames() As List(Of String)
+        Return Me.etabsLoadComboNames
+    End Function
     Public Function getEtabsGroupName() As String
         Return Me.selEtabsGroupName
     End Function
     Public Function getEtabsLoadComboName() As String
         Return Me.selEtabsLoadComboName
     End Function
-
-    Public Sub setEtabsPointNames(etabsPointNames As List(Of String))
-        Me.etabsPointNames = etabsPointNames
-    End Sub
     Public Function getEtabsPointNames() As List(Of String)
         Return Me.etabsPointNames
     End Function
-
     Public Function getIterNumMax() As Integer
         Return Me.iterNumMax
     End Function

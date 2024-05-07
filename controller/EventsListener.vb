@@ -97,7 +97,7 @@ Public Class EventsListener
         'Play Sound Effect
         Me.controller.getSoundManager().play(Sound.CLICKBUTTON)
 
-        Dim jsonFilePath As String = FileManager.getFilePath(Me.view.getViewInputs().ofdJsonFile,
+        Dim jsonFilePath As String = ControllerFileManager.getFilePath(Me.view.getViewInputs().ofdJsonFile,
                                                              "Select Json File", "Json Files|*.json")
         If ((jsonFilePath <> "")) Then
             viewInputsBtnOpenJSONFile.Enabled = False
@@ -110,7 +110,7 @@ Public Class EventsListener
         'Play Sound Effect
         Me.controller.getSoundManager().play(Sound.CLICKBUTTON)
 
-        Dim pDispFilePath As String = FileManager.getFilePath(Me.view.getViewInputs().ofdPDispFile,
+        Dim pDispFilePath As String = ControllerFileManager.getFilePath(Me.view.getViewInputs().ofdPDispFile,
                                                               "Select PDisp File", "PDisp Files|*.pdd")
         If ((pDispFilePath <> "")) Then
             viewInputsBtnOpenPDispFile.Enabled = False

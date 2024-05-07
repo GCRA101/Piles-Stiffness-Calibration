@@ -83,6 +83,7 @@
     <Compile Include="controller\AudioManagerInterface.vb" />
     <Compile Include="controller\ControllerInterface.vb" />
     <Compile Include="controller\EventsListener.vb" />
+    <Compile Include="controller\ControllerFileManager.vb" />
     <Compile Include="model\FileManager.vb" />
     <Compile Include="controller\PSC_Controller.vb" />
     <Compile Include="controller\Sound.vb" />
