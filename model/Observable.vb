@@ -1,14 +1,18 @@
-﻿Public Interface Observable
+﻿
+''' <summary>
+''' 
+''' Interface OBSERVABLE
+''' 
+''' Essential Interface of the Observer Pattern And that, once implemented In the Model,
+''' it allows it To notify all the registered observers As soon As a change occurs In
+''' its own state.
+''' 
+''' </summary>
 
-    ' INTERFACE OBSERVABLE
+Public Interface Observable
 
-    ' Essential interface of the Observer Pattern and that, once implemented in the Model,
-    ' it allows it to notify all the registered observers as soon as a change occurs in
-    ' its own state.
-
-    Sub registerObservers(o As Observer)
+    Sub registerObserver(o As Observer)
     Sub removeObserver(o As Observer)
     Sub notifyObservers()
-
 
 End Interface

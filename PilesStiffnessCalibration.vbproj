@@ -83,10 +83,12 @@
     <Compile Include="controller\AudioManagerInterface.vb" />
     <Compile Include="controller\ControllerInterface.vb" />
     <Compile Include="controller\EventsListener.vb" />
+    <Compile Include="model\FileManager.vb" />
     <Compile Include="controller\PSC_Controller.vb" />
     <Compile Include="controller\Sound.vb" />
     <Compile Include="controller\SoundManager.vb" />
     <Compile Include="controller\SoundPathRetriever.vb" />
+    <Compile Include="model\etabs\Group.vb" />
     <Compile Include="model\IncludePrivateResolver.vb" />
     <Compile Include="model\JSONSerializer.vb" />
     <Compile Include="controller\pdisp\LoadsPuller.vb" />

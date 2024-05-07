@@ -41,7 +41,7 @@ Piles_Stiffness_Calibration
 <member name="T:Piles_Stiffness_Calibration.PSC_Model">
  <summary>
  
- MODEL CLASS
+ Class MODEL
  
  Concrete class and main class of the Model Package.
  The class contains all the main data and methods for the running of the application.
@@ -52,6 +52,29 @@ Piles_Stiffness_Calibration
  - OBSERVER Design Pattern
  - MODEL-VIEW-CONTROLLER Design Pattern
  - SINGLETON Design Pattern
+ - STREAMS
+ 
+ </summary>
+</member>
+<member name="T:Piles_Stiffness_Calibration.Observable">
+ <summary>
+ 
+ Interface OBSERVABLE
+ 
+ Essential Interface of the Observer Pattern And that, once implemented In the Model,
+ it allows it To notify all the registered observers As soon As a change occurs In
+ its own state.
+ 
+ </summary>
+</member>
+<member name="T:Piles_Stiffness_Calibration.Observer">
+ <summary>
+ 
+ Interface OBSERVER
+ 
+ Essential functional interface of the Observer Pattern.
+ Once implemented in the View, it allows it to update itself automatically when 
+ whatever change comes about in the Model. 
  
  </summary>
 </member>

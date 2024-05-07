@@ -79,6 +79,10 @@ Public Class PDispModel
         Return Me.pDispApp
     End Function
 
+    Public Function getFilePath() As String
+        Return Me.filePath
+    End Function
+
 
 
 

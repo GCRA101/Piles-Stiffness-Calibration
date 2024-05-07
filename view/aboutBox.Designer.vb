@@ -18,7 +18,7 @@ Partial Class AboutBox
     Friend WithEvents lblProductName As System.Windows.Forms.Label
     Friend WithEvents lblVersion As System.Windows.Forms.Label
     Friend WithEvents lblCompanyName As System.Windows.Forms.Label
-    Friend WithEvents OKButton As System.Windows.Forms.Button
+    Friend WithEvents btnOK As System.Windows.Forms.Button
     Friend WithEvents lblCopyRight As System.Windows.Forms.Label
 
     'Required by the Windows Form Designer
@@ -35,7 +35,7 @@ Partial Class AboutBox
         Me.lblVersion = New System.Windows.Forms.Label()
         Me.lblCopyRight = New System.Windows.Forms.Label()
         Me.lblCompanyName = New System.Windows.Forms.Label()
-        Me.OKButton = New System.Windows.Forms.Button()
+        Me.btnOK = New System.Windows.Forms.Button()
         Me.panelImage = New System.Windows.Forms.Panel()
         Me.txtDescription = New System.Windows.Forms.RichTextBox()
         Me.TableLayoutPanel.SuspendLayout()
@@ -50,7 +50,7 @@ Partial Class AboutBox
         Me.TableLayoutPanel.Controls.Add(Me.lblVersion, 1, 1)
         Me.TableLayoutPanel.Controls.Add(Me.lblCopyRight, 1, 2)
         Me.TableLayoutPanel.Controls.Add(Me.lblCompanyName, 1, 3)
-        Me.TableLayoutPanel.Controls.Add(Me.OKButton, 1, 5)
+        Me.TableLayoutPanel.Controls.Add(Me.btnOK, 1, 5)
         Me.TableLayoutPanel.Controls.Add(Me.panelImage, 0, 0)
         Me.TableLayoutPanel.Controls.Add(Me.txtDescription, 0, 4)
         Me.TableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill
@@ -118,16 +118,16 @@ Partial Class AboutBox
         Me.lblCompanyName.Text = "Company Name"
         Me.lblCompanyName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
         '
-        'OKButton
+        'btnOK
         '
-        Me.OKButton.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.OKButton.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.OKButton.Location = New System.Drawing.Point(503, 403)
-        Me.OKButton.Margin = New System.Windows.Forms.Padding(4)
-        Me.OKButton.Name = "OKButton"
-        Me.OKButton.Size = New System.Drawing.Size(100, 28)
-        Me.OKButton.TabIndex = 0
-        Me.OKButton.Text = "&OK"
+        Me.btnOK.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btnOK.DialogResult = System.Windows.Forms.DialogResult.Cancel
+        Me.btnOK.Location = New System.Drawing.Point(503, 403)
+        Me.btnOK.Margin = New System.Windows.Forms.Padding(4)
+        Me.btnOK.Name = "btnOK"
+        Me.btnOK.Size = New System.Drawing.Size(100, 28)
+        Me.btnOK.TabIndex = 0
+        Me.btnOK.Text = "&OK"
         '
         'panelImage
         '
@@ -157,7 +157,7 @@ Partial Class AboutBox
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.CancelButton = Me.OKButton
+        Me.CancelButton = Me.btnOK
         Me.ClientSize = New System.Drawing.Size(631, 457)
         Me.Controls.Add(Me.TableLayoutPanel)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog

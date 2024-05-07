@@ -37,7 +37,10 @@ Public Class PSC_View
 	End Sub
 
 	Public Sub createViewInputs()
-		Me.viewInputs = New ViewInputs(Me.controller.getSapModel, Me.controller.getISapPlugIn)
+		Me.viewInputs = New ViewInputs(model, controller)
+		Me.viewInputs.initialize()
+		Me.model.registerObserver(Me.viewInputs)
+		Me.controller.extractEtabsModelData()
 		Me.viewInputs.Show()
 		Me.aboutBox.Close()
 	End Sub
