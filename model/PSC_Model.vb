@@ -38,8 +38,10 @@ Public Class PSC_Model
     Private selEtabsLoadComboName As String
     Private iterNumMax As Integer
     Private convergenceFactor As Double
+    Private pileObjs As List(Of PileObject)
     Private pileObjsQueue As New Queue(Of List(Of PileObject))
     Private ret As Integer
+    Private iterNum As Integer = 0
     Private stepRun As Boolean = False
     Private iterationComplete As Boolean = False
 
@@ -108,11 +110,11 @@ Public Class PSC_Model
 
 
     Public Sub filterPointsByGroup()
-        Me.etabsPointNames.Where(Function(ppName)
-                                     Dim groupNamesNum As Integer, groupNames As String()
-                                     sapModel.PointObj.GetGroupAssign(ppName, groupNamesNum, groupNames)
-                                     Return groupNames.Contains(Me.selEtabsGroupName)
-                                 End Function).ToList()
+        Me.etabsPointNames = Me.etabsPointNames.Where(Function(ppName)
+                                                          Dim groupNamesNum As Integer, groupNames As String()
+                                                          sapModel.PointObj.GetGroupAssign(ppName, groupNamesNum, groupNames)
+                                                          Return groupNames.Contains(Me.selEtabsGroupName)
+                                                      End Function).ToList()
     End Sub
 
     Public Sub setPointRestraints(restraintBools As Boolean())
@@ -138,7 +140,8 @@ Public Class PSC_Model
         Me.sapModel.SetModelIsLocked(False)
 
         Dim startPileObjsList As New List(Of PileObject)
-        startPileObjsList = Me.jsonSerializer.deserialize(jsonFilePath)
+        startPileObjsList = Me.deserialize(jsonFilePath)
+
         Me.etabsPointNames.ToList().ForEach(Function(ppName)
                                                 Dim Kvalues As Double() = startPileObjsList.Where(Function(plObj) (plObj.getName() = ppName)).
                                                                              Single().getStiffness().getValues()
@@ -149,20 +152,19 @@ Public Class PSC_Model
 
     Public Sub runIteration()
 
-        Dim iter As Integer = 0
         Do
             'Save Models
-            sapModel.File.Save(FileManager.setNewFilePath(sapModel.GetModelFilename(True), iter))
-            pDispModel.save(FileManager.setNewFilePath(Me.pDispModel.getFilePath(), iter))
+            sapModel.File.Save(FileManager.setNewFilePath(sapModel.GetModelFilename(True), Me.iterNum))
+            pDispModel.save(FileManager.setNewFilePath(Me.pDispModel.getFilePath(), Me.iterNum))
             'Run Iteration Step
             stepRun = False
-            runIterationStep(iter)
+            runIterationStep(Me.iterNum)
             stepRun = True
             'Notify Observers
             Me.notifyObservers()
             'Increment iter count
-            iter += 1
-        Loop While iter < iterNumMax Or isConvergent(pileObjsQueue) = False
+            Me.iterNum += 1
+        Loop While Me.iterNum < iterNumMax Or isConvergent(pileObjsQueue) = False
 
         Me.iterationComplete = True
         Me.notifyObservers()
@@ -187,120 +189,24 @@ Public Class PSC_Model
         sapModel.Results.Setup.DeselectAllCasesAndCombosForOutput()
         sapModel.Results.Setup.SetComboSelectedForOutput(Me.selEtabsLoadComboName)
 
-        'EXTRACT BASE POINT REACTIONS
-
-        'Get reactions from points and assign them to PileObjs
-        Dim itemTypeElm As ETABSv1.eItemTypeElm
-        Dim numRes As Integer
-        Dim obj, elm, loadCase, stepType As String()
-        Dim stepNum As Double()
-        Dim f1, f2, f3, m1, m2, m3 As Double()
-        Dim f_1, f_2, f_3, m_1, m_2, m_3 As Double
-        Dim ppX, ppY, ppZ As Double
-        Dim ppMatch As Boolean
-
-        Dim pileObjs As List(Of PileObject) = New List(Of PileObject)
-
-        For i = 0 To etabsPointNames.Count - 1 Step 1
-            ret = sapModel.Results.JointReact(etabsPointNames(i), itemTypeElm, numRes, obj, elm, loadCase,
-                                             stepType, stepNum, f1, f2, f3, m1, m2, m3)
-            ret = sapModel.PointObj.GetCoordCartesian(etabsPointNames(i), ppX, ppY, ppZ)
-
-            f_1 = f1.Select(Of Double)(Function(force) (Math.Round(force, 0))).First()
-            f_2 = f2.Select(Of Double)(Function(force) (Math.Round(force, 0))).First()
-            f_3 = f3.Select(Of Double)(Function(force) (Math.Round(force, 0))).First()
-
-            pileObjs.Add(New PileObject(etabsPointNames(i), New PointObject(etabsPointNames(i), ppX, ppY, ppZ),
-                         New PointLoads(New Double() {f_1, f_2, f_3})))
-        Next
-
-
         pDispModel.setVisibility(True)
 
-
-        'UPDATE PDISP LOADS
-
-        Dim rectLoadsPuller As LoadsPuller(Of PDispRectLoad) = New LoadsPuller(Of PDispRectLoad)(pDispModel)
-        Dim loadsPusher As LoadsPusher(Of PDispRectLoad) = New LoadsPusher(Of PDispRectLoad)(pDispModel)
-        Dim pDispRectLoads As List(Of PDispRectLoad) = rectLoadsPuller.pull()
-
-        'Update RectLoads based on new loads from ETABS
-        pDispRectLoads.ForEach(Function(pDispRectLoad)
-                                   Dim ppLoad As Double
-                                   ppLoad = pileObjs.Where(Function(plObj) plObj.getLocation().getName() = pDispRectLoad.getLoad().Name).
-                                                                 Select(Function(plObj) plObj.getLoads().getF3()).
-                                                                 FirstOrDefault()
-                                   If ppLoad <> 0 Then
-                                       ppLoad = ppLoad / (pDispRectLoad.getLoad().Width * pDispRectLoad.getLoad().Length)
-                                       Dim rectLoad As RectLoad
-                                       rectLoad = pDispRectLoad.getLoad()
-                                       rectLoad.Normal = ppLoad
-                                       pDispRectLoad.setLoad(rectLoad)
-                                   End If
-                               End Function)
-
-        'Push updated RectLoads back in PDisp
-        loadsPusher.push(pDispRectLoads, True)
-
-
-        'RUN PDISP ANALYSIS
-
-        'Perform Analysis
+        '1. Initialize/Reset List of PileObject Records for current iteration step
+        Me.pileObjs = New List(Of PileObject)
+        '2. Read Point Reactions from ETABS and assign them to PileObjects
+        readPileObjsForces(Me.pileObjs)
+        '3. Update PDisp Loads based on ETABS reactions
+        updatePDispLoads(Me.pileObjs)
+        '4. Perform Analysis
         pDispModel.analyse()
+        '5. Read Point Displacements from PDisp and assign them to PileObjects
+        readPileObjsDisplacements(Me.pileObjs)
+        '6. Compute Point Stiffnesses and assign them to PileObjects
+        computePileObjsStiffness(Me.pileObjs)
+        '7. Add current list of PileObjects to Queue data structure
+        pileObjsQueue.Enqueue(Me.pileObjs)
 
 
-        'GET PDISP DISPLACEMENTS and COMPUTE SPRING STIFFNESSES
-
-        'Get Disp Point Boussinesq/Mindlin Result
-        Dim pMethod As PDispAnalysisMethod
-        pDispModel.getPDispApp().AnalysisMethod(pMethod)
-
-        Select Case pMethod
-            Case PDispAnalysisMethod.MINDLIN
-                Dim MLDispPoints As List(Of PDispMLDispResult) = New ResultsPuller(Of PDispMLDispResult)(pDispModel).pull()
-                Dim mldpNames As List(Of String) = MLDispPoints.Select(Function(mldp) (mldp.getResult().Name)).ToList()
-                pileObjs.ForEach(Function(plObj)
-                                     If (mldpNames.Contains(plObj.getLocation().getName())) Then
-                                         Dim springName = "Spring_" + plObj.getLocation().getName()
-                                         Dim nameIndex As Integer = mldpNames.IndexOf(plObj.getLocation().getName())
-                                         plObj.setDisplacements(New PointDisplacements(New Double() {
-                                            Math.Round(CDbl(MLDispPoints(nameIndex).getResult().DispX) * 1000, 1),
-                                            Math.Round(CDbl(MLDispPoints(nameIndex).getResult().DispY) * 1000, 1),
-                                            Math.Round(CDbl(MLDispPoints(nameIndex).getResult().DispZ) * 1000, 1)}))
-                                         Dim zStiffness As Double = Math.Round(CDbl(plObj.getLoads().getF3()) / CDbl(plObj.getDisplacements().getU3()), 1)
-                                         Dim stiffnessValues() As Double = {0, 0, zStiffness}
-                                         plObj.setStiffness(New SpringObject(springName, stiffnessValues))
-                                     End If
-                                 End Function)
-            Case PDispAnalysisMethod.BOUSSINESQ
-                Dim BSQDispPoints As List(Of PDispBSQDispResult) = New ResultsPuller(Of PDispBSQDispResult)(pDispModel).pull()
-                Dim bsqdpNames As List(Of String) = BSQDispPoints.Select(Function(bsqdp) (bsqdp.getResult().Name)).ToList()
-                pileObjs.ForEach(Function(plObj)
-                                     If (bsqdpNames.Contains(plObj.getLocation().getName())) Then
-                                         Dim springName = "Spring_" + plObj.getLocation().getName()
-                                         Dim nameIndex As Integer = bsqdpNames.IndexOf(plObj.getLocation().getName())
-                                         plObj.setDisplacements(New PointDisplacements(New Double() {0, 0,
-                                            Math.Round(CDbl(BSQDispPoints(nameIndex).getResult().DispZ) * 1000, 1)}))
-                                         Dim zStiffness As Double = Math.Round(CDbl(plObj.getLoads().getF3()) / CDbl(plObj.getDisplacements().getU3()), 1)
-                                         Dim stiffnessValues() As Double = {0, 0, zStiffness}
-                                         plObj.setStiffness(New SpringObject(springName, stiffnessValues))
-                                     End If
-                                 End Function)
-        End Select
-
-
-        ' ENQUEUE PILE OBJS DATA IN A QUEUE
-        pileObjsQueue.Enqueue(pileObjs)
-
-
-
-        ' SERIALIZE OUTPUTS IN A JSON FILE
-        '1. Sort the PileObjects based on a user-defined Comparator
-        pileObjs.Sort(Function(pileObj1, pileObj2) (pileObj1.getName().CompareTo(pileObj2.getName())))
-        '2. Build the Json File Name depending on number of Iteration
-        Dim jsonFilePath As String = pDispModel.getFilePath() + "PilesObjsDataSet_Iter0" + CStr(iter) + ".json"
-        '3. Serialize the list of Pile Objects
-        jsonSerializer.serialize(pileObjs, jsonFilePath)
 
 
         ' ASSIGN COMPUTED STIFFNESSES TO ETABS BASE POINTS
@@ -344,6 +250,131 @@ Public Class PSC_Model
         Return False
 
     End Function
+
+
+
+    Public Sub readPileObjsForces(pileObjs As List(Of PileObject))
+
+        'EXTRACT BASE POINT REACTIONS
+
+        'Get reactions from points and assign them to PileObjs
+        Dim itemTypeElm As ETABSv1.eItemTypeElm
+        Dim numRes As Integer
+        Dim obj, elm, loadCase, stepType As String()
+        Dim stepNum As Double()
+        Dim f1, f2, f3, m1, m2, m3 As Double()
+        Dim f_1, f_2, f_3, m_1, m_2, m_3 As Double
+        Dim ppX, ppY, ppZ As Double
+
+        For i = 0 To etabsPointNames.Count - 1 Step 1
+            ret = sapModel.Results.JointReact(etabsPointNames(i), itemTypeElm, numRes, obj, elm, loadCase,
+                                             stepType, stepNum, f1, f2, f3, m1, m2, m3)
+            ret = sapModel.PointObj.GetCoordCartesian(etabsPointNames(i), ppX, ppY, ppZ)
+
+            f_1 = f1.Select(Of Double)(Function(force) (Math.Round(force, 0))).First()
+            f_2 = f2.Select(Of Double)(Function(force) (Math.Round(force, 0))).First()
+            f_3 = f3.Select(Of Double)(Function(force) (Math.Round(force, 0))).First()
+
+            pileObjs.Add(New PileObject(etabsPointNames(i), New PointObject(etabsPointNames(i), ppX, ppY, ppZ),
+                         New PointLoads(New Double() {f_1, f_2, f_3})))
+        Next
+
+    End Sub
+
+
+
+    Public Sub readPileObjsDisplacements(pileObjs As List(Of PileObject))
+
+        'GET PDISP DISPLACEMENTS and COMPUTE SPRING STIFFNESSES
+
+        'Get Disp Point Boussinesq/Mindlin Result
+        Dim pMethod As PDispAnalysisMethod
+        pDispModel.getPDispApp().AnalysisMethod(pMethod)
+
+        Select Case pMethod
+            Case PDispAnalysisMethod.MINDLIN
+                Dim MLDispPoints As List(Of PDispMLDispResult) = New ResultsPuller(Of PDispMLDispResult)(pDispModel).pull()
+                Dim mldpNames As List(Of String) = MLDispPoints.Select(Function(mldp) (mldp.getResult().Name)).ToList()
+                pileObjs.ForEach(Function(plObj)
+                                     If (mldpNames.Contains(plObj.getLocation().getName())) Then
+                                         Dim nameIndex As Integer = mldpNames.IndexOf(plObj.getLocation().getName())
+                                         plObj.setDisplacements(New PointDisplacements(New Double() {
+                                            Math.Round(CDbl(MLDispPoints(nameIndex).getResult().DispX) * 1000, 1),
+                                            Math.Round(CDbl(MLDispPoints(nameIndex).getResult().DispY) * 1000, 1),
+                                            Math.Round(CDbl(MLDispPoints(nameIndex).getResult().DispZ) * 1000, 1)}))
+                                     End If
+                                 End Function)
+            Case PDispAnalysisMethod.BOUSSINESQ
+                Dim BSQDispPoints As List(Of PDispBSQDispResult) = New ResultsPuller(Of PDispBSQDispResult)(pDispModel).pull()
+                Dim bsqdpNames As List(Of String) = BSQDispPoints.Select(Function(bsqdp) (bsqdp.getResult().Name)).ToList()
+                pileObjs.ForEach(Function(plObj)
+                                     If (bsqdpNames.Contains(plObj.getLocation().getName())) Then
+                                         Dim nameIndex As Integer = bsqdpNames.IndexOf(plObj.getLocation().getName())
+                                         plObj.setDisplacements(New PointDisplacements(New Double() {0, 0,
+                                            Math.Round(CDbl(BSQDispPoints(nameIndex).getResult().DispZ) * 1000, 1)}))
+                                     End If
+                                 End Function)
+        End Select
+
+    End Sub
+
+    Public Sub computePileObjsStiffness(pileObjs As List(Of PileObject))
+
+        'COMPUTE SPRING STIFFNESSES
+
+        pileObjs.ForEach(Function(plObj)
+                             Dim springName = "Spring_" + plObj.getLocation().getName()
+                             Dim zStiffness As Double = Math.Round(CDbl(plObj.getLoads().getF3()) /
+                                                                   CDbl(plObj.getDisplacements().getU3()), 1)
+                             Dim stiffnessValues() As Double = {0, 0, zStiffness}
+                             plObj.setStiffness(New SpringObject(springName, stiffnessValues))
+                         End Function)
+    End Sub
+
+
+    Public Sub updatePDispLoads(pileObjs As List(Of PileObject))
+
+        'UPDATE PDISP LOADS
+
+        Dim rectLoadsPuller As LoadsPuller(Of PDispRectLoad) = New LoadsPuller(Of PDispRectLoad)(pDispModel)
+        Dim loadsPusher As LoadsPusher(Of PDispRectLoad) = New LoadsPusher(Of PDispRectLoad)(pDispModel)
+        Dim pDispRectLoads As List(Of PDispRectLoad) = rectLoadsPuller.pull()
+
+        'Update RectLoads based on new loads from ETABS
+        pDispRectLoads.ForEach(Function(pDispRectLoad)
+                                   Dim ppLoad As Double
+                                   ppLoad = pileObjs.Where(Function(plObj) plObj.getLocation().getName() = pDispRectLoad.getLoad().Name).
+                                                                 Select(Function(plObj) plObj.getLoads().getF3()).
+                                                                 FirstOrDefault()
+                                   If ppLoad <> 0 Then
+                                       ppLoad = ppLoad / (pDispRectLoad.getLoad().Width * pDispRectLoad.getLoad().Length)
+                                       Dim rectLoad As RectLoad
+                                       rectLoad = pDispRectLoad.getLoad()
+                                       rectLoad.Normal = ppLoad
+                                       pDispRectLoad.setLoad(rectLoad)
+                                   End If
+                               End Function)
+
+        'Push updated RectLoads back in PDisp
+        loadsPusher.push(pDispRectLoads, True)
+
+    End Sub
+
+    Public Sub serialize(pileObjs As List(Of PileObject))
+        ' SERIALIZE OUTPUTS IN A JSON FILE
+        '1. Sort the PileObjects based on a user-defined Comparator
+        pileObjs.Sort(Function(pileObj1, pileObj2) (pileObj1.getName().CompareTo(pileObj2.getName())))
+        '2. Build the Json File Name depending on number of Iteration
+        Dim jsonFilePath As String = pDispModel.getFilePath() + "PilesObjsDataSet_Iter0" + CStr(Me.iterNum) + ".json"
+        '3. Serialize the list of Pile Objects
+        Me.jsonSerializer.serialize(pileObjs, jsonFilePath)
+
+    End Sub
+
+    Public Function deserialize(jsonFilePath As String) As List(Of PileObject)
+        Return Me.jsonSerializer.deserialize(jsonFilePath)
+    End Function
+
 
 
     Public Sub setEtabsGroupNames(etabsGroupNames As List(Of String))
@@ -390,6 +421,9 @@ Public Class PSC_Model
     End Function
     Public Function getIterationComplete() As Boolean
         Return Me.iterationComplete
+    End Function
+    Public Function getPileObjsList() As List(Of PileObject)
+        Return Me.pileObjs
     End Function
 
 End Class

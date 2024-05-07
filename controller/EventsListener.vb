@@ -117,8 +117,12 @@ Public Class EventsListener
     End Sub
 
     Private Sub btnRunIteration_Click(sender As Object, e As EventArgs) Handles viewInputsBtnRunIteration.Click
+
+        Me.controller.getSoundManager().play(Sound.CLICKBUTTON)
+
         Me.controller.processInputData()
         Me.controller.runIteration()
+        Me.controller.serialize()
         Me.controller.terminate()
     End Sub
 

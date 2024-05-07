@@ -27,6 +27,15 @@ Piles_Stiffness_Calibration
   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
 </summary>
 </member>
+<member name="T:Piles_Stiffness_Calibration.AudioManagerInterface">
+ <summary>
+ Interface AUDIOMANAGER
+ 
+Interface that defines the methods that all the concrete classes of 
+type AudioManager have to implement.
+ 
+ </summary>
+</member>
 <member name="T:Piles_Stiffness_Calibration.SoundManager">
  <summary>
  SOUNDSMANAGER

@@ -97,7 +97,7 @@ Public Class PSC_Controller
 	End Sub
 
 	Public Sub serialize() Implements ControllerInterface.serialize
-		Throw New NotImplementedException()
+		Me.model.serialize(Me.model.getPileObjsList())
 	End Sub
 	Public Sub deserialize() Implements ControllerInterface.deserialize
 		Throw New NotImplementedException()
