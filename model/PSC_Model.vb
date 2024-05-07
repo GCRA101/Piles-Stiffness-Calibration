@@ -1,5 +1,6 @@
 ﻿
 Imports ETABSv1
+Imports Newtonsoft.Json
 
 
 Imports pdispauto_20_1
@@ -26,7 +27,7 @@ Public Class PSC_Model
 
     'ATTRIBUTES
     Private Shared instance As PSC_Model
-    Private observers As List(Of Observer) = New List(Of Observer)
+    Private observers As List(Of Observer)
     Private jsonSerializer As JSONSerializer(Of List(Of PileObject))
     Private sapModel As ETABSv1.cSapModel
     Private pDispModel As PDispModel
@@ -39,7 +40,7 @@ Public Class PSC_Model
     Private iterNumMax As Integer
     Private convergenceFactor As Double
     Private pileObjs As List(Of PileObject)
-    Private pileObjsQueue As New Queue(Of List(Of PileObject))
+    Private pileObjsQueue As Queue(Of List(Of PileObject))
     Private ret As Integer
     Private iterNum As Integer = 0
     Private stepRun As Boolean = False
@@ -47,6 +48,9 @@ Public Class PSC_Model
 
     ' CONSTRUCTOR - Private'
     Private Sub New()
+        Me.observers = New List(Of Observer)
+        Me.jsonSerializer = New JSONSerializer(Of List(Of PileObject))
+        Me.pileObjsQueue = New Queue(Of List(Of PileObject))
     End Sub
 
     ' STATIC METHOD .getInstance() '

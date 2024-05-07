@@ -2,32 +2,23 @@
 Imports Newtonsoft.Json
 
 'MAIN FIGURES *************************************
-'Use of SINGLETON PATTERN
 'Use of GENERIC TYPES
 'Use of SERIALIZATION (JSON Format)
 
 Public Class JSONSerializer(Of T)
 
     'ATTRIBUTES
-    Private instance As JsonSerializer
     Private filePath As String
     Private jsonSettings As JsonSerializerSettings
 
     'CONSTRUCTORS
-    Private Sub New()
-        Dim jsonSettings As New JsonSerializerSettings() With {
+    Public Sub New()
+        Me.jsonSettings = New JsonSerializerSettings() With {
             .ContractResolver = New IncludePrivateResolver()}
     End Sub
 
-    'METHODS
 
-    'Get Instance Method - Singleton
-    Public Function getInstance() As JsonSerializer
-        If instance Is Nothing Then
-            instance = New JsonSerializer()
-        End If
-        Return instance
-    End Function
+    'METHODS
 
     'Serialize
     Public Sub serialize(obj As T, jsonFilePath As String)

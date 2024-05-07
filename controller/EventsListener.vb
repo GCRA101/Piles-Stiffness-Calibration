@@ -5,6 +5,7 @@ Imports Piles_Stiffness_Calibration.view
 
 Public Class EventsListener
 
+    'ATTRIBUTES
     Private controller As PSC_Controller
     Private view As PSC_View
     Private WithEvents aboutBoxBtnOk As Windows.Forms.Button
@@ -17,6 +18,7 @@ Public Class EventsListener
     Private WithEvents viewInputsBtnOpenPDispFile As Windows.Forms.Button
     Private WithEvents viewInputsBtnRunIteration As Windows.Forms.Button
 
+    'CONSTRUCTORS
     Public Sub New(controller As PSC_Controller, view As PSC_View)
         Me.controller = controller
         Me.view = view
@@ -39,16 +41,17 @@ Public Class EventsListener
     End Sub
 
     Private Sub btnOk_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles aboutBoxBtnOk.Click
-
+        'Play Sound Effect
         Me.controller.getSoundManager().play(Sound.CLICKBUTTON)
-
+        'Create the View
         view.createViewInputs()
+        'Initialize Components for Events listening
         Me.initializeViewInputs()
     End Sub
 
 
     Private Sub cklbGroups_ItemCheck(sender As Object, e As ItemCheckEventArgs) Handles viewInputsCklbGroups.ItemCheck
-
+        'Play Sound Effect
         Me.controller.getSoundManager().play(Sound.CHECKBOX)
 
         RemoveHandler viewInputsCklbGroups.ItemCheck, AddressOf cklbGroups_ItemCheck
@@ -64,7 +67,7 @@ Public Class EventsListener
     End Sub
 
     Private Sub cklbLoadCombos_ItemCheck(sender As Object, e As ItemCheckEventArgs) Handles viewInputsCklbLoadCombos.ItemCheck
-
+        'Play Sound Effect
         Me.controller.getSoundManager().play(Sound.CHECKBOX)
 
         RemoveHandler viewInputsCklbLoadCombos.ItemCheck, AddressOf cklbLoadCombos_ItemCheck
@@ -80,7 +83,7 @@ Public Class EventsListener
     End Sub
 
     Private Sub rbSpring_CheckedChanged(sender As Object, e As EventArgs) Handles viewInputsRbSpring.CheckedChanged
-
+        'Play Sound Effect
         Me.controller.getSoundManager().play(Sound.CHECKBOX)
 
         If viewInputsRbSpring.Checked Then
@@ -91,7 +94,7 @@ Public Class EventsListener
     End Sub
 
     Private Sub btnOpenJSONFile_Click(sender As Object, e As EventArgs) Handles viewInputsBtnOpenJSONFile.Click
-
+        'Play Sound Effect
         Me.controller.getSoundManager().play(Sound.CLICKBUTTON)
 
         Dim jsonFilePath As String = FileManager.getFilePath(Me.view.getViewInputs().ofdJsonFile,
@@ -104,7 +107,7 @@ Public Class EventsListener
     End Sub
 
     Private Sub btnOpenPDispFile_Click(sender As Object, e As EventArgs) Handles viewInputsBtnOpenPDispFile.Click
-
+        'Play Sound Effect
         Me.controller.getSoundManager().play(Sound.CLICKBUTTON)
 
         Dim pDispFilePath As String = FileManager.getFilePath(Me.view.getViewInputs().ofdPDispFile,
@@ -117,7 +120,7 @@ Public Class EventsListener
     End Sub
 
     Private Sub btnRunIteration_Click(sender As Object, e As EventArgs) Handles viewInputsBtnRunIteration.Click
-
+        'Play Sound Effect
         Me.controller.getSoundManager().play(Sound.CLICKBUTTON)
 
         Me.controller.processInputData()
