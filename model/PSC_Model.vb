@@ -195,7 +195,7 @@ Public Class PSC_Model
         sapModel.Results.Setup.DeselectAllCasesAndCombosForOutput()
         sapModel.Results.Setup.SetComboSelectedForOutput(Me.selEtabsLoadComboName)
 
-        pDispModel.setVisibility(True)
+        pDispModel.setVisibility(False)
 
         '1. Initialize/Reset List of PileObject Records for current iteration step
         Me.pileObjs = New List(Of PileObject)
