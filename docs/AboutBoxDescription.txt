@@ -1,0 +1,30 @@
+DESCRIPTION:
+- ETABS Plugin Application automatic the iterative calibration of pile stiffnesses in 
+  conjunction with Oasys PDisp.
+- The Tool iterates the analysis in the selected ETABS and PDisp models transferring 
+  data between the two until convergence is reached based on user's input criteria.
+  
+ALGORITHM:
+- Base point reactions at piles locations are extracted from the ETABS model 
+  and transferred to the PDisp Model converting them in corresponding soil pressures
+- PDisp Model analysis is run and updated vertical displacements at pile locations
+  are extracted and used to compute the corresponding pile stiffnesses
+- Updated pile stiffnesses are assigned to the base points in the ETABS model and 
+  the analysis is re-run.
+- PDisp and ETABS Models are saved with label named after iteration step number
+- Process continues until convergence is achieved.
+
+UI FEATURES:
+- Windows Form allowing the user to select the following items:
+	- ETABS Group collecting points corresponding to pile locations
+	- ETABS Load Combination used for loads computation
+	- Initial Pile Stiffness Values set to be used
+	- PDisp Model File Location
+	- Maximum Displacement Variation between iteration steps for convergence
+	- Maximum Number of Analysis Iterations
+  
+LIMITATIONS:
+- Pile Point Objects must have the same labels/unique names assigned in both the ETABS
+  and in the PDisp Model.
+- Pile Point Objects in the ETABS Model to be all assigned with the same Group 
+	- Group MUST BE DIFFERENT than the default "All" Group

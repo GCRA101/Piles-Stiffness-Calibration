@@ -1,4 +1,5 @@
 ﻿Imports System.Runtime.Versioning
+Imports ETABSv1
 Imports Newtonsoft.Json.Converters
 
 Public NotInheritable Class SplashScreen
@@ -21,7 +22,7 @@ Public NotInheritable Class SplashScreen
         '  Version control's designtime text to "Version {0}.{1:00}.{2}.{3}" or something similar.  See
         '  String.Format() in Help for more information.
 
-        lblVersion.Text = "Version: " + CStr(My.Application.Info.Version.Major) + CStr(My.Application.Info.Version.Minor)
+        lblVersion.Text = "Version: " + "1.0.0"
 
         'Copyright info
         lblCopyright.Text = "Copyright @ Buro Happold Ltd Inc.2024"

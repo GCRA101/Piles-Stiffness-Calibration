@@ -82,8 +82,10 @@
   <ItemGroup>
     <Compile Include="controller\AudioManagerInterface.vb" />
     <Compile Include="controller\ControllerInterface.vb" />
+    <Compile Include="controller\Document.vb" />
     <Compile Include="controller\EventsListener.vb" />
     <Compile Include="controller\ControllerFileManager.vb" />
+    <Compile Include="controller\FilePathRetriever.vb" />
     <Compile Include="model\FileManager.vb" />
     <Compile Include="controller\PSC_Controller.vb" />
     <Compile Include="controller\Sound.vb" />
@@ -241,6 +243,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="sounds\SPLASHSCREEN.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="docs\AboutBoxDescription.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>

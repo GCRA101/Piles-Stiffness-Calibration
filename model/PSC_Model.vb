@@ -31,6 +31,8 @@ Public Class PSC_Model
     Private jsonSerializer As JSONSerializer(Of List(Of PileObject))
     Private sapModel As ETABSv1.cSapModel
     Private pDispModel As PDispModel
+    Private sapModelInitialPath As String
+    Private pDispModelInitialPath As String
     Private etabsGroupNames As List(Of String)      'TO BE REPLACED WITH ETABS WRAPPING CLASSES !!!
     Private etabsLoadCaseNames As List(Of String)   'TO BE REPLACED WITH ETABS WRAPPING CLASSES !!!
     Private etabsLoadComboNames As List(Of String)  'TO BE REPLACED WITH ETABS WRAPPING CLASSES !!!
@@ -61,6 +63,8 @@ Public Class PSC_Model
         Return instance
     End Function
 
+    ' METHDOS
+
 
     Public Sub registerObserver(o As Observer) Implements Observable.registerObserver
         Me.observers.Add(o)
@@ -83,6 +87,8 @@ Public Class PSC_Model
         Me.selEtabsGroupName = selEtabsGroupName
         Me.iterNumMax = iterNumMax
         Me.convergenceFactor = convergenceFactor
+        Me.sapModelInitialPath = Me.sapModel.GetModelFilename(True)
+        Me.pDispModelInitialPath = Me.pDispModel.getFilePath()
     End Sub
     Public Sub setSapModel(sapModel As ETABSv1.cSapModel)
         Me.sapModel = sapModel
@@ -122,30 +128,30 @@ Public Class PSC_Model
     End Sub
 
     Public Sub setPointRestraints(restraintBools As Boolean())
-
+        'Unlock Etabs Model
         Me.sapModel.SetModelIsLocked(False)
-
+        'Set Point Restraints via Streams...
         Me.etabsPointNames.ForEach(Function(ppName)
                                        Me.sapModel.PointObj.SetRestraint(ppName, restraintBools)
                                    End Function)
     End Sub
 
     Public Sub setPointStiffnessesFromValues(stiffnessValues As Double())
-
+        'Unlock Etabs Model
         Me.sapModel.SetModelIsLocked(False)
-
+        'Set Point Springs via Streams...
         Me.etabsPointNames.ForEach(Function(ppName)
                                        Me.sapModel.PointObj.SetSpring(ppName, stiffnessValues)
                                    End Function)
     End Sub
 
     Public Sub setPointStiffnessesFromJson(jsonFilePath As String)
-
+        'Unlock Etabs Model
         Me.sapModel.SetModelIsLocked(False)
-
+        'Deserialize Json File
         Dim startPileObjsList As New List(Of PileObject)
         startPileObjsList = Me.deserialize(jsonFilePath)
-
+        'Set Point Springs via Streams...
         Me.etabsPointNames.ToList().ForEach(Function(ppName)
                                                 Dim Kvalues As Double() = startPileObjsList.Where(Function(plObj) (plObj.getName() = ppName)).
                                                                              Single().getStiffness().getValues()
@@ -158,8 +164,8 @@ Public Class PSC_Model
 
         Do
             'Save Models
-            sapModel.File.Save(FileManager.setNewFilePath(sapModel.GetModelFilename(True), Me.iterNum))
-            pDispModel.save(FileManager.setNewFilePath(Me.pDispModel.getFilePath(), Me.iterNum))
+            sapModel.File.Save(FileManager.setNewFilePath(Me.sapModelInitialPath, Me.iterNum))
+            pDispModel.save(FileManager.setNewFilePath(Me.pDispModelInitialPath, Me.iterNum))
             'Run Iteration Step
             stepRun = False
             runIterationStep(Me.iterNum)
@@ -379,7 +385,7 @@ Public Class PSC_Model
         '1. Sort the PileObjects based on a user-defined Comparator
         pileObjs.Sort(Function(pileObj1, pileObj2) (pileObj1.getName().CompareTo(pileObj2.getName())))
         '2. Build the Json File Name depending on number of Iteration
-        Dim jsonFilePath As String = pDispModel.getFilePath() + "PilesObjsDataSet_Iter0" + CStr(Me.iterNum) + ".json"
+        Dim jsonFilePath As String = Me.pDispModelInitialPath + "PilesObjsDataSet_Iter0" + CStr(Me.iterNum) + ".json"
         '3. Serialize the list of Pile Objects
         Me.jsonSerializer.serialize(pileObjs, jsonFilePath)
 

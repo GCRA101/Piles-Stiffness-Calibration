@@ -1,4 +1,8 @@
-﻿Imports System.Windows.Forms
+﻿Imports System.Diagnostics.Eventing
+Imports System.IO
+Imports System.Media
+Imports System.Reflection
+Imports System.Windows.Forms
 
 Module ControllerFileManager
 
@@ -18,6 +22,21 @@ Module ControllerFileManager
         End With
 
         Return fileName
+
+    End Function
+
+    Public Function getText(doc As Document) As String
+        Dim resourceName As String = FilePathRetriever.getPath(doc)
+
+        ' Get the stream for the embedded resource
+        Dim stream As Stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(resourceName)
+        If stream Is Nothing Then
+            Throw New FileNotFoundException("The specified resource was not found.", resourceName)
+        End If
+
+        ' Return the text content from the stream
+        Dim reader As New System.IO.StreamReader(stream)
+        Return reader.ReadToEnd()
 
     End Function
 
