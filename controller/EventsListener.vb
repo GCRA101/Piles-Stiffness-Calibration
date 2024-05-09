@@ -123,9 +123,18 @@ Public Class EventsListener
         'Play Sound Effect
         Me.controller.getSoundManager().play(Sound.CLICKBUTTON)
 
-        Me.controller.processInputData()
-        Me.controller.runIteration()
-        Me.controller.terminate()
+        Try
+            Me.controller.processInputData()
+            Me.controller.runIteration()
+            Me.controller.terminate()
+
+        Catch ex As MissingInputsException
+
+            Me.controller.getMissingInputsHandler().execute()
+
+        End Try
+
+
     End Sub
 
     Public Sub viewInputsForm_Closed(sender As Object, e As EventArgs) Handles viewInputsForm.Closed

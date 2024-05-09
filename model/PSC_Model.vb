@@ -81,6 +81,9 @@ Public Class PSC_Model
 
     Public Sub initialize(sapModel As ETABSv1.cSapModel, pdispModel As PDispModel, selEtabsLoadComboName As String,
                           selEtabsGroupName As String, iterNumMax As Integer, convergenceFactor As Double)
+
+        Me.checkInputsData(sapModel, pdispModel, selEtabsLoadComboName, selEtabsGroupName, iterNumMax, convergenceFactor)
+
         Me.sapModel = sapModel
         Me.pDispModel = pdispModel
         Me.selEtabsLoadComboName = selEtabsLoadComboName
@@ -89,11 +92,26 @@ Public Class PSC_Model
         Me.convergenceFactor = convergenceFactor
         Me.sapModelInitialPath = Me.sapModel.GetModelFilename(True)
         Me.pDispModelInitialPath = Me.pDispModel.getFilePath()
+
+
     End Sub
+
+    Private Sub checkInputsData(sapModel As ETABSv1.cSapModel, pdispModel As PDispModel, selEtabsLoadComboName As String,
+                                selEtabsGroupName As String, iterNumMax As Integer, convergenceFactor As Double)
+        If (sapModel Is Nothing) Then Throw New MissingInputsException("ETABS Model is missing/not valid")
+        If (pdispModel Is Nothing) Then Throw New MissingInputsException("PDisp Model is missing/not valid")
+        If (selEtabsGroupName = "") Then Throw New MissingInputsException("ETABS Group Name missing")
+        If (selEtabsLoadComboName = "") Then Throw New MissingInputsException("ETABS Load Combo Name missing")
+        If (iterNumMax < 2) Then Throw New MissingInputsException("Maximum Number of Iterations is too low")
+        If (convergenceFactor < 0) Then Throw New MissingInputsException("Convergence Factor is not valid")
+    End Sub
+
     Public Sub setSapModel(sapModel As ETABSv1.cSapModel)
+        If (sapModel Is Nothing) Then Throw New MissingInputsException("ETABS Model is missing/not valid")
         Me.sapModel = sapModel
     End Sub
     Public Sub setPDispModel(pdispModel As PDispModel)
+        If (pdispModel Is Nothing) Then Throw New MissingInputsException("PDisp Model is missing/not valid")
         Me.pDispModel = pdispModel
     End Sub
 
@@ -162,14 +180,17 @@ Public Class PSC_Model
 
     Public Sub runIteration()
 
+        Me.pDispModel.setVisibility(False)
+
         Do
-            'Save Models
+            'Save ETABS Model
             sapModel.File.Save(FileManager.setNewFilePath(Me.sapModelInitialPath, Me.iterNum))
-            pDispModel.save(FileManager.setNewFilePath(Me.pDispModelInitialPath, Me.iterNum))
             'Run Iteration Step
             stepRun = False
             runIterationStep(Me.iterNum)
             stepRun = True
+            'Save PDisp Model
+            pDispModel.save(FileManager.setNewFilePath(Me.pDispModelInitialPath, Me.iterNum))
             'Serialize DataSet
             Me.serialize(Me.pileObjs)
             'Notify Observers
@@ -200,8 +221,6 @@ Public Class PSC_Model
         'ACTIVATE ONLY LOAD COMBO SELECTED BY THE USER
         sapModel.Results.Setup.DeselectAllCasesAndCombosForOutput()
         sapModel.Results.Setup.SetComboSelectedForOutput(Me.selEtabsLoadComboName)
-
-        pDispModel.setVisibility(False)
 
         '1. Initialize/Reset List of PileObject Records for current iteration step
         Me.pileObjs = New List(Of PileObject)

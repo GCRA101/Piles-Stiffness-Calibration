@@ -3,18 +3,18 @@
 
     'ATTRIBUTES
     Private name As String
-    Private values_MPa As Double()
+    Private values_N_mm As Double()
 
     'CONSTRUCTORS
     'Overloaded 01
     Public Sub New(name As String)
         Me.name = name
-        ReDim values_MPa(5)
+        ReDim values_N_mm(5)
     End Sub
     'Overloaded 02
     Public Sub New(name As String, values As Double())
         Me.New(name)
-        Me.values_MPa = values
+        Me.values_N_mm = values
     End Sub
 
     'METHODS
@@ -24,16 +24,16 @@
         Me.name = name
     End Sub
     Public Sub setValues(values As Double())
-        Me.values_MPa = values
+        Me.values_N_mm = values
     End Sub
     Public Sub setU1(u1 As Double)
-        Me.values_MPa.SetValue(u1, 0)
+        Me.values_N_mm.SetValue(u1, 0)
     End Sub
     Public Sub setU2(u2 As Double)
-        Me.values_MPa.SetValue(u2, 1)
+        Me.values_N_mm.SetValue(u2, 1)
     End Sub
     Public Sub setU3(u3 As Double)
-        Me.values_MPa.SetValue(u3, 2)
+        Me.values_N_mm.SetValue(u3, 2)
     End Sub
 
 
@@ -42,16 +42,16 @@
         Return Me.name
     End Function
     Public Function getValues() As Double()
-        Return Me.values_MPa
+        Return Me.values_N_mm
     End Function
     Public Function getU1() As Double
-        Return Me.values_MPa(0)
+        Return Me.values_N_mm(0)
     End Function
     Public Function getU2() As Double
-        Return Me.values_MPa(1)
+        Return Me.values_N_mm(1)
     End Function
     Public Function getU3() As Double
-        Return Me.values_MPa(2)
+        Return Me.values_N_mm(2)
     End Function
 
 
@@ -65,7 +65,7 @@
         'Determines and returns the Hashcode of the class instance as the number given by the sum 
         'of the name's corresponding hashcode plus the integer sum of the stiffness values u1,u2,u3,r1,r2,r3.
         Dim hash As Integer
-        hash = CInt(Me.values_MPa.Average())
+        hash = CInt(Me.values_N_mm.Average())
         Return hash
     End Function
 
@@ -91,9 +91,9 @@
         ElseIf Me.name.GetHashCode < spObj.GetHashCode Then
             Return -1
         Else
-            If Me.values_MPa.Sum() < spObj.getValues().Sum() Then
+            If Me.values_N_mm.Sum() < spObj.getValues().Sum() Then
                 Return -1
-            ElseIf Me.values_MPa.Sum() > spObj.getValues().Sum() Then
+            ElseIf Me.values_N_mm.Sum() > spObj.getValues().Sum() Then
                 Return 1
             End If
         End If
@@ -119,7 +119,7 @@
 
         '3. Check if all attributes and name of the two objects are equal or not
         If Me.getName = spObj.getName And
-           Me.values_MPa Is spObj.getValues() Then
+           Me.values_N_mm Is spObj.getValues() Then
             Return True
         Else
             Return False

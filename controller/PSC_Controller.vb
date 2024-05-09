@@ -21,14 +21,16 @@ Public Class PSC_Controller
 	'Private TimerListenerInterface turnoTimerListener;
 	'Private UnoListener unoListener;
 	'Private ColorButtonListener colorButtonListener;
-	'//ExceptionHandlers
-	'Private MazzoEsauritoHandler mazzoEsauritoHandler;
+	'ExceptionHandlers
+	Private missingInputsHandler As MissingInputsHandler
+	'EventListeners
 	Private eventsListener As EventsListener
 	'AudioManagers
 	Private soundManager As SoundManager
 	'FilePaths
 	Private jsonFilePath As String
 	Private pDispFilePath As String
+
 	Public Sub New(SapModel As cSapModel, ISapPlugin As cPluginCallback)
 
 		'Save CSI Plugin Objects
@@ -44,14 +46,10 @@ Public Class PSC_Controller
 		Me.view = New PSC_View(Me.model, Me)
 		'Istantiate AudioManagers
 		Me.soundManager = SoundManager.getInstance()
-
 		'Instantiate EventsListener
 		Me.eventsListener = New EventsListener(Me, Me.view)
-
-		'// 4. Creazione ActionListeners
-		'this.creaListeners();
-		'// 5. Creazione ExceptionHandlers
-		'this.creaExceptionHandlers();}
+		'Instantiate ExceptionHandlers
+		Me.createExceptionHandlers()
 	End Sub
 
 
@@ -60,27 +58,33 @@ Public Class PSC_Controller
 		Me.view.createAboutBox()
 		Me.eventsListener.initializeAboutBox()
 	End Sub
+
+	Public Sub createExceptionHandlers()
+		Me.missingInputsHandler = New MissingInputsHandler(Me)
+	End Sub
+
+
 	Public Sub processInputData()
 
 		Dim pdispModel As New PDispModel(pDispFilePath)
-		Me.model.initialize(Me.SapModel, pdispModel,
-							Me.view.getViewInputs().cklbLoadCombos.SelectedItem.ToString(),
-							Me.view.getViewInputs().cklbGroups.SelectedItem.ToString(),
-							CInt(Me.view.getViewInputs().cbIterations.Items(Me.view.getViewInputs().cbIterations.SelectedIndex)),
-							CDbl(Strings.Split(CStr(Me.view.getViewInputs().cbDispVariation.
-							Items(Me.view.getViewInputs().cbDispVariation.SelectedIndex)), "%")(0)) / 100.0)
+			Me.model.initialize(Me.SapModel, pdispModel,
+								Me.view.getViewInputs().cklbLoadCombos.SelectedItem.ToString(),
+								Me.view.getViewInputs().cklbGroups.SelectedItem.ToString(),
+								CInt(Me.view.getViewInputs().cbIterations.Items(Me.view.getViewInputs().cbIterations.SelectedIndex)),
+								CDbl(Strings.Split(CStr(Me.view.getViewInputs().cbDispVariation.
+								Items(Me.view.getViewInputs().cbDispVariation.SelectedIndex)), "%")(0)) / 100.0)
 
-		Me.model.filterPointsByGroup()
+			Me.model.filterPointsByGroup()
 
-		If Me.view.getViewInputs().rbRigid.Checked = True Then
-			Dim restraintBools As Boolean() = {True, True, True, False, False, False}
-			Me.model.setPointRestraints(restraintBools)
-		ElseIf Me.view.getViewInputs().rbSpring.Checked = True Then
-			Dim stiffnessValues As Double() = {0.0, 0.0, CDbl(Me.view.getViewInputs().tbStiffness.Text()), 0.0, 0.0, 0.0}
-			Me.model.setPointStiffnessesFromValues(stiffnessValues)
-		ElseIf Me.view.getViewInputs().rbImportFromFile.Checked = True Then
-			Me.model.setPointStiffnessesFromJson(Me.getJsonFilePath())
-		End If
+			If Me.view.getViewInputs().rbRigid.Checked = True Then
+				Dim restraintBools As Boolean() = {True, True, True, False, False, False}
+				Me.model.setPointRestraints(restraintBools)
+			ElseIf Me.view.getViewInputs().rbSpring.Checked = True Then
+				Dim stiffnessValues As Double() = {0.0, 0.0, CDbl(Me.view.getViewInputs().tbStiffness.Text()), 0.0, 0.0, 0.0}
+				Me.model.setPointStiffnessesFromValues(stiffnessValues)
+			ElseIf Me.view.getViewInputs().rbImportFromFile.Checked = True Then
+				Me.model.setPointStiffnessesFromJson(Me.getJsonFilePath())
+			End If
 
 	End Sub
 	Public Sub runIteration() Implements ControllerInterface.runIteration
@@ -119,6 +123,9 @@ Public Class PSC_Controller
 	Public Sub setEventsListener(eventsListener As EventsListener)
 		Me.eventsListener = eventsListener
 	End Sub
+	Public Sub setMissingInputsHandler(missingInputsHandler As MissingInputsHandler)
+		Me.missingInputsHandler = missingInputsHandler
+	End Sub
 	Public Sub setJsonFilePath(jsonFilePath As String)
 		Me.jsonFilePath = jsonFilePath
 	End Sub
@@ -138,6 +145,9 @@ Public Class PSC_Controller
 	End Function
 	Public Function getEventsListener() As EventsListener
 		Return Me.eventsListener
+	End Function
+	Public Function getMissingInputsHandler() As MissingInputsHandler
+		Return Me.missingInputsHandler
 	End Function
 	Public Function getJsonFilePath() As String
 		Return Me.jsonFilePath

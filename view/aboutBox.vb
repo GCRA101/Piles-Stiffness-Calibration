@@ -13,7 +13,7 @@ Public NotInheritable Class AboutBox
         ' TODO: Customize the application's assembly information in the "Application" pane of the project 
         '    properties dialog (under the "Project" menu).
         Me.lblProductName.Text = "Piles Stiffness Calibration Tool"
-        Me.lblVersion.Text = String.Format("Version {0}", My.Application.Info.Version.ToString)
+        Me.lblVersion.Text = "Version: " + "1.0.0"
         Me.lblCopyRight.Text = "Copyright @ Buro Happold Ltd Inc.2024"
         Me.lblCompanyName.Text = "Buro Happold Ltd"
         'Me.txtDescription.Text = My.Application.Info.Description

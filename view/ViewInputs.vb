@@ -39,14 +39,13 @@ Public Class ViewInputs
         InitializeComponent()
     End Sub
 
-    Private Sub ViewInputs_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-
-    End Sub
 
     Public Sub initialize()
 
         Me.cklbGroups.Items.Clear()
         Me.cklbLoadCombos.Items.Clear()
+
+        Me.rbRigid.Checked = True
 
         For Each comp As Component In gbPDispInputs.Controls
             If CStr(comp.GetType().Name) = "ComboBox" Then

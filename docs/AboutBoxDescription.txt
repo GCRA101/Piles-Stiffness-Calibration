@@ -1,5 +1,5 @@
 DESCRIPTION:
-- ETABS Plugin Application automatic the iterative calibration of pile stiffnesses in 
+- ETABS Plugin Application automating the iterative calibration of pile stiffnesses in 
   conjunction with Oasys PDisp.
 - The Tool iterates the analysis in the selected ETABS and PDisp models transferring 
   data between the two until convergence is reached based on user's input criteria.
