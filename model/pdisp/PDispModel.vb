@@ -1,4 +1,5 @@
-﻿Imports pdispauto_20_1
+﻿Imports System.Runtime.InteropServices
+Imports pdispauto_20_1
 
 Public Class PDispModel
 
@@ -10,17 +11,22 @@ Public Class PDispModel
     ' CONSTRUCTORS ******************************************
     ' Overloaded
     Public Sub New(Optional filePath As String = "")
-        '1. Initialize PDisp Application
-        Me.pDispApp = New pdispauto_20_1.Application
-        '2. Create/Open PDisp Model
-        If filePath = "" Then
-            Me.pDispApp.NewFile()
-        ElseIf filePath.Contains("pdd") Then
-            Me.pDispApp.Open(filePath)
-            Me.filePath = filePath
-        Else
-            Return
-        End If
+        Try
+            '1. Initialize PDisp Application
+            Me.pDispApp = New pdispauto_20_1.Application
+            '2. Create/Open PDisp Model
+            If filePath = "" Then
+                Me.pDispApp.NewFile()
+            ElseIf filePath.Contains("pdd") Then
+                Me.pDispApp.Open(filePath)
+                Me.filePath = filePath
+            Else
+                Return
+            End If
+        Catch ex As COMException
+            Throw New OutOfLicensesException
+        End Try
+
     End Sub
 
 

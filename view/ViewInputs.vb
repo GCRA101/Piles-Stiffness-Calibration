@@ -39,7 +39,6 @@ Public Class ViewInputs
         InitializeComponent()
     End Sub
 
-
     Public Sub initialize()
 
         Me.cklbGroups.Items.Clear()
@@ -55,6 +54,8 @@ Public Class ViewInputs
         Next
 
         tbStiffness.Enabled = False
+        btnOpenJSONFile.Enabled = False
+
         Me.btnOpenPDispFile.Enabled = True
 
     End Sub

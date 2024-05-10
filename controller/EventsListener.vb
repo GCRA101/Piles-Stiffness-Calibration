@@ -1,5 +1,7 @@
 ﻿Imports System.ComponentModel
+Imports System.Runtime.InteropServices
 Imports System.Windows.Forms
+Imports ETABSv1
 Imports Piles_Stiffness_Calibration.model
 Imports Piles_Stiffness_Calibration.view
 
@@ -13,6 +15,7 @@ Public Class EventsListener
     Private WithEvents viewInputsCklbGroups As Windows.Forms.CheckedListBox
     Private WithEvents viewInputsCklbLoadCombos As Windows.Forms.CheckedListBox
     Private WithEvents viewInputsRbSpring As Windows.Forms.RadioButton
+    Private WithEvents viewInputsRbImportFromFile As Windows.Forms.RadioButton
     Private WithEvents viewInputsTbStiffness As Windows.Forms.TextBox
     Private WithEvents viewInputsBtnOpenJSONFile As Windows.Forms.Button
     Private WithEvents viewInputsBtnOpenPDispFile As Windows.Forms.Button
@@ -34,6 +37,7 @@ Public Class EventsListener
         Me.viewInputsCklbGroups = Me.view.getViewInputs().cklbGroups
         Me.viewInputsCklbLoadCombos = Me.view.getViewInputs().cklbLoadCombos
         Me.viewInputsRbSpring = Me.view.getViewInputs().rbSpring
+        Me.viewInputsRbImportFromFile = Me.view.getViewInputs().rbImportFromFile
         Me.viewInputsTbStiffness = Me.view.getViewInputs().tbStiffness
         Me.viewInputsBtnOpenJSONFile = Me.view.getViewInputs().btnOpenJSONFile
         Me.viewInputsBtnOpenPDispFile = Me.view.getViewInputs().btnOpenPDispFile
@@ -93,6 +97,28 @@ Public Class EventsListener
         End If
     End Sub
 
+    Private Sub rbImportFromFile_CheckedChanged(sender As Object, e As EventArgs) Handles viewInputsRbImportFromFile.CheckedChanged
+        'Play Sound Effect
+        Me.controller.getSoundManager().play(Sound.CHECKBOX)
+
+        If viewInputsRbImportFromFile.Checked Then
+            viewInputsBtnOpenJSONFile.Enabled = True
+        Else
+            viewInputsBtnOpenJSONFile.Enabled = False
+        End If
+    End Sub
+
+
+
+    Private Sub tbStiffness_TextChanged(sender As Object, e As EventArgs) Handles viewInputsTbStiffness.TextChanged
+
+        If Not IsNumeric(viewInputsTbStiffness.Text) And viewInputsTbStiffness.Text <> "" Then
+            viewInputsTbStiffness.Text = ""
+        End If
+
+    End Sub
+
+
     Private Sub btnOpenJSONFile_Click(sender As Object, e As EventArgs) Handles viewInputsBtnOpenJSONFile.Click
         'Play Sound Effect
         Me.controller.getSoundManager().play(Sound.CLICKBUTTON)
@@ -128,16 +154,29 @@ Public Class EventsListener
             Me.controller.runIteration()
             Me.controller.terminate()
 
-        Catch ex As MissingInputsException
+        Catch ex1 As OutOfLicensesException
+            MsgBox("No PDisp Licenses are currently available.", vbOKOnly + vbCritical, "WARNING")
+        Catch ex2 As MissingInputsException
+            Me.controller.getMissingInputsHandler().execute(ex2)
 
-            Me.controller.getMissingInputsHandler().execute()
+            'With Me.view.getViewInputs()
+
+            '    If .rbImportFromFile.Checked = True And .ofdJsonFile.FileName = "" Then
+
+            '    End If
+
+            '    If (PDispModel Is Nothing) Then exceptionMessage += "PDisp Model is missing/not valid." + vbNewLine
+            '    If (selEtabsGroupName = "") Then exceptionMessage += "ETABS Group Name missing." + vbNewLine
+            '    If (selEtabsLoadComboName = "") Then exceptionMessage += "ETABS Load Combo Name missing." + vbNewLine
+            '    If (iterNumMax < 2) Then exceptionMessage += "Maximum Number of Iterations is too low." + vbNewLine
+            '    If (convergenceFactor < 0) Then exceptionMessage += "Convergence Factor is not valid."
 
         End Try
 
 
     End Sub
 
-    Public Sub viewInputsForm_Closed(sender As Object, e As EventArgs) Handles viewInputsForm.Closed
+    Private Sub viewInputsForm_Closed(sender As Object, e As EventArgs) Handles viewInputsForm.Closed
         'DISPOSE THE INPUTSFORM
         viewInputsForm.Dispose()
         'MEMORY RELEASE

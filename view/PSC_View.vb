@@ -33,7 +33,7 @@ Public Class PSC_View
 
 	Public Sub createAboutBox()
 		Me.aboutBox = New AboutBox()
-		Me.aboutBox.txtDescription.Text = ControllerFileManager.getText(Document.APP_DESCRIPTION)
+		Me.aboutBox.txtDescription.Text = ControllerFileManager.getDocText(Document.APP_DESCRIPTION)
 		Me.aboutBox.Show()
 	End Sub
 

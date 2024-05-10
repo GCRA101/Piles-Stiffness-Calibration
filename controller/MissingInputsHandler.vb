@@ -1,4 +1,6 @@
-﻿Public Class MissingInputsHandler
+﻿Imports ETABSv1
+
+Public Class MissingInputsHandler
     Inherits ExceptionHandler
 
     'CONSTRUCTOR
@@ -8,12 +10,10 @@
 
     'METHODS
     Public Overrides Sub execute(Optional ex As Exception = Nothing)
-        'Play Sound Effect
-        Me.controller.getSoundManager().play(Sound.WARNING)
 
         If ex IsNot Nothing Then
             Me.message = ex.Message
-            MsgBox(Me.message, vbOKOnly + vbCritical, "WARNING")
+            MsgBox(Me.message, vbOKOnly + vbCritical, "WARNING - MISSING INPUTS")
         End If
 
     End Sub

@@ -4,8 +4,7 @@
     Sub runIteration()
     Sub serialize()
     Sub deserialize()
+    Sub createExceptionHandlers()
     Sub terminate()
-    'Sub createExceptionHandlers()
-
 
 End Interface

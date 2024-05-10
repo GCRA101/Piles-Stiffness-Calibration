@@ -54,6 +54,7 @@ Public Class SoundManager
 		Dim player As New SoundPlayer(stream)
 		player.Play()
 	End Sub
+
 	Private Sub play(filePath As String) Implements AudioManagerInterface.play
 		'Execute this Sub only if the SoundManager is set to active
 		If Me.active = False Then Return

@@ -79,13 +79,13 @@ Public Class PSC_Model
     End Sub
 
 
-    Public Sub initialize(sapModel As ETABSv1.cSapModel, pdispModel As PDispModel, selEtabsLoadComboName As String,
+    Public Sub initialize(sapModel As ETABSv1.cSapModel, pDispFilePath As String, selEtabsLoadComboName As String,
                           selEtabsGroupName As String, iterNumMax As Integer, convergenceFactor As Double)
 
-        Me.checkInputsData(sapModel, pdispModel, selEtabsLoadComboName, selEtabsGroupName, iterNumMax, convergenceFactor)
+        Me.checkInputsData(sapModel, pDispFilePath, selEtabsLoadComboName, selEtabsGroupName, iterNumMax, convergenceFactor)
 
         Me.sapModel = sapModel
-        Me.pDispModel = pdispModel
+        Me.pDispModel = New PDispModel(pDispFilePath)
         Me.selEtabsLoadComboName = selEtabsLoadComboName
         Me.selEtabsGroupName = selEtabsGroupName
         Me.iterNumMax = iterNumMax
@@ -96,14 +96,23 @@ Public Class PSC_Model
 
     End Sub
 
-    Private Sub checkInputsData(sapModel As ETABSv1.cSapModel, pdispModel As PDispModel, selEtabsLoadComboName As String,
+    Private Sub checkInputsData(sapModel As ETABSv1.cSapModel, pDispFilePath As String, selEtabsLoadComboName As String,
                                 selEtabsGroupName As String, iterNumMax As Integer, convergenceFactor As Double)
-        If (sapModel Is Nothing) Then Throw New MissingInputsException("ETABS Model is missing/not valid")
-        If (pdispModel Is Nothing) Then Throw New MissingInputsException("PDisp Model is missing/not valid")
-        If (selEtabsGroupName = "") Then Throw New MissingInputsException("ETABS Group Name missing")
-        If (selEtabsLoadComboName = "") Then Throw New MissingInputsException("ETABS Load Combo Name missing")
-        If (iterNumMax < 2) Then Throw New MissingInputsException("Maximum Number of Iterations is too low")
-        If (convergenceFactor < 0) Then Throw New MissingInputsException("Convergence Factor is not valid")
+
+        Dim exceptionMessage As String = ""
+
+        If (sapModel Is Nothing) Then exceptionMessage += "ETABS Model is missing/not valid." + vbNewLine
+        If pDispFilePath Is Nothing Then
+            exceptionMessage += "PDisp Model is missing." + vbNewLine
+        ElseIf Not pDispFilePath.Contains(".pdd") Then
+            exceptionMessage += "PDisp Model is not valid." + vbNewLine
+        End If
+        If (selEtabsGroupName = "") Then exceptionMessage += "ETABS Group Name missing." + vbNewLine
+        If (selEtabsLoadComboName = "") Then exceptionMessage += "ETABS Load Combo Name missing." + vbNewLine
+        If (iterNumMax < 2) Then exceptionMessage += "Maximum Number of Iterations is too low." + vbNewLine
+        If (convergenceFactor < 0) Then exceptionMessage += "Convergence Factor is not valid."
+
+        If exceptionMessage <> "" Then Throw New MissingInputsException(exceptionMessage)
     End Sub
 
     Public Sub setSapModel(sapModel As ETABSv1.cSapModel)
@@ -146,6 +155,9 @@ Public Class PSC_Model
     End Sub
 
     Public Sub setPointRestraints(restraintBools As Boolean())
+
+        If restraintBools Is Nothing Then Throw New MissingInputsException("Piles Restraint Boolean Arrays missing")
+
         'Unlock Etabs Model
         Me.sapModel.SetModelIsLocked(False)
         'Set Point Restraints via Streams...
@@ -155,6 +167,9 @@ Public Class PSC_Model
     End Sub
 
     Public Sub setPointStiffnessesFromValues(stiffnessValues As Double())
+
+        If stiffnessValues Is Nothing Then Throw New MissingInputsException("Piles Stiffness Value missing")
+
         'Unlock Etabs Model
         Me.sapModel.SetModelIsLocked(False)
         'Set Point Springs via Streams...
@@ -164,6 +179,9 @@ Public Class PSC_Model
     End Sub
 
     Public Sub setPointStiffnessesFromJson(jsonFilePath As String)
+
+        If jsonFilePath = "" Then Throw New MissingInputsException("FilePath to Piles Stiffness JsonFile missing")
+
         'Unlock Etabs Model
         Me.sapModel.SetModelIsLocked(False)
         'Deserialize Json File
@@ -275,7 +293,7 @@ Public Class PSC_Model
 
 
 
-    Public Sub readPileObjsForces(pileObjs As List(Of PileObject))
+    Private Sub readPileObjsForces(pileObjs As List(Of PileObject))
 
         'EXTRACT BASE POINT REACTIONS
 
@@ -305,7 +323,7 @@ Public Class PSC_Model
 
 
 
-    Public Sub readPileObjsDisplacements(pileObjs As List(Of PileObject))
+    Private Sub readPileObjsDisplacements(pileObjs As List(Of PileObject))
 
         'GET PDISP DISPLACEMENTS and COMPUTE SPRING STIFFNESSES
 
@@ -340,7 +358,7 @@ Public Class PSC_Model
 
     End Sub
 
-    Public Sub computePileObjsStiffness(pileObjs As List(Of PileObject))
+    Private Sub computePileObjsStiffness(pileObjs As List(Of PileObject))
 
         'COMPUTE SPRING STIFFNESSES
 
@@ -354,7 +372,7 @@ Public Class PSC_Model
     End Sub
 
 
-    Public Sub updatePDispLoads(pileObjs As List(Of PileObject))
+    Private Sub updatePDispLoads(pileObjs As List(Of PileObject))
 
         'UPDATE PDISP LOADS
 
@@ -383,7 +401,7 @@ Public Class PSC_Model
     End Sub
 
 
-    Public Sub updatePointSprings(pileObjs As List(Of PileObject))
+    Private Sub updatePointSprings(pileObjs As List(Of PileObject))
 
         ' ASSIGN COMPUTED STIFFNESSES TO ETABS BASE POINTS
         Me.sapModel.SetModelIsLocked(False)

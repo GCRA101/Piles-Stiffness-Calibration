@@ -1,8 +1,5 @@
 ﻿Module SoundPathRetriever
 
-    'ATTIBUTES
-    Private sound As Sound
-
     'CONSTRUCTOR
     Sub New()
     End Sub

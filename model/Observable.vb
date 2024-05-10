@@ -3,8 +3,8 @@
 ''' 
 ''' Interface OBSERVABLE
 ''' 
-''' Essential Interface of the Observer Pattern And that, once implemented In the Model,
-''' it allows it To notify all the registered observers As soon As a change occurs In
+''' Essential Interface of the Observer Pattern and that, once implemented in the Model,
+''' it allows it to notify all the registered observers As soon As a change occurs In
 ''' its own state.
 ''' 
 ''' </summary>

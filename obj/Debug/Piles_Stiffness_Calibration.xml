@@ -36,6 +36,29 @@ type AudioManager have to implement.
  
  </summary>
 </member>
+<member name="T:Piles_Stiffness_Calibration.Document">
+ <summary>
+ 
+ ENUMERATION DOCUMENT
+ 
+ Enumeration made from a number of identification constants for different typologies of text document
+ from which to extract text and data to be displayed in the UI of the application.
+ Each Constant is then associated with a specific filepath to the corresponding document.
+ The use of Enum constants allow to hide the filepaths to the user.
+ 
+ </summary>
+</member>
+<member name="T:Piles_Stiffness_Calibration.Sound">
+ <summary>
+ 
+ ENUMERATION SOUND
+ 
+ Enumeration made from a number of identification constants for different typologies of sound.
+ Each Constant is then associated with a specific filepath to the corresponding audio file.
+ The use of Enum constants allow to hide the filepaths to the user.
+ 
+ </summary>
+</member>
 <member name="T:Piles_Stiffness_Calibration.SoundManager">
  <summary>
  SOUNDSMANAGER
@@ -70,8 +93,8 @@ type AudioManager have to implement.
  
  Interface OBSERVABLE
  
- Essential Interface of the Observer Pattern And that, once implemented In the Model,
- it allows it To notify all the registered observers As soon As a change occurs In
+ Essential Interface of the Observer Pattern and that, once implemented in the Model,
+ it allows it to notify all the registered observers As soon As a change occurs In
  its own state.
  
  </summary>

@@ -59,32 +59,45 @@ Public Class PSC_Controller
 		Me.eventsListener.initializeAboutBox()
 	End Sub
 
-	Public Sub createExceptionHandlers()
+	Public Sub createExceptionHandlers() Implements ControllerInterface.createExceptionHandlers
 		Me.missingInputsHandler = New MissingInputsHandler(Me)
 	End Sub
 
 
 	Public Sub processInputData()
 
-		Dim pdispModel As New PDispModel(pDispFilePath)
-			Me.model.initialize(Me.SapModel, pdispModel,
-								Me.view.getViewInputs().cklbLoadCombos.SelectedItem.ToString(),
-								Me.view.getViewInputs().cklbGroups.SelectedItem.ToString(),
-								CInt(Me.view.getViewInputs().cbIterations.Items(Me.view.getViewInputs().cbIterations.SelectedIndex)),
-								CDbl(Strings.Split(CStr(Me.view.getViewInputs().cbDispVariation.
-								Items(Me.view.getViewInputs().cbDispVariation.SelectedIndex)), "%")(0)) / 100.0)
+		Dim selLoadCombo As String
 
-			Me.model.filterPointsByGroup()
+		If Me.view.getViewInputs().cklbLoadCombos.CheckedItems().Count <> 0 Then
+			selLoadCombo = Me.view.getViewInputs().cklbLoadCombos.SelectedItem.ToString()
+		Else
+			selLoadCombo = ""
+		End If
 
-			If Me.view.getViewInputs().rbRigid.Checked = True Then
-				Dim restraintBools As Boolean() = {True, True, True, False, False, False}
-				Me.model.setPointRestraints(restraintBools)
-			ElseIf Me.view.getViewInputs().rbSpring.Checked = True Then
-				Dim stiffnessValues As Double() = {0.0, 0.0, CDbl(Me.view.getViewInputs().tbStiffness.Text()), 0.0, 0.0, 0.0}
-				Me.model.setPointStiffnessesFromValues(stiffnessValues)
-			ElseIf Me.view.getViewInputs().rbImportFromFile.Checked = True Then
-				Me.model.setPointStiffnessesFromJson(Me.getJsonFilePath())
-			End If
+		Dim selGroup As String
+
+		If Me.view.getViewInputs().cklbGroups.CheckedItems().Count <> 0 Then
+			selGroup = Me.view.getViewInputs().cklbGroups.SelectedItem.ToString()
+		Else
+			selGroup = ""
+		End If
+
+		Me.model.initialize(Me.SapModel, pDispFilePath, selLoadCombo, selGroup,
+							CInt(Me.view.getViewInputs().cbIterations.Items(Me.view.getViewInputs().cbIterations.SelectedIndex)),
+							CDbl(Strings.Split(CStr(Me.view.getViewInputs().cbDispVariation.
+							Items(Me.view.getViewInputs().cbDispVariation.SelectedIndex)), "%")(0)) / 100.0)
+
+		Me.model.filterPointsByGroup()
+
+		If Me.view.getViewInputs().rbRigid.Checked = True Then
+			Dim restraintBools As Boolean() = {True, True, True, False, False, False}
+			Me.model.setPointRestraints(restraintBools)
+		ElseIf Me.view.getViewInputs().rbSpring.Checked = True Then
+			Dim stiffnessValues As Double() = {0.0, 0.0, CDbl(Me.view.getViewInputs().tbStiffness.Text()), 0.0, 0.0, 0.0}
+			Me.model.setPointStiffnessesFromValues(stiffnessValues)
+		ElseIf Me.view.getViewInputs().rbImportFromFile.Checked = True Then
+			Me.model.setPointStiffnessesFromJson(Me.getJsonFilePath())
+		End If
 
 	End Sub
 	Public Sub runIteration() Implements ControllerInterface.runIteration
@@ -129,7 +142,7 @@ Public Class PSC_Controller
 	Public Sub setJsonFilePath(jsonFilePath As String)
 		Me.jsonFilePath = jsonFilePath
 	End Sub
-	Public Sub setpDispFilePath(pDispFilePath As String)
+	Public Sub setPDispFilePath(pDispFilePath As String)
 		Me.pDispFilePath = pDispFilePath
 	End Sub
 
@@ -152,7 +165,7 @@ Public Class PSC_Controller
 	Public Function getJsonFilePath() As String
 		Return Me.jsonFilePath
 	End Function
-	Public Function getpDispFilePath() As String
+	Public Function getPDispFilePath() As String
 		Return Me.pDispFilePath
 	End Function
 

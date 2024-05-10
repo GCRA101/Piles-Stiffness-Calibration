@@ -1,8 +1,5 @@
 ﻿Module FilePathRetriever
 
-    'ATTIBUTES
-    Private doc As Document
-
     'CONSTRUCTOR
     Sub New()
     End Sub

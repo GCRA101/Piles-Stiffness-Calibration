@@ -85,7 +85,11 @@
     <Compile Include="controller\Document.vb" />
     <Compile Include="controller\EventsListener.vb" />
     <Compile Include="controller\ControllerFileManager.vb" />
+    <Compile Include="controller\ExceptionHandler.vb" />
+    <Compile Include="controller\ExceptionHandlerInterface.vb" />
     <Compile Include="controller\FilePathRetriever.vb" />
+    <Compile Include="controller\MissingInputsHandler.vb" />
+    <Compile Include="controller\VisualEffects.vb" />
     <Compile Include="model\FileManager.vb" />
     <Compile Include="controller\PSC_Controller.vb" />
     <Compile Include="controller\Sound.vb" />
@@ -94,8 +98,11 @@
     <Compile Include="model\etabs\Group.vb" />
     <Compile Include="model\IncludePrivateResolver.vb" />
     <Compile Include="model\JSONSerializer.vb" />
-    <Compile Include="controller\pdisp\LoadsPuller.vb" />
-    <Compile Include="controller\pdisp\LoadsPusher.vb" />
+    <Compile Include="model\pdisp\LoadsPuller.vb" />
+    <Compile Include="model\pdisp\LoadsPusher.vb" />
+    <Compile Include="model\MissingInputsException.vb" />
+    <Compile Include="model\pdisp\InvalidFilePathException.vb" />
+    <Compile Include="model\pdisp\OutOfLicensesException.vb" />
     <Compile Include="model\PSC_Model.vb" />
     <Compile Include="model\Observable.vb" />
     <Compile Include="model\Observer.vb" />
@@ -132,11 +139,10 @@
     <Compile Include="model\pdisp\PDispBSQLoadResult.vb" />
     <Compile Include="model\pdisp\PDispBSQResult.vb" />
     <Compile Include="model\pdisp\PDispCircLoad.vb" />
-    <Compile Include="controller\pdisp\PDispConnection.vb" />
-    <Compile Include="controller\pdisp\PDispConnector.vb" />
+    <Compile Include="model\pdisp\PDispConnection.vb" />
+    <Compile Include="model\pdisp\PDispConnector.vb" />
     <Compile Include="model\pdisp\PDispData.vb" />
     <Compile Include="model\pdisp\PDispLoad.vb" />
-    <Compile Include="model\pdisp\PDispLoadType.vb" />
     <Compile Include="model\pdisp\PDispMLDispResult.vb" />
     <Compile Include="model\pdisp\PDispMLLoadResult.vb" />
     <Compile Include="model\pdisp\PDispMLResult.vb" />
@@ -144,29 +150,28 @@
     <Compile Include="model\pdisp\PDispPolyLoad.vb" />
     <Compile Include="model\pdisp\PDispRectLoad.vb" />
     <Compile Include="model\pdisp\PDispResult.vb" />
-    <Compile Include="model\pdisp\PDispResultType.vb" />
     <Compile Include="model\etabs\PointDataSet.vb" />
     <Compile Include="model\etabs\PointObj.vb" />
     <Compile Include="model\etabs\PointReactions.vb" />
-    <Compile Include="controller\pdisp\PullBehaviour.vb" />
-    <Compile Include="controller\pdisp\PullBSQDispResults.vb" />
-    <Compile Include="controller\pdisp\PullBSQLoadResults.vb" />
-    <Compile Include="controller\pdisp\PullCircLoads.vb" />
-    <Compile Include="controller\pdisp\PullData.vb" />
-    <Compile Include="controller\pdisp\PullBSQResults.vb" />
-    <Compile Include="controller\pdisp\Puller.vb" />
-    <Compile Include="controller\pdisp\PullMLDispResults.vb" />
-    <Compile Include="controller\pdisp\PullMLLoadResults.vb" />
-    <Compile Include="controller\pdisp\PullMLResults.vb" />
-    <Compile Include="controller\pdisp\PullPolyLoads.vb" />
-    <Compile Include="controller\pdisp\PullRectLoads.vb" />
-    <Compile Include="controller\pdisp\PushBehaviour.vb" />
-    <Compile Include="controller\pdisp\PushCircLoads.vb" />
-    <Compile Include="controller\pdisp\PushData.vb" />
-    <Compile Include="controller\pdisp\Pusher.vb" />
-    <Compile Include="controller\pdisp\PushPolyLoads.vb" />
-    <Compile Include="controller\pdisp\PushRectLoads.vb" />
-    <Compile Include="controller\pdisp\ResultsPuller.vb" />
+    <Compile Include="model\pdisp\PullBehaviour.vb" />
+    <Compile Include="model\pdisp\PullBSQDispResults.vb" />
+    <Compile Include="model\pdisp\PullBSQLoadResults.vb" />
+    <Compile Include="model\pdisp\PullCircLoads.vb" />
+    <Compile Include="model\pdisp\PullData.vb" />
+    <Compile Include="model\pdisp\PullBSQResults.vb" />
+    <Compile Include="model\pdisp\Puller.vb" />
+    <Compile Include="model\pdisp\PullMLDispResults.vb" />
+    <Compile Include="model\pdisp\PullMLLoadResults.vb" />
+    <Compile Include="model\pdisp\PullMLResults.vb" />
+    <Compile Include="model\pdisp\PullPolyLoads.vb" />
+    <Compile Include="model\pdisp\PullRectLoads.vb" />
+    <Compile Include="model\pdisp\PushBehaviour.vb" />
+    <Compile Include="model\pdisp\PushCircLoads.vb" />
+    <Compile Include="model\pdisp\PushData.vb" />
+    <Compile Include="model\pdisp\Pusher.vb" />
+    <Compile Include="model\pdisp\PushPolyLoads.vb" />
+    <Compile Include="model\pdisp\PushRectLoads.vb" />
+    <Compile Include="model\pdisp\ResultsPuller.vb" />
     <Compile Include="model\etabs\SpringProperty.vb" />
     <Compile Include="view\AboutBox.Designer.vb">
       <DependentUpon>AboutBox.vb</DependentUpon>
@@ -197,6 +202,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="view\AboutBox.resx">
       <DependentUpon>AboutBox.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="view\SplashScreen.resx">
       <DependentUpon>SplashScreen.vb</DependentUpon>

@@ -25,7 +25,7 @@ Module ControllerFileManager
 
     End Function
 
-    Public Function getText(doc As Document) As String
+    Public Function getDocText(doc As Document) As String
         Dim resourceName As String = FilePathRetriever.getPath(doc)
 
         ' Get the stream for the embedded resource
