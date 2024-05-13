@@ -42,11 +42,13 @@ Public Class PSC_Model
     Private iterNumMax As Integer
     Private convergenceFactor As Double
     Private pileObjs As List(Of PileObject)
+    Private pileObjsInit As List(Of PileObject)
     Private pileObjsQueue As Queue(Of List(Of PileObject))
     Private ret As Integer
     Private iterNum As Integer = 0
     Private stepRun As Boolean = False
     Private iterationComplete As Boolean = False
+    Private Const fixity As Double = 100000000
 
     ' CONSTRUCTOR - Private'
     Private Sub New()
@@ -250,12 +252,13 @@ Public Class PSC_Model
         pDispModel.analyse()
         '5. Read Point Displacements from PDisp and assign them to PileObjects
         readPileObjsDisplacements(Me.pileObjs)
-        ' CHECK DISPLACEMENTS AGAINST ORIGINAL/1ST STEP DISPLACEMENTS FROM JSON IN HERE !!!!!!!!!!!!!!!!!!
-        '6. Compute Point Stiffnesses and assign them to PileObjects
+        '6 Update the Piles Status based on the 
+        updatePileObjsStatus(Me.pileObjs, Me.pileObjsInit)
+        '7. Compute Point Stiffnesses and assign them to PileObjects
         computePileObjsStiffness(Me.pileObjs)
-        '7. Add current list of PileObjects to Queue data structure
+        '8. Add current list of PileObjects to Queue data structure
         pileObjsQueue.Enqueue(Me.pileObjs)
-        '8. Update Etabs Point Springs
+        '9. Update Etabs Point Springs
         updatePointSprings(Me.pileObjs)
 
 
@@ -324,7 +327,7 @@ Public Class PSC_Model
 
 
 
-    Private Sub readPileObjsDisplacements(pileObjs As List(Of PileObject))
+    Private Sub readPileObjsDisplacements(pileObjs As List(Of PileObject), Optional initPileObjs As List(Of PileObject) = Nothing)
 
         'GET PDISP DISPLACEMENTS and COMPUTE SPRING STIFFNESSES
 
@@ -359,51 +362,44 @@ Public Class PSC_Model
 
     End Sub
 
-    Private Sub computePileObjsStiffness(pileObjs As List(Of PileObject), Optional initPileObjs As List(Of PileObject) = Nothing)
 
-        'COMPUTE SPRING STIFFNESSES
+    Private Sub updatePileObjsStatus(pileObjs As List(Of PileObject), Optional initPileObjs As List(Of PileObject) = Nothing)
 
-        Dim pileObjsDict As Dictionary(Of PileObject, PileObject)
-
-
-        If (initPileObjs IsNot Nothing) Then
+        If initPileObjs IsNot Nothing Then
 
             pileObjs.Sort()
             initPileObjs.Sort()
 
-
-
-            pileObjs.ToDictionary(Function(po)
-                                      Return po
-                                  End Function,
-                                  Function(po)
-                                      If initPileObjs.BinarySearch(po) <> -1 Then
-                                          Return initPileObjs(initPileObjs.BinarySearch(po))
-                                      Else
-                                          Return Nothing
-                                      End If
-                                  End Function)
-
+            pileObjs.ForEach(Sub(po)
+                                 If initPileObjs.BinarySearch(po) <> -1 And
+                                    po.getDisplacements.getU3() < initPileObjs(initPileObjs.BinarySearch(po)).getDisplacements.getU3() Then
+                                     po.setStatus(PileStatus.UNLOADED)
+                                 Else
+                                     po.setStatus(PileStatus.LOADED)
+                                 End If
+                             End Sub)
+        Else
+            pileObjs.ForEach(Sub(po) po.setStatus(PileStatus.LOADED))
         End If
+    End Sub
 
+    Private Sub computePileObjsStiffness(pileObjs As List(Of PileObject))
+
+        'COMPUTE SPRING STIFFNESSES
 
         pileObjs.ForEach(Function(plObj)
-                                 Dim springName = "Spring_" + plObj.getLocation().getName()
-                                 Dim zStiffness As Double
-                                 If initPileObjs Is Nothing Then
-                                     zStiffness = Math.Round(CDbl(plObj.getLoads().getF3()) /
-                                                     CDbl(plObj.getDisplacements().getU3()), 1)
-                                 Else
-
-                                     zStiffness = Math.Round(CDbl(plObj.getLoads().getF3()) /
-                                                     CDbl(plObj.getDisplacements().getU3()), 1)
-
-                                 End If
-
-                                 Dim stiffnessValues() As Double = {0, 0, zStiffness}
-                                 plObj.setStiffness(New SpringObject(springName, stiffnessValues))
-                             End Function)
-            E
+                             Dim springName = "Spring_" + plObj.getLocation().getName()
+                             Dim zStiffness As Double
+                             If plObj.getStatus = PileStatus.LOADED Then
+                                 zStiffness = Math.Round(CDbl(plObj.getLoads().getF3()) /
+                                                         CDbl(plObj.getDisplacements().getU3()), 1)
+                             Else
+                                 zStiffness = fixity
+                             End If
+                             Dim stiffnessValues() As Double = {0, 0, zStiffness}
+                             plObj.setStiffness(New SpringObject(springName, stiffnessValues))
+                         End Function)
+        E
     End Sub
 
 
@@ -468,7 +464,12 @@ Public Class PSC_Model
     End Function
 
 
-
+    Public Sub setPileObjs(pileObjs As List(Of PileObject))
+        Me.pileObjs = pileObjs
+    End Sub
+    Public Sub setPileObjsInit(pileObjsInit As List(Of PileObject))
+        Me.pileObjsInit = pileObjsInit
+    End Sub
     Public Sub setEtabsGroupNames(etabsGroupNames As List(Of String))
         Me.etabsGroupNames = etabsGroupNames
     End Sub
@@ -495,7 +496,12 @@ Public Class PSC_Model
     End Sub
 
 
-
+    Public Function getPileObjs() As List(Of PileObject)
+        Return Me.pileObjs
+    End Function
+    Public Function getPileObjsInit() As List(Of PileObject)
+        Return Me.pileObjsInit
+    End Function
     Public Function getEtabsGroupNames() As List(Of String)
         Return Me.etabsGroupNames
     End Function
