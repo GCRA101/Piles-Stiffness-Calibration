@@ -4,6 +4,7 @@
     'ATTRIBUTES
     Private name As String
     Private location As PointObject
+    Private status As PileStatus
     Private loads As PointLoads
     Private displacements As PointDisplacements
     Private stiffness As SpringObject
@@ -35,6 +36,9 @@
     Public Sub setLocation(location As PointObject)
         Me.location = location
     End Sub
+    Public Sub setStatus(status As PileStatus)
+        Me.status = status
+    End Sub
     Public Sub setLoads(loads As PointLoads)
         Me.loads = loads
     End Sub
@@ -57,6 +61,9 @@
     End Function
     Public Function getLocation() As PointObject
         Return Me.location
+    End Function
+    Public Function getStatus() As PileStatus
+        Return Me.status
     End Function
     Public Function getLoads() As PointLoads
         Return Me.loads

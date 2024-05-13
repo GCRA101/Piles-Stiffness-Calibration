@@ -238,9 +238,7 @@
   <ItemGroup>
     <EmbeddedResource Include="Icons\PluginIcon.ico" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="controller\etabs\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <EmbeddedResource Include="sounds\CHECKBOX.wav" />
     <EmbeddedResource Include="sounds\ENDITERATION.wav" />

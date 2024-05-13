@@ -1,8 +1,8 @@
 ﻿Imports pdispauto_20_1
 
 Public Class PullBSQLoadResults
-    Inherits PullBSQResults
-    Implements PullData
+    Inherits PullBSQResults(Of PDispBSQLoadResult)
+    Implements PullData(Of PDispBSQLoadResult)
 
     'CONSTRUCTOR
     Public Sub New(pDispModel As PDispModel)

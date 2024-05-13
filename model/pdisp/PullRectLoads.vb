@@ -2,7 +2,7 @@
 Imports pdispauto_20_1
 
 Public Class PullRectLoads
-    Inherits PullBehaviour
+    Inherits PullBehaviour(Of PDispRectLoad)
 
     'CONSTRUCTOR
     Public Sub New(pDispModel As PDispModel)
@@ -10,7 +10,7 @@ Public Class PullRectLoads
     End Sub
 
     'METHODS
-    Public Function pull() As List(Of PDispRectLoad)
+    Public Overrides Function pull() As List(Of PDispRectLoad)
 
         '1. Get Number of Results
         Dim numLoads As Short

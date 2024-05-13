@@ -1,7 +1,7 @@
 ﻿Imports pdispauto_20_1
 
 Public Class PullPolyLoads
-    Inherits PullBehaviour
+    Inherits PullBehaviour(Of PDispPolyLoad)
 
     'CONSTRUCTOR
     Public Sub New(pDispModel As PDispModel)
@@ -9,7 +9,7 @@ Public Class PullPolyLoads
     End Sub
 
     'METHODS
-    Public Function pull() As List(Of PDispPolyLoad)
+    Public Overrides Function pull() As List(Of PDispPolyLoad)
 
         '1. Get Number of Results
         Dim numLoads As Short

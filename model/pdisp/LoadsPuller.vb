@@ -1,5 +1,5 @@
 ﻿Public Class LoadsPuller(Of T As PDispLoad)
-    Inherits Puller
+    Inherits Puller(Of T)
 
     'ATTRIBUTES
     'All protected attributes inherited from the superclass

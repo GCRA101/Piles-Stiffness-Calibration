@@ -1,7 +1,7 @@
 ﻿Imports pdispauto_20_1
 
-Public Class PullBSQResults
-    Inherits PullBehaviour
+Public Class PullBSQResults(Of T As PDispData)
+    Inherits PullBehaviour(Of T)
 
     'CONSTRUCTOR
     Public Sub New(pDispModel As PDispModel)

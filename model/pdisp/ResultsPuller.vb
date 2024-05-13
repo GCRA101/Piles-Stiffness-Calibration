@@ -1,5 +1,5 @@
 ﻿Public Class ResultsPuller(Of T As PDispResult)
-    Inherits Puller
+    Inherits Puller(Of T)
 
     'ATTRIBUTES
     'All protected attributes inherited from the superclass

@@ -1,8 +1,8 @@
 ﻿Imports pdispauto_20_1
 
 Public Class PullBSQDispResults
-    Inherits PullBSQResults
-    Implements PullData
+    Inherits PullBSQResults(Of PDispBSQDispResult)
+    Implements PullData(Of PDispBSQDispResult)
 
     'CONSTRUCTOR
     Public Sub New(pDispModel As PDispModel)
@@ -11,7 +11,7 @@ Public Class PullBSQDispResults
 
 
     'METHODS
-    Public Function pull() As List(Of PDispBSQDispResult)
+    Public Overrides Function pull() As List(Of PDispBSQDispResult)
 
         '1. Get Number of Results
         Dim numResults As Short

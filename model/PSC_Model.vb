@@ -250,6 +250,7 @@ Public Class PSC_Model
         pDispModel.analyse()
         '5. Read Point Displacements from PDisp and assign them to PileObjects
         readPileObjsDisplacements(Me.pileObjs)
+        ' CHECK DISPLACEMENTS AGAINST ORIGINAL/1ST STEP DISPLACEMENTS FROM JSON IN HERE !!!!!!!!!!!!!!!!!!
         '6. Compute Point Stiffnesses and assign them to PileObjects
         computePileObjsStiffness(Me.pileObjs)
         '7. Add current list of PileObjects to Queue data structure
@@ -358,17 +359,51 @@ Public Class PSC_Model
 
     End Sub
 
-    Private Sub computePileObjsStiffness(pileObjs As List(Of PileObject))
+    Private Sub computePileObjsStiffness(pileObjs As List(Of PileObject), Optional initPileObjs As List(Of PileObject) = Nothing)
 
         'COMPUTE SPRING STIFFNESSES
 
+        Dim pileObjsDict As Dictionary(Of PileObject, PileObject)
+
+
+        If (initPileObjs IsNot Nothing) Then
+
+            pileObjs.Sort()
+            initPileObjs.Sort()
+
+
+
+            pileObjs.ToDictionary(Function(po)
+                                      Return po
+                                  End Function,
+                                  Function(po)
+                                      If initPileObjs.BinarySearch(po) <> -1 Then
+                                          Return initPileObjs(initPileObjs.BinarySearch(po))
+                                      Else
+                                          Return Nothing
+                                      End If
+                                  End Function)
+
+        End If
+
+
         pileObjs.ForEach(Function(plObj)
-                             Dim springName = "Spring_" + plObj.getLocation().getName()
-                             Dim zStiffness As Double = Math.Round(CDbl(plObj.getLoads().getF3()) /
-                                                                   CDbl(plObj.getDisplacements().getU3()), 1)
-                             Dim stiffnessValues() As Double = {0, 0, zStiffness}
-                             plObj.setStiffness(New SpringObject(springName, stiffnessValues))
-                         End Function)
+                                 Dim springName = "Spring_" + plObj.getLocation().getName()
+                                 Dim zStiffness As Double
+                                 If initPileObjs Is Nothing Then
+                                     zStiffness = Math.Round(CDbl(plObj.getLoads().getF3()) /
+                                                     CDbl(plObj.getDisplacements().getU3()), 1)
+                                 Else
+
+                                     zStiffness = Math.Round(CDbl(plObj.getLoads().getF3()) /
+                                                     CDbl(plObj.getDisplacements().getU3()), 1)
+
+                                 End If
+
+                                 Dim stiffnessValues() As Double = {0, 0, zStiffness}
+                                 plObj.setStiffness(New SpringObject(springName, stiffnessValues))
+                             End Function)
+            E
     End Sub
 
 

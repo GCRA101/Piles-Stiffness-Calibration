@@ -158,19 +158,6 @@ Public Class EventsListener
             MsgBox("No PDisp Licenses are currently available.", vbOKOnly + vbCritical, "WARNING")
         Catch ex2 As MissingInputsException
             Me.controller.getMissingInputsHandler().execute(ex2)
-
-            'With Me.view.getViewInputs()
-
-            '    If .rbImportFromFile.Checked = True And .ofdJsonFile.FileName = "" Then
-
-            '    End If
-
-            '    If (PDispModel Is Nothing) Then exceptionMessage += "PDisp Model is missing/not valid." + vbNewLine
-            '    If (selEtabsGroupName = "") Then exceptionMessage += "ETABS Group Name missing." + vbNewLine
-            '    If (selEtabsLoadComboName = "") Then exceptionMessage += "ETABS Load Combo Name missing." + vbNewLine
-            '    If (iterNumMax < 2) Then exceptionMessage += "Maximum Number of Iterations is too low." + vbNewLine
-            '    If (convergenceFactor < 0) Then exceptionMessage += "Convergence Factor is not valid."
-
         End Try
 
 
