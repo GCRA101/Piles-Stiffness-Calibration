@@ -2,6 +2,26 @@
 Imports ETABSv1
 Imports Newtonsoft.Json
 
+
+''' <summary>
+''' 
+''' PSC_Controller Concrete Class
+''' 
+''' <remarks>
+''' <para> Main class of the Controller Package. </para>
+''' <para> It allows the View to communicate with the Model via the MVC Pattern. </para>
+''' 
+''' <para> Desing Patterns: 
+''' - MODEL-VIEW-CONTROLLER
+''' 
+''' <para> Programming Techniques: 
+''' - STREAMS </para>
+''' 
+''' </remarks>
+''' 
+''' </summary>
+
+
 Public Class PSC_Controller
 	Implements ControllerInterface
 
@@ -12,15 +32,6 @@ Public Class PSC_Controller
 	'References to CSI Plugin Objects
 	Protected SapModel As cSapModel
 	Protected ISapPlugin As cPluginCallback
-	'//ActionListeners
-	'Private CaricaProfiloListener caricaProfiloListener;
-	'Private GiocaPartitaListener giocaPartitaListener;
-	'Private CardsMouseListener cardsMouseListener;
-	'Private PassaTurnoListener passaTurnoListener;
-	'Private PescaCartaListener pescaCartaListener;
-	'Private TimerListenerInterface turnoTimerListener;
-	'Private UnoListener unoListener;
-	'Private ColorButtonListener colorButtonListener;
 	'ExceptionHandlers
 	Private missingInputsHandler As MissingInputsHandler
 	'EventListeners
@@ -98,6 +109,7 @@ Public Class PSC_Controller
 			Me.model.setPointStiffnessesFromValues(stiffnessValues)
 		ElseIf Me.view.getViewInputs().rbImportFromFile.Checked = True Then
 			Me.model.setPointStiffnessesFromJson(Me.getJsonFilePath())
+			Me.model.setPileObjsInit(Me.model.deserialize(Me.getJsonFilePath))
 		End If
 
 	End Sub

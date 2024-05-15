@@ -103,12 +103,13 @@
     <Compile Include="model\MissingInputsException.vb" />
     <Compile Include="model\pdisp\InvalidFilePathException.vb" />
     <Compile Include="model\pdisp\OutOfLicensesException.vb" />
+    <Compile Include="model\physical\PileStatus.vb" />
     <Compile Include="model\PSC_Model.vb" />
     <Compile Include="model\Observable.vb" />
     <Compile Include="model\Observer.vb" />
     <Compile Include="model\pdisp\PDispAnalysisMethod.vb" />
-    <Compile Include="model\physical\Color.vb" />
-    <Compile Include="model\physical\ColorInterface.vb" />
+    <Compile Include="model\etabs\Color.vb" />
+    <Compile Include="model\etabs\ColorInterface.vb" />
     <Compile Include="Plugin\cPlugin.vb" />
     <Compile Include="model\etabs\ETABSData.vb" />
     <Compile Include="model\etabs\ETABSProperty.vb" />

@@ -39,6 +39,10 @@ Public Class ViewInputs
         InitializeComponent()
     End Sub
 
+    Private Sub lblInitialStiffness_Click(sender As Object, e As EventArgs) Handles lblInitialStiffness.Click
+
+    End Sub
+
     Public Sub initialize()
 
         Me.cklbGroups.Items.Clear()

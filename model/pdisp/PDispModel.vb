@@ -42,10 +42,10 @@ Public Class PDispModel
         End If
     End Sub
 
-    Public Sub analyse(Optional analysisMethod As PDispAnalysisMethod = Nothing)
+    Public Sub analyse(Optional analysisMethod As PDispAnalysisMethod = PDispAnalysisMethod.PRESET)
 
         '1. Delete previous results
-        Me.pDispApp.Delete()
+        'Me.pDispApp.Delete()
 
         '2. Set up analysis method, if specified
         If analysisMethod = PDispAnalysisMethod.MINDLIN Then

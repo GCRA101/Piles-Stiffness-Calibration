@@ -73,18 +73,23 @@ type AudioManager have to implement.
 <member name="T:Piles_Stiffness_Calibration.PSC_Model">
  <summary>
  
- Class MODEL
+ PSC_Model Concrete Class
  
- Concrete class and main class of the Model Package.
- The class contains all the main data and methods for the running of the application.
+ <remarks>
+ <para> Concrete class and main class of the Model Package. </para>
+ <para> The class contains all the main data and methods for the running of the application.
  The model is updated based on the actions of the user in the View via the MVC Design Pattern while the View
- is updated based on the changes of the Model via the OBSERVER Design Pattern.
+ is updated based on the changes of the Model via the OBSERVER Design Pattern. </para>
  
- Specific Techniques: 
- - OBSERVER Design Pattern
- - MODEL-VIEW-CONTROLLER Design Pattern
- - SINGLETON Design Pattern
- - STREAMS
+ <para> Desing Patterns: 
+ - OBSERVER
+ - MODEL-VIEW-CONTROLLER
+ - SINGLETON </para>
+ 
+ <para> Programming Techniques: 
+ - STREAMS </para>
+ 
+ </remarks>
  
  </summary>
 </member>

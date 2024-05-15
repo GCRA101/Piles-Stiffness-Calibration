@@ -2,5 +2,6 @@
 
     MINDLIN
     BOUSSINESQ
+    PRESET
 
 End Enum

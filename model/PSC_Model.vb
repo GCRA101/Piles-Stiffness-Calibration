@@ -7,18 +7,23 @@ Imports pdispauto_20_1
 
 ''' <summary>
 ''' 
-''' Class MODEL
+''' PSC_Model Concrete Class
 ''' 
-''' Concrete class and main class of the Model Package.
-''' The class contains all the main data and methods for the running of the application.
+''' <remarks>
+''' <para> Concrete class and main class of the Model Package. </para>
+''' <para> The class contains all the main data and methods for the running of the application.
 ''' The model is updated based on the actions of the user in the View via the MVC Design Pattern while the View
-''' is updated based on the changes of the Model via the OBSERVER Design Pattern.
+''' is updated based on the changes of the Model via the OBSERVER Design Pattern. </para>
 ''' 
-''' Specific Techniques: 
-''' - OBSERVER Design Pattern
-''' - MODEL-VIEW-CONTROLLER Design Pattern
-''' - SINGLETON Design Pattern
-''' - STREAMS
+''' <para> Desing Patterns: 
+''' - OBSERVER
+''' - MODEL-VIEW-CONTROLLER
+''' - SINGLETON </para>
+''' 
+''' <para> Programming Techniques: 
+''' - STREAMS </para>
+''' 
+''' </remarks>
 ''' 
 ''' </summary>
 
@@ -66,8 +71,6 @@ Public Class PSC_Model
     End Function
 
     ' METHDOS
-
-
     Public Sub registerObserver(o As Observer) Implements Observable.registerObserver
         Me.observers.Add(o)
     End Sub
@@ -327,7 +330,7 @@ Public Class PSC_Model
 
 
 
-    Private Sub readPileObjsDisplacements(pileObjs As List(Of PileObject), Optional initPileObjs As List(Of PileObject) = Nothing)
+    Private Sub readPileObjsDisplacements(pileObjs As List(Of PileObject))
 
         'GET PDISP DISPLACEMENTS and COMPUTE SPRING STIFFNESSES
 
@@ -359,6 +362,9 @@ Public Class PSC_Model
                                      End If
                                  End Function)
         End Select
+
+        'Remove all pileObjs with Null Displacements as they are not present in the PDispModel
+        Me.pileObjs = Me.pileObjs.Where(Function(po) po.getDisplacements() IsNot Nothing).ToList()
 
     End Sub
 
@@ -399,7 +405,6 @@ Public Class PSC_Model
                              Dim stiffnessValues() As Double = {0, 0, zStiffness}
                              plObj.setStiffness(New SpringObject(springName, stiffnessValues))
                          End Function)
-        E
     End Sub
 
 

@@ -298,9 +298,9 @@ Partial Class ViewInputs
         Me.lblInitialStiffness.Location = New System.Drawing.Point(9, 286)
         Me.lblInitialStiffness.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.lblInitialStiffness.Name = "lblInitialStiffness"
-        Me.lblInitialStiffness.Size = New System.Drawing.Size(230, 17)
+        Me.lblInitialStiffness.Size = New System.Drawing.Size(248, 17)
         Me.lblInitialStiffness.TabIndex = 42
-        Me.lblInitialStiffness.Text = "INITIAL PILES STIFFNESS ASSUMPTION"
+        Me.lblInitialStiffness.Text = "PILES STIFFNESS BOUNDARY CONDITION"
         '
         'rbImportFromFile
         '
