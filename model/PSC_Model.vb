@@ -270,29 +270,34 @@ Public Class PSC_Model
 
     Public Function isConvergent(pileObjsQueue As Queue(Of List(Of PileObject))) As Boolean
 
-        '1. INITIALIZE AUXILIARY LIST
-        Dim plΔKList As List(Of Double) = New List(Of Double)
+        If pileObjsQueue.Count > 1 Then
 
-        '2. SORT THE FIRST/LAST LISTS OF THE QUEUE BASED ON THE ADDIGNED COMPARATOR
-        pileObjsQueue.First().Sort()
-        pileObjsQueue.Last().Sort()
+            '1. INITIALIZE AUXILIARY LIST
+            Dim plΔKList As List(Of Double) = New List(Of Double)
 
-        '3. CALCULATE THE RATE INCREASE/DECREASE OF STIFFNESS FOR EACH PILE
-        plΔKList = pileObjsQueue.Last().Select(Function(plObj)
-                                                   'Search 
-                                                   Dim i As Integer = pileObjsQueue.First().BinarySearch(plObj)
-                                                   Dim Kprev As Double = pileObjsQueue.First()(i).getStiffness().getU3()
-                                                   Dim Knext As Double = plObj.getStiffness().getU3()
-                                                   Dim ΔK As Double = Math.Abs(Knext - Kprev) / Kprev
-                                                   Return ΔK
-                                               End Function).ToList()
+            '2. SORT THE FIRST/LAST LISTS OF THE QUEUE BASED ON THE ADDIGNED COMPARATOR
+            pileObjsQueue.First().Sort()
+            pileObjsQueue.Last().Sort()
 
-        '4. DEQUEUE FIRST/PREVIOUS LIST OF THE QUEUE
-        pileObjsQueue.Dequeue()
+            '3. CALCULATE THE RATE INCREASE/DECREASE OF STIFFNESS FOR EACH PILE
+            plΔKList = pileObjsQueue.Last().Select(Function(plObj)
+                                                       'Search 
+                                                       Dim i As Integer = pileObjsQueue.First().BinarySearch(plObj)
+                                                       Dim Kprev As Double = pileObjsQueue.First()(i).getStiffness().getU3()
+                                                       Dim Knext As Double = plObj.getStiffness().getU3()
+                                                       Dim ΔK As Double = Math.Abs(Knext - Kprev) / Kprev
+                                                       Return ΔK
+                                                   End Function).ToList()
 
-        '5. RETURN BOOL
-        ' True if the max increase/decrease is smaller than the convergenceFactor...
-        If (plΔKList.Max() < convergenceFactor) Then Return True
+            '4. DEQUEUE FIRST/PREVIOUS LIST OF THE QUEUE
+            pileObjsQueue.Dequeue()
+
+            '5. RETURN BOOL
+            ' True if the max increase/decrease is smaller than the convergenceFactor...
+            If (plΔKList.Max() < convergenceFactor) Then Return True
+
+        End If
+
         ' False if not...
         Return False
 
@@ -362,6 +367,13 @@ Public Class PSC_Model
                                      End If
                                  End Function)
         End Select
+
+        'Count the number of PileObjs that have been assigned with Null PDispDisplacements
+        Dim numMissingPiles As Double = Me.pileObjs.Sum(Function(po)
+                                                            If po.getDisplacements Is Nothing Then
+                                                                Return 1.0
+                                                            End If
+                                                        End Function)
 
         'Remove all pileObjs with Null Displacements as they are not present in the PDispModel
         Me.pileObjs = Me.pileObjs.Where(Function(po) po.getDisplacements() IsNot Nothing).ToList()
