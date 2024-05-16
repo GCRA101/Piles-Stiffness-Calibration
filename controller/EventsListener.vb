@@ -158,6 +158,8 @@ Public Class EventsListener
             MsgBox("No PDisp Licenses are currently available.", vbOKOnly + vbCritical, "WARNING")
         Catch ex2 As MissingInputsException
             Me.controller.getMissingInputsHandler().execute(ex2)
+        Catch ex3 As ExcessiveΔKException
+            Me.controller.getExcessiveΔKHandler().execute(ex3)
         End Try
 
 

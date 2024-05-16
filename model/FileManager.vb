@@ -10,7 +10,7 @@ Module FileManager
         Dim sep() As Char = {"/", "\", "//"}
 
         With dateObj
-            newFilePath = filePath.Remove(filePath.IndexOf(filePath.Split(sep).Last())) + "PSI" +
+            newFilePath = filePath.Remove(filePath.IndexOf(filePath.Split(sep).Last())) + "PSCT" +
                         .Year.ToString + .Month.ToString("D2") +
                         .Day.ToString("D2") + "_" + "Iteration_" + CStr(iterNum) +
                         "_" + filePath.Split(sep).Last()

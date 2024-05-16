@@ -34,6 +34,7 @@ Public Class PSC_Controller
 	Protected ISapPlugin As cPluginCallback
 	'ExceptionHandlers
 	Private missingInputsHandler As MissingInputsHandler
+	Private excessiveΔKHandler As ExcessiveΔKHandler
 	'EventListeners
 	Private eventsListener As EventsListener
 	'AudioManagers
@@ -72,6 +73,7 @@ Public Class PSC_Controller
 
 	Public Sub createExceptionHandlers() Implements ControllerInterface.createExceptionHandlers
 		Me.missingInputsHandler = New MissingInputsHandler(Me)
+		Me.excessiveΔKHandler = New ExcessiveΔKHandler(Me)
 	End Sub
 
 
@@ -152,6 +154,9 @@ Public Class PSC_Controller
 	Public Sub setMissingInputsHandler(missingInputsHandler As MissingInputsHandler)
 		Me.missingInputsHandler = missingInputsHandler
 	End Sub
+	Public Sub setExcessiveΔKHandler(excessiveΔKHandler As ExcessiveΔKHandler)
+		Me.excessiveΔKHandler = excessiveΔKHandler
+	End Sub
 	Public Sub setJsonFilePath(jsonFilePath As String)
 		Me.jsonFilePath = jsonFilePath
 	End Sub
@@ -174,6 +179,9 @@ Public Class PSC_Controller
 	End Function
 	Public Function getMissingInputsHandler() As MissingInputsHandler
 		Return Me.missingInputsHandler
+	End Function
+	Public Function getExcessiveΔKHandler() As ExcessiveΔKHandler
+		Return Me.excessiveΔKHandler
 	End Function
 	Public Function getJsonFilePath() As String
 		Return Me.jsonFilePath

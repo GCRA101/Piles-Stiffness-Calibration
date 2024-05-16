@@ -53,6 +53,7 @@ Public Class PSC_Model
     Private iterNum As Integer = 0
     Private stepRun As Boolean = False
     Private iterationComplete As Boolean = False
+    Private Const ΔKMax As Double = 10
     Private Const fixity As Double = 100000000
 
     ' CONSTRUCTOR - Private'
@@ -295,6 +296,16 @@ Public Class PSC_Model
             '5. RETURN BOOL
             ' True if the max increase/decrease is smaller than the convergenceFactor...
             If (plΔKList.Max() < convergenceFactor) Then Return True
+
+            If (Math.Abs(plΔKList.Max()) > ΔKMax) Then
+                Dim message As String = "Pile Stiffness Variation from previous iteration looks excessive."
+                Dim errorPilesList As List(Of PileObject)
+                errorPilesList = plΔKList.Select(Function(dk)
+                                                     If dk >= ΔKMax Then Return plΔKList.IndexOf(dk)
+                                                 End Function).Select(Function(index) pileObjsQueue.First().Item(index))
+
+                Throw New ExcessiveΔKException(message, errorPilesList)
+            End If
 
         End If
 
