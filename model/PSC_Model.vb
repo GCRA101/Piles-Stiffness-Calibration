@@ -220,7 +220,7 @@ Public Class PSC_Model
             Me.notifyObservers()
             'Increment iter count
             Me.iterNum += 1
-        Loop While Me.iterNum < iterNumMax Or isConvergent(pileObjsQueue) = False
+        Loop While Me.iterNum < iterNumMax And isConvergent(pileObjsQueue) = False
 
         Me.iterationComplete = True
         Me.notifyObservers()
@@ -456,8 +456,9 @@ Public Class PSC_Model
 
         pileObjs.ForEach(Function(pileObj)
                              ret = Me.sapModel.PointObj.DeleteRestraint(pileObj.getLocation.getName())
-                             ret = Me.sapModel.PointObj.SetSpring(pileObj.getLocation.getName(),
-                                                                  pileObj.getStiffness().getValues())
+                             Dim stiffnessArray() As Double = {pileObj.getStiffness().getU1(), pileObj.getStiffness().getU2(),
+                                                                 pileObj.getStiffness().getU3(), 0, 0, 0}
+                             ret = Me.sapModel.PointObj.SetSpring(pileObj.getLocation.getName(), stiffnessArray)
                          End Function)
 
         Me.sapModel.View.RefreshView()

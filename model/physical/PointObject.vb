@@ -75,14 +75,13 @@
     'which object is greater or smaller than the other based on the values assigned to its 
     'attributes.
     Public Overridable Function CompareTo(obj As Object) As Integer Implements IComparable.CompareTo
-        Throw New NotImplementedException()
         '1. Check input Obj Data Type to match the PointObj Class
         If Not obj.GetType().Equals(Me.GetType) Then
             Return Nothing
         End If
         '2. Down-Cast the input Object to the PointObjClass
-        Dim ppObj As PointObj
-        ppObj = CType(obj, PointObj)
+        Dim ppObj As PointObject
+        ppObj = CType(obj, PointObject)
         '3. Compare the two instances of the class giving precedence to coordinates and then to name
         If (Me.getX + Me.getY + Me.getZ) > (ppObj.getX + ppObj.getY + ppObj.getZ) Then
             Return 1
@@ -112,8 +111,8 @@
         End If
 
         '2. Down-Cast the input object to the PointObj Class
-        Dim ppObj As PointObj
-        ppObj = CType(obj, PointObj)
+        Dim ppObj As PointObject
+        ppObj = CType(obj, PointObject)
 
         '3. Check if all coordinates and name of the two objects are equal or not
         If Me.getName = ppObj.getName And
