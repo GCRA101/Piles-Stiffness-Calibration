@@ -49,6 +49,8 @@ Public Class WindowResizer
                                      MoveWindow(hWnd, Screen.PrimaryScreen.Bounds.Width / 2, 0, Screen.PrimaryScreen.Bounds.Width / 2, Screen.PrimaryScreen.Bounds.Height, True)
                                  Case DockType.BOTTOM
                                      MoveWindow(hWnd, 0, Screen.PrimaryScreen.Bounds.Height / 2, Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height / 2, True)
+                                 Case DockType.CENTER
+                                     MoveWindow(hWnd, 0, 0, Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height, True)
                              End Select
                              Return False 'Stop enumerating windows
                          End If

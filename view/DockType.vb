@@ -4,5 +4,6 @@
     TOP
     RIGHT
     BOTTOM
+    CENTER
 
 End Enum

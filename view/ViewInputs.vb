@@ -98,12 +98,16 @@ Public Class ViewInputs
 
         If Me.model.getIterationComplete = True Then
             Me.lblProgrBar.Text = "ITERATION COMPLETE!"
+            Me.progrBar.Increment(Me.progrBar.Maximum - Me.progrBar.Value)
+            Me.Refresh()
+            System.Threading.Thread.Sleep(3000)
+            WindowResizer.dockWindow(ProcessName.CSI_ETABS, DockType.CENTER)
         End If
 
 
         Me.Refresh()
 
-        System.Threading.Thread.Sleep(3000)
+
 
 
     End Sub
