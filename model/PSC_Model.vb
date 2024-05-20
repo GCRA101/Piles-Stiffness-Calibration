@@ -52,6 +52,7 @@ Public Class PSC_Model
     Private ret As Integer
     Private iterNum As Integer = 0
     Private stepRun As Boolean = False
+    Private iterationStarted As Boolean = False
     Private iterationComplete As Boolean = False
     Private Const ΔKMax As Double = 10
     Private Const fixity As Double = 100000000
@@ -204,7 +205,7 @@ Public Class PSC_Model
 
     Public Sub runIteration()
 
-        Me.pDispModel.setVisibility(False)
+        Me.iterationStarted = True
 
         Do
             'Save ETABS Model
@@ -554,6 +555,9 @@ Public Class PSC_Model
     End Function
     Public Function getStepRun() As Boolean
         Return Me.stepRun
+    End Function
+    Public Function getIterationStarted() As Boolean
+        Return Me.iterationStarted
     End Function
     Public Function getIterationComplete() As Boolean
         Return Me.iterationComplete

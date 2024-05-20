@@ -107,7 +107,8 @@ Public Class PSC_Controller
 			Me.model.setPointRestraints(restraintBools)
 		ElseIf Me.view.getViewInputs().rbSpring.Checked = True Then
 			If Me.view.getViewInputs().tbStiffness.Text() = "" Then Throw New MissingInputsException("Piles Stiffness Missing")
-			Dim stiffnessValues As Double() = {0.0, 0.0, CDbl(Me.view.getViewInputs().tbStiffness.Text()), 0.0, 0.0, 0.0}
+			Dim stiffness_Nmm As Double = CDbl(Me.view.getViewInputs().tbStiffness.Text()) * 1000
+			Dim stiffnessValues As Double() = {0.0, 0.0, stiffness_Nmm, 0.0, 0.0, 0.0}
 			Me.model.setPointStiffnessesFromValues(stiffnessValues)
 		ElseIf Me.view.getViewInputs().rbImportFromFile.Checked = True Then
 			Me.model.setPointStiffnessesFromJson(Me.getJsonFilePath())

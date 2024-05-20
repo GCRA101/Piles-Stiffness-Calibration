@@ -322,10 +322,10 @@ Partial Class ViewInputs
         Me.rbSpring.Location = New System.Drawing.Point(11, 336)
         Me.rbSpring.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.rbSpring.Name = "rbSpring"
-        Me.rbSpring.Size = New System.Drawing.Size(219, 24)
+        Me.rbSpring.Size = New System.Drawing.Size(229, 24)
         Me.rbSpring.TabIndex = 40
         Me.rbSpring.TabStop = True
-        Me.rbSpring.Text = "All Same Stiffness [N/mm]"
+        Me.rbSpring.Text = "All Same Stiffness [KN/mm]"
         Me.rbSpring.UseVisualStyleBackColor = True
         '
         'rbRigid
@@ -360,6 +360,7 @@ Partial Class ViewInputs
         Me.Name = "ViewInputs"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Piles Stiffness Iteration"
+        Me.TopMost = True
         CType(Me.pbETABSInputs, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.pbPDispInputs, System.ComponentModel.ISupportInitialize).EndInit()
         Me.gbPDispInputs.ResumeLayout(False)

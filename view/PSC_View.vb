@@ -1,4 +1,6 @@
 ﻿
+Imports System.Runtime.InteropServices
+Imports System.Windows.Forms
 Imports Piles_Stiffness_Iteration.model
 Public Class PSC_View
 
@@ -30,13 +32,11 @@ Public Class PSC_View
 		System.Threading.Thread.Sleep(5000)
 		splashScreen.Close()
 	End Sub
-
 	Public Sub createAboutBox()
 		Me.aboutBox = New AboutBox()
 		Me.aboutBox.txtDescription.Text = ControllerFileManager.getDocText(Document.APP_DESCRIPTION)
 		Me.aboutBox.Show()
 	End Sub
-
 	Public Sub createViewInputs()
 		Me.viewInputs = New ViewInputs(model, controller)
 		Me.viewInputs.initialize()
@@ -65,8 +65,6 @@ Public Class PSC_View
 	Public Function getViewInputs() As ViewInputs
 		Return Me.viewInputs
 	End Function
-
-
 
 
 End Class

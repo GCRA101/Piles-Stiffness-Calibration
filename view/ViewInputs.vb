@@ -39,10 +39,6 @@ Public Class ViewInputs
         InitializeComponent()
     End Sub
 
-    Private Sub lblInitialStiffness_Click(sender As Object, e As EventArgs) Handles lblInitialStiffness.Click
-
-    End Sub
-
     Public Sub initialize()
 
         Me.cklbGroups.Items.Clear()
@@ -81,6 +77,14 @@ Public Class ViewInputs
             .ClearSelected()
         End With
 
+        If model.getIterationStarted() = True Then
+            WindowResizer.dockWindow(ProcessName.CSI_ETABS, DockType.LEFT)
+            model.getPDispModel().setVisibility(True)
+            WindowResizer.dockWindow(ProcessName.OASYS_PDISP, DockType.RIGHT)
+
+        End If
+
+
         Dim iterNumMax As Integer = Me.model.getIterNumMax()
 
         If iterNumMax <> 0 Then
@@ -94,6 +98,12 @@ Public Class ViewInputs
         If Me.model.getIterationComplete = True Then
             Me.lblProgrBar.Text = "ITERATION COMPLETE!"
         End If
+
+
+        Me.Refresh()
+
+        System.Threading.Thread.Sleep(3000)
+
 
     End Sub
 
