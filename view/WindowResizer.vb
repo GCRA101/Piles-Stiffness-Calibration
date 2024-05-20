@@ -38,7 +38,7 @@ Public Class WindowResizer
                          Dim title As StringBuilder = New StringBuilder(256)
                          GetWindowText(hWnd, title, 256)
                          ' Check for a specific window title
-                         If title.ToString().StartsWith(ProcessNameRetriever.getName(processName)) Then
+                         If title.ToString().Contains(ProcessNameRetriever.getName(processName)) Then
                              ' Dock the window to the left half of the screen
                              Select Case dockType
                                  Case DockType.LEFT

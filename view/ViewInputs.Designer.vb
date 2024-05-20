@@ -164,6 +164,7 @@ Partial Class ViewInputs
         '
         'cklbGroups
         '
+        Me.cklbGroups.BackColor = System.Drawing.SystemColors.Window
         Me.cklbGroups.CheckOnClick = True
         Me.cklbGroups.Font = New System.Drawing.Font("Segoe UI", 7.2!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.cklbGroups.FormattingEnabled = True
@@ -359,7 +360,7 @@ Partial Class ViewInputs
         Me.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.Name = "ViewInputs"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "Piles Stiffness Iteration"
+        Me.Text = "Piles Stiffness Calibration"
         Me.TopMost = True
         CType(Me.pbETABSInputs, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.pbPDispInputs, System.ComponentModel.ISupportInitialize).EndInit()

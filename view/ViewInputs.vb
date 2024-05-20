@@ -77,11 +77,12 @@ Public Class ViewInputs
             .ClearSelected()
         End With
 
+
         If model.getIterationStarted() = True Then
             WindowResizer.dockWindow(ProcessName.CSI_ETABS, DockType.LEFT)
+            model.getSapModel().View.RefreshWindow()
             model.getPDispModel().setVisibility(True)
             WindowResizer.dockWindow(ProcessName.OASYS_PDISP, DockType.RIGHT)
-
         End If
 
 

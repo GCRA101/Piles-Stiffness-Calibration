@@ -207,6 +207,8 @@ Public Class PSC_Model
 
         Me.iterationStarted = True
 
+        Me.notifyObservers()
+
         Do
             'Save ETABS Model
             sapModel.File.Save(FileManager.setNewFilePath(Me.sapModelInitialPath, Me.iterNum))
@@ -526,6 +528,12 @@ Public Class PSC_Model
     End Sub
 
 
+    Public Function getSapModel() As cSapModel
+        Return Me.sapModel
+    End Function
+    Public Function getPDispModel() As PDispModel
+        Return Me.pDispModel
+    End Function
     Public Function getPileObjs() As List(Of PileObject)
         Return Me.pileObjs
     End Function
