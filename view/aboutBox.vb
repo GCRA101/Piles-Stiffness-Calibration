@@ -2,24 +2,36 @@
 Imports System.Reflection
 
 Public NotInheritable Class AboutBox
+    Implements Observer
+
+    'ATTRIBUTES
+    Private model As PSC_Model
+
+    'CONSTRUCTOR
+    'Overloaded
+    Public Sub New(model As PSC_Model)
+        ' This call is required by the designer.
+        InitializeComponent()
+        ' Add any initialization after the InitializeComponent() call.
+        Me.model = model
+    End Sub
 
     Private Sub aboutBox_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         ' Set the title of the form.
         Dim ApplicationTitle As String
         ApplicationTitle = "Piles Stiffness Calibration Tool"
         Me.Text = String.Format("About {0}", ApplicationTitle)
-
         ' Initialize all of the text displayed on the About Box.
-        ' TODO: Customize the application's assembly information in the "Application" pane of the project 
-        '    properties dialog (under the "Project" menu).
-        Me.lblProductName.Text = "Piles Stiffness Calibration Tool"
-        Me.lblVersion.Text = "Version: " + "1.0.0"
-        Me.lblCopyRight.Text = "Copyright @ Buro Happold Ltd Inc.2024"
-        Me.lblCompanyName.Text = "Buro Happold Ltd"
-        'Me.txtDescription.Text = My.Application.Info.Description
-
+        Me.update()
         ' Place the AboutBox at the centre of the Screen
         Me.CenterToScreen()
     End Sub
 
+    Private Sub update() Implements Observer.update
+        Me.lblProductName.Text = Me.model.getModelName()
+        Me.lblVersion.Text = Me.model.getModelVersion()
+        Me.lblCopyRight.Text = Me.model.getModelCopyRight()
+        Me.lblCompanyName.Text = Me.model.getModelOwner()
+        Me.txtDescription.Text = ControllerFileManager.getDocText(Document.APP_DESCRIPTION)
+    End Sub
 End Class

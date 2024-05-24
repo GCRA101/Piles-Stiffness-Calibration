@@ -80,7 +80,7 @@ Public Class ViewInputs
 
         If model.getIterationStarted() = True Then
             WindowResizer.dockWindow(ProcessName.CSI_ETABS, DockType.LEFT)
-            model.getSapModel().View.RefreshWindow()
+            model.getSapModel().View.RefreshView()
             model.getPDispModel().setVisibility(True)
             WindowResizer.dockWindow(ProcessName.OASYS_PDISP, DockType.RIGHT)
         End If
@@ -102,6 +102,8 @@ Public Class ViewInputs
             Me.Refresh()
             System.Threading.Thread.Sleep(3000)
             WindowResizer.dockWindow(ProcessName.CSI_ETABS, DockType.CENTER)
+            model.getSapModel().View.RefreshWindow()
+            model.getSapModel().View.RefreshView()
         End If
 
 

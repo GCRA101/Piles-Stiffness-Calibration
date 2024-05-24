@@ -57,6 +57,13 @@ Public Class PSC_Model
     Private Const ΔKMax As Double = 10
     Private Const fixity As Double = 100000000
 
+    Private Const modelName = "Piles Stiffness Calibration Tool"
+    Private Const modelVersion = "Version: " + "1.0.0"
+    Private Const modelCopyRight = "Copyright @ Buro Happold Ltd Inc.2024"
+    Private Const modelAuthor = "Giorgio Carlo Roberto Albieri"
+    Private Const modelOwner = "Buro Happold Ltd"
+
+
     ' CONSTRUCTOR - Private'
     Private Sub New()
         Me.observers = New List(Of Observer)
@@ -572,6 +579,22 @@ Public Class PSC_Model
     End Function
     Public Function getPileObjsList() As List(Of PileObject)
         Return Me.pileObjs
+    End Function
+
+    Public Function getModelName() As String
+        Return Me.modelName
+    End Function
+    Public Function getModelVersion() As String
+        Return Me.modelVersion
+    End Function
+    Public Function getModelCopyRight() As String
+        Return Me.modelCopyRight
+    End Function
+    Public Function getModelAuthor() As String
+        Return Me.modelAuthor
+    End Function
+    Public Function getModelOwner() As String
+        Return Me.modelOwner
     End Function
 
 End Class
