@@ -11,6 +11,7 @@ Imports System.Reflection.Emit
 ''' 
 ''' Specific Techniques
 '''  - SINGLETON Design Pattern
+'''  
 ''' </summary>
 
 Public Class SoundManager

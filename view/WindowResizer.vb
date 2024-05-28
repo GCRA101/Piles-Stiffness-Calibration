@@ -4,6 +4,25 @@ Imports System.Runtime.InteropServices
 Imports System.Text
 Imports System.Windows.Forms
 
+
+''' <summary>
+''' 
+''' WindowResizer Concrete Class
+''' 
+''' <remarks>
+''' <para> Concrete class responsible for sizing and arrangement external application windows. </para>
+''' <para> The class implements functions from the Windows API assembly "user32.dll" to carry out docking and 
+''' resizing operations on windows belonging to external applications running in parallel to the application.
+'''  </para>
+''' 
+''' <para> Desing Patterns: 
+''' - FACADE </para>
+''' 
+''' </remarks>
+''' 
+''' </summary>
+
+
 Public Class WindowResizer
 
     'Import necessary Windows API functions

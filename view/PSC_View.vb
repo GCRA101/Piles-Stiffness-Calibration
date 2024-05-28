@@ -1,7 +1,26 @@
-﻿
-Imports System.Runtime.InteropServices
+﻿Imports System.Runtime.InteropServices
 Imports System.Windows.Forms
 Imports Piles_Stiffness_Iteration.model
+
+
+''' <summary>
+''' 
+''' PSC_View Concrete Class
+''' 
+''' <remarks>
+''' <para> Concrete class and main class of the View Package. </para>
+''' <para> The class contains all the main data and methods for the running the User Interface of the application.
+''' The View is updated based on the changes occurring in the Model via the OBSERVER Design Pattern, while the 
+''' Model is updated based on the actions taken by the user in the View via the Controller (MVC Pattern).
+'''  </para>
+''' 
+''' <para> Desing Patterns: 
+''' - OBSERVER
+''' - MODEL-VIEW-CONTROLLER </para>
+''' 
+''' </remarks>
+''' 
+''' </summary>
 Public Class PSC_View
 
 	'ATTRIBUTES
@@ -38,7 +57,6 @@ Public Class PSC_View
 		Me.aboutBox = New AboutBox(Me.model)
 		Me.model.registerObserver(Me.aboutBox)
 		Me.model.notifyObservers()
-		Me.aboutBox.txtDescription.Text = ControllerFileManager.getDocText(Document.APP_DESCRIPTION)
 		Me.aboutBox.Show()
 	End Sub
 	Public Sub createViewInputs()

@@ -100,7 +100,6 @@
     <Compile Include="model\etabs\Group.vb" />
     <Compile Include="model\IncludePrivateResolver.vb" />
     <Compile Include="model\JSONSerializer.vb" />
-    <Compile Include="model\MissingPilesInPDispException.vb" />
     <Compile Include="model\pdisp\LoadsPuller.vb" />
     <Compile Include="model\pdisp\LoadsPusher.vb" />
     <Compile Include="model\MissingInputsException.vb" />

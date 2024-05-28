@@ -10,6 +10,24 @@ Imports System.Runtime.Remoting.Contexts
 Imports System.Runtime.Serialization
 Imports System.Windows.Forms
 
+
+''' <summary>
+''' 
+''' ViewInputs Concrete Class
+''' 
+''' <remarks>
+''' <para> Concrete class representing the main UI window of the application. </para>
+''' <para> The class implements the Observer functional interace that allows it to be updated with changes occurring in the Model
+''' via the Observer Pattern.
+'''  </para>
+''' 
+''' <para> Desing Patterns: 
+''' - FACADE </para>
+''' 
+''' </remarks>
+''' 
+''' </summary>
+
 Public Class ViewInputs
     Implements Observer
 

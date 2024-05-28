@@ -1,6 +1,27 @@
 ﻿Imports System.IO
 Imports System.Reflection
 
+''' <summary>
+''' 
+''' AboutBox Concrete Class
+''' 
+''' <remarks>
+''' <para> Concrete class representing the AboutBox of the application, highlighting important information for the user. </para>
+''' <para> The AboutBox window appears after the splashscreen has disappeared and its purpose </para>
+''' <para> The class implements the Observer functional interface that allows it to be updated with changes occurring in the Model
+''' via the Observer Pattern.</para>
+''' <para> The <see cref="update"/> method gets called as soon as the window gets loaded, allowing it to collect the application's assembly 
+''' information that is stored in the Model <see cref="PSC_Model"/>
+''' </para>
+''' 
+''' <para> Desing Patterns: 
+''' - OBSERVER </para>
+''' 
+''' </remarks>
+''' 
+''' </summary>
+
+
 Public NotInheritable Class AboutBox
     Implements Observer
 

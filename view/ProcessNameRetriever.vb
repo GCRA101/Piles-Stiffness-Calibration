@@ -1,4 +1,20 @@
-﻿Public Module ProcessNameRetriever
+﻿''' <summary>
+''' 
+''' ProcessNameRetriever Static Class
+''' 
+''' <remarks>
+''' <para> Static Class returning the string name of the Window corresponding to a specific process. </para>
+''' <para> Given an input ProcessName Enumeration value, the class returns its corresponding string 
+'''  </para>
+''' 
+''' <para> Desing Patterns: 
+''' - FACADE </para>
+''' 
+''' </remarks>
+''' 
+''' </summary>
+
+Public Module ProcessNameRetriever
 
     Public Function getName(processName As ProcessName)
         Select Case processName

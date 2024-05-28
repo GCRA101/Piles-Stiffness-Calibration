@@ -68,6 +68,33 @@ type AudioManager have to implement.
  
  Specific Techniques
   - SINGLETON Design Pattern
+  
+ </summary>
+</member>
+<member name="T:Piles_Stiffness_Calibration.JSONSerializer`1">
+ <summary>
+ 
+ JSONSerializer Concrete Class
+ 
+ <remarks>
+ <para> Generic Type Concrete Class responsible for serializing and deserializing json files. </para>
+ <para> The class allows to hide the list of calls to Newtonsoft library functions within the two methods
+ <see cref="M:Piles_Stiffness_Calibration.JSONSerializer`1.serialize(`0,System.String)"/> and <see cref="M:Piles_Stiffness_Calibration.JSONSerializer`1.deserialize(System.String)"/>. </para>
+ <para> This allows to make the code easy to read client side. </para>
+ 
+ <typeparam name="T">
+ The base item type. Must implement IComparable.
+ </typeparam>
+
+ <para> Desing Patterns: 
+ - FACADE </para>
+ 
+ <para> Programming Techniques: 
+ - GENERIC TYPES
+ - SERIALIZATION </para>
+ 
+ </remarks>
+ 
  </summary>
 </member>
 <member name="T:Piles_Stiffness_Calibration.PSC_Model">
@@ -98,9 +125,13 @@ type AudioManager have to implement.
  
  Interface OBSERVABLE
  
+ <remarks>
+ <para>
  Essential Interface of the Observer Pattern and that, once implemented in the Model,
- it allows it to notify all the registered observers As soon As a change occurs In
- its own state.
+ it allows it to notify all the registered observers as soon as a change occurs in
+ its own state. 
+ </para>
+ </remarks>
  
  </summary>
 </member>
@@ -109,9 +140,155 @@ type AudioManager have to implement.
  
  Interface OBSERVER
  
+ <remarks>
+ <para>
  Essential functional interface of the Observer Pattern.
  Once implemented in the View, it allows it to update itself automatically when 
  whatever change comes about in the Model. 
+ </para>
+ </remarks>
+ 
+ </summary>
+</member>
+<member name="T:Piles_Stiffness_Calibration.AboutBox">
+ <summary>
+ 
+ AboutBox Concrete Class
+ 
+ <remarks>
+ <para> Concrete class representing the AboutBox of the application, highlighting important information for the user. </para>
+ <para> The AboutBox window appears after the splashscreen has disappeared and its purpose </para>
+ <para> The class implements the Observer functional interface that allows it to be updated with changes occurring in the Model
+ via the Observer Pattern.</para>
+ <para> The <see cref="M:Piles_Stiffness_Calibration.AboutBox.update"/> method gets called as soon as the window gets loaded, allowing it to collect the application's assembly 
+ information that is stored in the Model <see cref="T:Piles_Stiffness_Calibration.PSC_Model"/>
+ </para>
+ 
+ <para> Desing Patterns: 
+ - OBSERVER </para>
+ 
+ </remarks>
+ 
+ </summary>
+</member>
+<member name="T:Piles_Stiffness_Calibration.ProcessName">
+ <summary>
+ 
+ ProcessName Enum
+ 
+ <remarks>
+ <para> Enumeration Class listing Names of Running Processes. </para>
+ <para> Values of the Enumeration allow the class WindowResizer to operate on the window of a specific 
+ process running on the screen while hiding from the client the api functions dealing with it. </para>
+ 
+ </remarks>
+ 
+ </summary>
+</member>
+<member name="T:Piles_Stiffness_Calibration.DockType">
+ <summary>
+ 
+ DockType Enum
+ 
+ <remarks>
+ <para> Enumeration Class listing Window docking options on the screen. </para>
+ <para> Values of the Enumeration allow the class WindowResizer to place the window in the correct location
+ on the screen hiding from the client the api functions dealing with it. </para>
+ 
+ </remarks>
+ 
+ </summary>
+</member>
+<member name="T:Piles_Stiffness_Calibration.ProcessNameRetriever">
+ <summary>
+ 
+ ProcessNameRetriever Static Class
+ 
+ <remarks>
+ <para> Static Class returning the string name of the Window corresponding to a specific process. </para>
+ <para> Given an input ProcessName Enumeration value, the class returns its corresponding string 
+  </para>
+ 
+ <para> Desing Patterns: 
+ - FACADE </para>
+ 
+ </remarks>
+ 
+ </summary>
+</member>
+<member name="T:Piles_Stiffness_Calibration.SplashScreen">
+ <summary>
+ 
+ SplashScreen Concrete Class
+ 
+ <remarks>
+ <para> Concrete class representing the initial splashscreen window of the application. </para>
+ <para> The class implements the Observer functional interface that allows it to be updated with changes occurring in the Model
+ via the Observer Pattern.</para>
+ <para> The <see cref="M:Piles_Stiffness_Calibration.SplashScreen.update"/> method gets called as soon as the window gets loaded, allowing it to collect the application's assembly 
+ information that is stored in the Model <see cref="T:Piles_Stiffness_Calibration.PSC_Model"/>
+  </para>
+ 
+ <para> Desing Patterns: 
+ - OBSERVER </para>
+ 
+ </remarks>
+ 
+ </summary>
+</member>
+<member name="T:Piles_Stiffness_Calibration.ViewInputs">
+ <summary>
+ 
+ ViewInputs Concrete Class
+ 
+ <remarks>
+ <para> Concrete class representing the main UI window of the application. </para>
+ <para> The class implements the Observer functional interace that allows it to be updated with changes occurring in the Model
+ via the Observer Pattern.
+  </para>
+ 
+ <para> Desing Patterns: 
+ - FACADE </para>
+ 
+ </remarks>
+ 
+ </summary>
+</member>
+<member name="T:Piles_Stiffness_Calibration.PSC_View">
+ <summary>
+ 
+ PSC_View Concrete Class
+ 
+ <remarks>
+ <para> Concrete class and main class of the View Package. </para>
+ <para> The class contains all the main data and methods for the running the User Interface of the application.
+ The View is updated based on the changes occurring in the Model via the OBSERVER Design Pattern, while the 
+ Model is updated based on the actions taken by the user in the View via the Controller (MVC Pattern).
+  </para>
+ 
+ <para> Desing Patterns: 
+ - OBSERVER
+ - MODEL-VIEW-CONTROLLER </para>
+ 
+ </remarks>
+ 
+ </summary>
+</member>
+<member name="T:Piles_Stiffness_Calibration.WindowResizer">
+ <summary>
+ 
+ WindowResizer Concrete Class
+ 
+ <remarks>
+ <para> Concrete class responsible for sizing and arrangement external application windows. </para>
+ <para> The class implements functions from the Windows API assembly "user32.dll" to carry out docking and 
+ resizing operations on windows belonging to external applications running in parallel to the application.
+  </para>
+ 
+ <para> Desing Patterns: 
+ - FACADE </para>
+ 
+ </remarks>
  
  </summary>
 </member>

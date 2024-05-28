@@ -2,6 +2,25 @@
 Imports ETABSv1
 Imports Newtonsoft.Json.Converters
 
+''' <summary>
+''' 
+''' SplashScreen Concrete Class
+''' 
+''' <remarks>
+''' <para> Concrete class representing the initial splashscreen window of the application. </para>
+''' <para> The class implements the Observer functional interface that allows it to be updated with changes occurring in the Model
+''' via the Observer Pattern.</para>
+''' <para> The <see cref="update"/> method gets called as soon as the window gets loaded, allowing it to collect the application's assembly 
+''' information that is stored in the Model <see cref="PSC_Model"/>
+'''  </para>
+''' 
+''' <para> Desing Patterns: 
+''' - OBSERVER </para>
+''' 
+''' </remarks>
+''' 
+''' </summary>
+
 Public NotInheritable Class SplashScreen
     Implements Observer
 

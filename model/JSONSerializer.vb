@@ -1,9 +1,34 @@
 ﻿Imports System.IO
 Imports Newtonsoft.Json
 
-'MAIN FIGURES *************************************
-'Use of GENERIC TYPES
-'Use of SERIALIZATION (JSON Format)
+
+''' <summary>
+''' 
+''' JSONSerializer Concrete Class
+''' 
+''' <remarks>
+''' <para> Generic Type Concrete Class responsible for serializing and deserializing json files. </para>
+''' <para> The class allows to hide the list of calls to Newtonsoft library functions within the two methods
+''' <see cref="serialize"/> and <see cref="deserialize"/>. </para>
+''' <para> This allows to make the code easy to read client side. </para>
+''' 
+''' <typeparam name="T">
+''' The base item type. Must implement IComparable.
+''' </typeparam>
+'''
+''' <para> Desing Patterns: 
+''' - FACADE </para>
+''' 
+''' <para> Programming Techniques: 
+''' - GENERIC TYPES
+''' - SERIALIZATION </para>
+''' 
+''' </remarks>
+''' 
+''' </summary>
+
+
+
 
 Public Class JSONSerializer(Of T)
 
@@ -26,7 +51,7 @@ Public Class JSONSerializer(Of T)
         File.WriteAllText(jsonFilePath, jsonText)
     End Sub
 
-    'Deserlize
+    'Deserialize
     Public Function deserialize(jsonFilePath As String) As T
 
         Dim jsonText As String = File.ReadAllText(jsonFilePath)
