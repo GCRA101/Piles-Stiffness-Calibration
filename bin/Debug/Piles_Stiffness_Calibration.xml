@@ -71,6 +71,27 @@ type AudioManager have to implement.
   
  </summary>
 </member>
+<member name="T:Piles_Stiffness_Calibration.InvalidFilePathException">
+ <summary>
+ 
+ InvalidFilePathException Concrete Class
+ 
+ <remarks>
+ <para> Exception Concrete Class thrown when filepath provided by the user is not valid. </para>
+ <para> The class inherits from the Exception class and it gets thrown by the following classes whenever it is found that the provided filepath
+ is not valid.
+ <see cref="T:Piles_Stiffness_Calibration.PSC_Model"/>
+ <see cref="T:Piles_Stiffness_Calibration.PSC_Controller"/>
+ <see cref="T:Piles_Stiffness_Calibration.EventsListener"/>
+  </para>
+ 
+ <para> Programming Techniques: 
+ - EXCEPTIONS HANDLING </para>
+ 
+ </remarks>
+ 
+ </summary>
+</member>
 <member name="T:Piles_Stiffness_Calibration.JSONSerializer`1">
  <summary>
  
@@ -92,6 +113,27 @@ type AudioManager have to implement.
  <para> Programming Techniques: 
  - GENERIC TYPES
  - SERIALIZATION </para>
+ 
+ </remarks>
+ 
+ </summary>
+</member>
+<member name="T:Piles_Stiffness_Calibration.MissingInputsException">
+ <summary>
+ 
+ MissingInputsException Concrete Class
+ 
+ <remarks>
+ <para> Exception Concrete Class thrown when user inputs are missing. </para>
+ <para> The class inherits from the Exception class and it gets thrown by the following classes whenever it is found that the required inputs
+ from the user are missing.
+ <see cref="T:Piles_Stiffness_Calibration.PSC_Model"/>
+ <see cref="T:Piles_Stiffness_Calibration.PSC_Controller"/>
+ <see cref="T:Piles_Stiffness_Calibration.EventsListener"/>
+  </para>
+ 
+ <para> Programming Techniques: 
+ - EXCEPTIONS HANDLING </para>
  
  </remarks>
  

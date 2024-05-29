@@ -4,6 +4,7 @@ Imports Newtonsoft.Json
 
 
 Imports pdispauto_20_1
+Imports System.IO
 
 ''' <summary>
 ''' 
@@ -37,7 +38,11 @@ Public Class PSC_Model
     Private sapModel As ETABSv1.cSapModel
     Private pDispModel As PDispModel
     Private sapModelInitialPath As String
-    Private pDispModelInitialPath As String
+    Private pDispInitialPath As String
+    Private resultsFolderPath As String
+    Private sapModelsFolderPath As String
+    Private pDispModelsFolderPath As String
+    Private jsonFilesFolderPath As String
     Private etabsGroupNames As List(Of String)      'TO BE REPLACED WITH ETABS WRAPPING CLASSES !!!
     Private etabsLoadCaseNames As List(Of String)   'TO BE REPLACED WITH ETABS WRAPPING CLASSES !!!
     Private etabsLoadComboNames As List(Of String)  'TO BE REPLACED WITH ETABS WRAPPING CLASSES !!!
@@ -57,11 +62,11 @@ Public Class PSC_Model
     Private Const ΔKMax As Double = 10
     Private Const fixity As Double = 100000000
 
-    Private Const modelName = "Piles Stiffness Calibration Tool"
-    Private Const modelVersion = "Version: " + "1.0.0"
-    Private Const modelCopyRight = "Copyright @ Buro Happold Ltd Inc.2024"
-    Private Const modelAuthor = "Giorgio Carlo Roberto Albieri"
-    Private Const modelOwner = "Buro Happold Ltd"
+    Private Const MODEL_NAME = "Piles Stiffness Calibration Tool"
+    Private Const MODEL_VERSION = "Version: " + "1.0.0"
+    Private Const MODEL_COPYRIGHT = "Copyright @ Buro Happold Ltd Inc.2024"
+    Private Const MODEL_AUTHOR = "Giorgio Carlo Roberto Albieri"
+    Private Const MODEL_OWNER = "Buro Happold Ltd"
 
 
     ' CONSTRUCTOR - Private'
@@ -105,8 +110,15 @@ Public Class PSC_Model
         Me.iterNumMax = iterNumMax
         Me.convergenceFactor = convergenceFactor
         Me.sapModelInitialPath = Me.sapModel.GetModelFilename(True)
-        Me.pDispModelInitialPath = Me.pDispModel.getFilePath()
+        Me.pDispInitialPath = pDispFilePath
+        Me.resultsFolderPath = FileManager.setDatedFolderPath(Path.GetDirectoryName(Me.sapModelInitialPath), "PSCT_Results")
+        Me.sapModelsFolderPath = Me.resultsFolderPath + "\ETABS_Models"
+        Me.pDispModelsFolderPath = Me.resultsFolderPath + "\PDISP_Models"
+        Me.jsonFilesFolderPath = Me.resultsFolderPath + "\JSON_Files"
 
+        Directory.CreateDirectory(Me.sapModelsFolderPath)
+        Directory.CreateDirectory(Me.pDispModelsFolderPath)
+        Directory.CreateDirectory(Me.jsonFilesFolderPath)
 
     End Sub
 
@@ -218,13 +230,13 @@ Public Class PSC_Model
 
         Do
             'Save ETABS Model
-            sapModel.File.Save(FileManager.setNewFilePath(Me.sapModelInitialPath, Me.iterNum))
+            sapModel.File.Save(FileManager.setNewFilePath(Me.sapModelInitialPath, Me.sapModelsFolderPath, Me.iterNum))
             'Run Iteration Step
             stepRun = False
             runIterationStep(Me.iterNum)
             stepRun = True
             'Save PDisp Model
-            pDispModel.save(FileManager.setNewFilePath(Me.pDispModelInitialPath, Me.iterNum))
+            pDispModel.save(FileManager.setNewFilePath(Me.pDispInitialPath, Me.pDispModelsFolderPath, Me.iterNum))
             'Serialize DataSet
             Me.serialize(Me.pileObjs)
             'Notify Observers
@@ -233,7 +245,16 @@ Public Class PSC_Model
             Me.iterNum += 1
         Loop While Me.iterNum < iterNumMax And isConvergent(pileObjsQueue) = False
 
+        'Create Summarizing Excel Spreadsheet
+        Dim excelDataManager = New ExcelDataManager()
+        Dim jsonFilePaths As String() = IO.Directory.GetFiles(Me.jsonFilesFolderPath)
+        jsonFilePaths.ToList().Sort()
+        jsonFilePaths.ToList().ToDictionary(Function(filePath) filePath.Substring(filePath.IndexOf("Iteration")).Replace(".json", ""),
+                                            Function(filePath) jsonSerializer.deserialize(filePath)).ToList().
+                               ForEach(Sub(kvpair) excelDataManager.write("Piles Stiffness Calibration", kvpair.Value, kvpair.Key))
+
         Me.iterationComplete = True
+
         Me.notifyObservers()
 
         Me.pDispModel.close()
@@ -492,7 +513,7 @@ Public Class PSC_Model
         '1. Sort the PileObjects based on a user-defined Comparator
         pileObjs.Sort(Function(pileObj1, pileObj2) (pileObj1.getName().CompareTo(pileObj2.getName())))
         '2. Build the Json File Name depending on number of Iteration
-        Dim jsonFilePath As String = Me.pDispModelInitialPath + "PilesObjsDataSet_Iter0" + CStr(Me.iterNum) + ".json"
+        Dim jsonFilePath As String = Me.jsonFilesFolderPath + "PilesObjsDataSet_Iteration0" + CStr(Me.iterNum) + ".json"
         '3. Serialize the list of Pile Objects
         Me.jsonSerializer.serialize(pileObjs, jsonFilePath)
 
@@ -582,19 +603,19 @@ Public Class PSC_Model
     End Function
 
     Public Function getModelName() As String
-        Return Me.modelName
+        Return Me.MODEL_NAME
     End Function
     Public Function getModelVersion() As String
-        Return Me.modelVersion
+        Return Me.MODEL_VERSION
     End Function
     Public Function getModelCopyRight() As String
-        Return Me.modelCopyRight
+        Return Me.MODEL_COPYRIGHT
     End Function
     Public Function getModelAuthor() As String
-        Return Me.modelAuthor
+        Return Me.MODEL_AUTHOR
     End Function
     Public Function getModelOwner() As String
-        Return Me.modelOwner
+        Return Me.MODEL_OWNER
     End Function
 
 End Class

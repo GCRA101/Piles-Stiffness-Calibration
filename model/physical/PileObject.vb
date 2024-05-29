@@ -81,6 +81,18 @@
         Return Me.length_m
     End Function
 
+    Public Function toDictionary() As Dictionary(Of String, String)
+
+        Dim pileObjectDict As New Dictionary(Of String, String) From
+            {{"Pile Name", Me.name},
+             {"Status", Me.status},
+             {"Fz [KN]", Me.loads.getF3()},
+             {"Kz [KN/mm]", CStr(CDbl(Me.stiffness.getU3()) / 1000)},
+             {"dz [mm]", CStr(Me.displacements.getU3())}}
+
+        Return pileObjectDict
+
+    End Function
 
     'HASHCODE
 
