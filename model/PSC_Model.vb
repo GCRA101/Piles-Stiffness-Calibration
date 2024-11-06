@@ -246,12 +246,17 @@ Public Class PSC_Model
         Loop While Me.iterNum < iterNumMax And isConvergent(pileObjsQueue) = False
 
         'Create Summarizing Excel Spreadsheet
-        Dim excelDataManager = New ExcelDataManager()
+        Dim excelDataManager = New ExcelDataManager() '(Me.resultsFolderPath + "\Outputs.xlsx")
+        excelDataManager.initialize()
         Dim jsonFilePaths As String() = IO.Directory.GetFiles(Me.jsonFilesFolderPath)
         jsonFilePaths.ToList().Sort()
         jsonFilePaths.ToList().ToDictionary(Function(filePath) filePath.Substring(filePath.IndexOf("Iteration")).Replace(".json", ""),
                                             Function(filePath) jsonSerializer.deserialize(filePath)).ToList().
                                ForEach(Sub(kvpair) excelDataManager.write("Piles Stiffness Calibration", kvpair.Value, kvpair.Key))
+
+        excelDataManager.createChart()
+
+        excelDataManager.dispose()
 
         Me.iterationComplete = True
 
@@ -369,7 +374,7 @@ Public Class PSC_Model
             f_2 = f2.Select(Of Double)(Function(force) (Math.Round(force, 0))).First()
             f_3 = f3.Select(Of Double)(Function(force) (Math.Round(force, 0))).First()
 
-            pileObjs.Add(New PileObject(etabsPointNames(i), New PointObject(etabsPointNames(i), ppX, ppY, ppZ),
+            pileObjs.Add(New PileObject(etabsPointNames(i), New PointObject(etabsPointNames(i), ppX, ppY, ppZ),,
                          New PointLoads(New Double() {f_1, f_2, f_3})))
         Next
 
@@ -513,7 +518,7 @@ Public Class PSC_Model
         '1. Sort the PileObjects based on a user-defined Comparator
         pileObjs.Sort(Function(pileObj1, pileObj2) (pileObj1.getName().CompareTo(pileObj2.getName())))
         '2. Build the Json File Name depending on number of Iteration
-        Dim jsonFilePath As String = Me.jsonFilesFolderPath + "PilesObjsDataSet_Iteration0" + CStr(Me.iterNum) + ".json"
+        Dim jsonFilePath As String = Me.jsonFilesFolderPath + "\" + "PilesObjsDataSet_Iteration0" + CStr(Me.iterNum) + ".json"
         '3. Serialize the list of Pile Objects
         Me.jsonSerializer.serialize(pileObjs, jsonFilePath)
 

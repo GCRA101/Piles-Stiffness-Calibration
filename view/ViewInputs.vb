@@ -57,6 +57,8 @@ Public Class ViewInputs
         InitializeComponent()
     End Sub
 
+
+
     Public Sub initialize()
 
         Me.cklbGroups.Items.Clear()
@@ -76,10 +78,14 @@ Public Class ViewInputs
 
         Me.btnOpenPDispFile.Enabled = True
 
+        Me.TopMost = True
+
     End Sub
 
 
     Private Sub update() Implements Observer.update
+
+        'Me.TopMost = True
 
         'Update CheckBoxes with Group/LoadCombo Names
 
@@ -128,6 +134,7 @@ Public Class ViewInputs
         Me.Refresh()
 
 
+        'Me.TopMost = False
 
 
     End Sub

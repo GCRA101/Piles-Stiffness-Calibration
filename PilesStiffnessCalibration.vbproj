@@ -59,6 +59,9 @@
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="office, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c">
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
@@ -94,7 +97,10 @@
     <Compile Include="controller\FilePathRetriever.vb" />
     <Compile Include="controller\MissingInputsHandler.vb" />
     <Compile Include="controller\VisualEffects.vb" />
+    <Compile Include="model\ExcelChartFactoryInterface.vb" />
+    <Compile Include="model\ExcelChartFactory.vb" />
     <Compile Include="model\ExcelDataManager.vb" />
+    <Compile Include="model\ExcelRangeType.vb" />
     <Compile Include="model\ExcessiveΔKException.vb" />
     <Compile Include="model\FileManager.vb" />
     <Compile Include="controller\PSC_Controller.vb" />

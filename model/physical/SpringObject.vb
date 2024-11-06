@@ -6,6 +6,10 @@
     Private values_N_mm As Double()
 
     'CONSTRUCTORS
+    'Default
+    Public Sub New()
+        ReDim values_N_mm(5)
+    End Sub
     'Overloaded 01
     Public Sub New(name As String)
         Me.name = name

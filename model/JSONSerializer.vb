@@ -27,9 +27,6 @@ Imports Newtonsoft.Json
 ''' 
 ''' </summary>
 
-
-
-
 Public Class JSONSerializer(Of T)
 
     'ATTRIBUTES
@@ -55,7 +52,7 @@ Public Class JSONSerializer(Of T)
     Public Function deserialize(jsonFilePath As String) As T
 
         Dim jsonText As String = File.ReadAllText(jsonFilePath)
-        Return JsonConvert.DeserializeObject(jsonText, jsonSettings)
+        Return JsonConvert.DeserializeObject(Of T)(jsonText, jsonSettings)
 
     End Function
 

@@ -361,7 +361,6 @@ Partial Class ViewInputs
         Me.Name = "ViewInputs"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Piles Stiffness Calibration"
-        Me.TopMost = True
         CType(Me.pbETABSInputs, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.pbPDispInputs, System.ComponentModel.ISupportInitialize).EndInit()
         Me.gbPDispInputs.ResumeLayout(False)

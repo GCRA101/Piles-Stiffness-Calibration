@@ -5,11 +5,11 @@ Module FileManager
 
 
     Public Function setDatedFolderPath(folderPath As String, subFolderName As String)
-        Dim dateObj As Date = Date.Today
+        Dim dateObj As Date = Date.Now
         Dim datedFolderPath As String = ""
 
         With dateObj
-            datedFolderPath = folderPath + .Year.ToString + .Month.ToString("D2") +
+            datedFolderPath = folderPath + "\" + .Year.ToString + .Month.ToString("D2") +
                                 .Day.ToString("D2") + .Hour.ToString() + .Minute.ToString() + "_" + subFolderName
         End With
 
@@ -21,7 +21,7 @@ Module FileManager
     Public Function setNewFilePath(oldFilePath As String, iterNum As Integer) As String
 
         Dim newFilePath As String
-        Dim dateObj As Date = Date.Today
+        Dim dateObj As Date = Date.Now
 
         Dim sep() As Char = {"/", "\", "//"}
 
@@ -40,12 +40,10 @@ Module FileManager
     Public Function setNewFilePath(oldFilePath As String, destinationFolderPath As String, iterNum As Integer) As String
 
         Dim newFilePath As String
-        Dim dateObj As Date = Date.Today
-
-        Dim sep() As Char = {"/", "\", "//"}
+        Dim dateObj As Date = Date.Now
 
         With dateObj
-            newFilePath = destinationFolderPath + "PSCT" + .Year.ToString + .Month.ToString("D2") +
+            newFilePath = destinationFolderPath + "\" + "PSCT" + .Year.ToString + .Month.ToString("D2") +
                             .Day.ToString("D2") + "_" + "Iteration_" + CStr(iterNum) +
                              "_" + Path.GetFileName(oldFilePath)
         End With

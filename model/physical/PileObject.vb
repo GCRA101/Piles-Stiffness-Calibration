@@ -1,4 +1,6 @@
-﻿Public Class PileObject
+﻿Imports Newtonsoft.Json
+
+Public Class PileObject
     Implements IComparable
 
     'ATTRIBUTES
@@ -11,14 +13,21 @@
     Private diameter_m, length_m As Double
 
     'CONSTRUCTORS
+    'Default
+    Public Sub New()
+    End Sub
+    'Overloaded 1
     Public Sub New(name As String)
         Me.name = name
     End Sub
-    Public Sub New(name As String, Optional location As PointObject = Nothing, Optional loads As PointLoads = Nothing,
-                   Optional displacements As PointDisplacements = Nothing, Optional stiffness As SpringObject = Nothing,
-                   Optional diameter As Double = Nothing, Optional length As Double = Nothing)
+    'Overloaded 2
+    <JsonConstructor>
+    Public Sub New(name As String, Optional location As PointObject = Nothing, Optional status As PileStatus = PileStatus.UNLOADED,
+                   Optional loads As PointLoads = Nothing, Optional displacements As PointDisplacements = Nothing,
+                   Optional stiffness As SpringObject = Nothing, Optional diameter As Double = Nothing, Optional length As Double = Nothing)
         Me.name = name
         Me.location = location
+        Me.status = status
         Me.loads = loads
         Me.displacements = displacements
         Me.stiffness = stiffness
@@ -86,7 +95,7 @@
         Dim pileObjectDict As New Dictionary(Of String, String) From
             {{"Pile Name", Me.name},
              {"Status", Me.status},
-             {"Fz [KN]", Me.loads.getF3()},
+             {"Fz [KN]", CStr(CDbl(Me.loads.getF3()) / 1000)},
              {"Kz [KN/mm]", CStr(CDbl(Me.stiffness.getU3()) / 1000)},
              {"dz [mm]", CStr(Me.displacements.getU3())}}
 
