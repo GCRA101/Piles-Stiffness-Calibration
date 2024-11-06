@@ -4,12 +4,23 @@ Imports System.Media
 Imports System.Reflection
 Imports System.Windows.Forms
 
+''' <summary>
+'''     Static Class CONTROLLERFILEMANAGER
+'''     <remarks>
+'''         Static Class responsible to provide utility methods allowing to get important information
+'''         regarding the files used by the controller.
+'''     </remarks>
+''' </summary>
+
 Module ControllerFileManager
 
+    ' METHODS
     Public Function getFilePath(ofd As OpenFileDialog, dialogTitle As String, filter As String) As String
 
+        ' Initialize the fileName string variable
         Dim fileName As String = Nothing
 
+        ' Run the OpenFileDialog to get the File path from the user
         With ofd
             .Title = dialogTitle
             .InitialDirectory = "C:\"
@@ -21,11 +32,14 @@ Module ControllerFileManager
             End If
         End With
 
+        ' Return the File Path
         Return fileName
 
     End Function
 
     Public Function getDocText(doc As Document) As String
+
+        ' Get the File Path of the input Document class instance
         Dim resourceName As String = FilePathRetriever.getPath(doc)
 
         ' Get the stream for the embedded resource

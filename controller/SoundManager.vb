@@ -5,13 +5,17 @@ Imports System.Reflection.Emit
 
 ''' <summary>
 ''' SOUNDSMANAGER
-''' 
+'''
+''' <para> 
 ''' Concrete Class implementing the interface AudioManagerInterface and that is responsible 
 ''' for playing the sound effects of the application, when active.
+''' </para>
 ''' 
+''' <para>
 ''' Specific Techniques
 '''  - SINGLETON Design Pattern
-'''  
+''' </para> 
+''' 
 ''' </summary>
 
 Public Class SoundManager
@@ -40,17 +44,16 @@ Public Class SoundManager
 	'Overloaded play method taking the enum sound as input and calling within it the play method implemented from
 	'the AudioManagerInterface interface that is turned into private in order to keep it hidden from the client.
 	'This allows the client to input just the Sound Enum rather than its filepath, leaving it getting retrieved under
-	'the hood by the Static Class SoundPath.
+	'the hood by the Static Class SoundPathRetriever.
 	'This makes the clode cleaner and easier to extend.
 	Public Sub play(sound As Sound)
+		' Get the file path corresponding to the input Sound enum value
 		Dim resourceName As String = SoundPathRetriever.getPath(sound)
-
 		' Get the stream for the embedded resource
 		Dim stream As Stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(resourceName)
 		If stream Is Nothing Then
 			Throw New FileNotFoundException("The specified resource was not found.", resourceName)
 		End If
-
 		' Play the sound
 		Dim player As New SoundPlayer(stream)
 		player.Play()

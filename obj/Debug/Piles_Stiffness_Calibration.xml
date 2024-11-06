@@ -29,12 +29,21 @@ Piles_Stiffness_Calibration
 </member>
 <member name="T:Piles_Stiffness_Calibration.AudioManagerInterface">
  <summary>
- Interface AUDIOMANAGER
- 
-Interface that defines the methods that all the concrete classes of 
-type AudioManager have to implement.
- 
+     Interface AUDIOMANAGER
+     <remarks>
+         Interface that defines the methods that all the concrete classes of 
+         type AudioManager have to implement.
+     </remarks>
  </summary>
+</member>
+<member name="M:Piles_Stiffness_Calibration.AudioManagerInterface.play(System.String)">
+ <summary>
+     play
+ </summary>
+     <remarks>
+         Interface that defines the methods that all the concrete classes of 
+         type AudioManager have to implement.
+     </remarks>
 </member>
 <member name="T:Piles_Stiffness_Calibration.Document">
  <summary>
@@ -46,6 +55,15 @@ type AudioManager have to implement.
  Each Constant is then associated with a specific filepath to the corresponding document.
  The use of Enum constants allow to hide the filepaths to the user.
  
+ </summary>
+</member>
+<member name="T:Piles_Stiffness_Calibration.ControllerFileManager">
+ <summary>
+     Static Class CONTROLLERFILEMANAGER
+     <remarks>
+         Static Class responsible to provide utility methods allowing to get important information
+         regarding the files used by the controller.
+     </remarks>
  </summary>
 </member>
 <member name="T:Piles_Stiffness_Calibration.Sound">

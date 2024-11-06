@@ -3,7 +3,7 @@
 
 ''' <summary>
 ''' 
-''' ENUMERATION SOUND
+''' Enumeration SOUND
 ''' 
 ''' Enumeration made from a number of identification constants for different typologies of sound.
 ''' Each Constant is then associated with a specific filepath to the corresponding audio file.

@@ -1,4 +1,13 @@
-﻿Public MustInherit Class ExceptionHandler
+﻿
+''' <summary>
+'''     Abstract Class EXCEPTIONHANDLER
+'''     <remarks>
+'''         Abstract Class used to define common attributes, constructor and methods to be inherited
+'''         by all concrete classes of type ExceptionHandler.
+'''     </remarks>
+''' </summary>
+
+Public MustInherit Class ExceptionHandler
 	Implements ExceptionHandlerInterface
 
 	'ATTRIBUTES

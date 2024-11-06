@@ -4,13 +4,12 @@ Imports Newtonsoft.Json
 
 
 ''' <summary>
-''' 
 ''' PSC_Controller Concrete Class
 ''' 
 ''' <remarks>
 ''' <para> Main class of the Controller Package. </para>
 ''' <para> It allows the View to communicate with the Model via the MVC Pattern. </para>
-''' 
+'''
 ''' <para> Desing Patterns: 
 ''' - MODEL-VIEW-CONTROLLER
 ''' 
@@ -18,7 +17,6 @@ Imports Newtonsoft.Json
 ''' - STREAMS </para>
 ''' 
 ''' </remarks>
-''' 
 ''' </summary>
 
 
@@ -43,6 +41,7 @@ Public Class PSC_Controller
 	Private jsonFilePath As String
 	Private pDispFilePath As String
 
+	'CONSTRUCTORS
 	Public Sub New(SapModel As cSapModel, ISapPlugin As cPluginCallback)
 
 		'Save CSI Plugin Objects
@@ -64,10 +63,13 @@ Public Class PSC_Controller
 		Me.createExceptionHandlers()
 	End Sub
 
-
+	'METHODS
 	Public Sub initialize() Implements ControllerInterface.initialize
+		'Show the SplashScreen
 		Me.view.createSplashScreen()
+		'Show the AboutBox
 		Me.view.createAboutBox()
+		'Activate the EventsListener of the AboutBox
 		Me.eventsListener.initializeAboutBox()
 	End Sub
 
@@ -79,67 +81,82 @@ Public Class PSC_Controller
 
 	Public Sub processInputData()
 
-		Dim selLoadCombo As String
+		'1. Get the Input Data from the UI
 
+		'Get the name of the Load Combination selected by the user in the UI
+		Dim selLoadCombo As String
 		If Me.view.getViewInputs().cklbLoadCombos.CheckedItems().Count <> 0 Then
 			selLoadCombo = Me.view.getViewInputs().cklbLoadCombos.SelectedItem.ToString()
 		Else
 			selLoadCombo = ""
 		End If
 
+		'Get the name of the Group selected by the user in the UI
 		Dim selGroup As String
-
 		If Me.view.getViewInputs().cklbGroups.CheckedItems().Count <> 0 Then
 			selGroup = Me.view.getViewInputs().cklbGroups.SelectedItem.ToString()
 		Else
 			selGroup = ""
 		End If
 
+
+		'2. Initialize the Model
 		Me.model.initialize(Me.SapModel, pDispFilePath, selLoadCombo, selGroup,
 							CInt(Me.view.getViewInputs().cbIterations.Items(Me.view.getViewInputs().cbIterations.SelectedIndex)),
 							CDbl(Strings.Split(CStr(Me.view.getViewInputs().cbDispVariation.
 							Items(Me.view.getViewInputs().cbDispVariation.SelectedIndex)), "%")(0)) / 100.0)
-
+		'Retain only points belonging to selected Group
 		Me.model.filterPointsByGroup()
 
+
+		'3. Set Up the pile objects restraints/stiffnesses based on input criteria
+
 		If Me.view.getViewInputs().rbRigid.Checked = True Then
+			' Rigid Piles
 			Dim restraintBools As Boolean() = {True, True, True, False, False, False}
 			Me.model.setPointRestraints(restraintBools)
 		ElseIf Me.view.getViewInputs().rbSpring.Checked = True Then
+			' Constant Stiffness Piles
 			If Me.view.getViewInputs().tbStiffness.Text() = "" Then Throw New MissingInputsException("Piles Stiffness Missing")
 			Dim stiffness_Nmm As Double = CDbl(Me.view.getViewInputs().tbStiffness.Text()) * 1000
 			Dim stiffnessValues As Double() = {0.0, 0.0, stiffness_Nmm, 0.0, 0.0, 0.0}
 			Me.model.setPointStiffnessesFromValues(stiffnessValues)
 		ElseIf Me.view.getViewInputs().rbImportFromFile.Checked = True Then
+			' Input Json Stiffness Piles
 			Me.model.setPointStiffnessesFromJson(Me.getJsonFilePath())
 			Me.model.setPileObjsInit(Me.model.deserialize(Me.getJsonFilePath))
 		End If
 
 	End Sub
 	Public Sub runIteration() Implements ControllerInterface.runIteration
+		'Call the Model's Iteration method
 		Me.model.runIteration()
+		'Play Sound Effect at the end of the process
 		Me.soundManager.play(Sound.ENDITERATION)
 	End Sub
 
 	Public Sub terminate() Implements ControllerInterface.terminate
-		'CLOSE AND DISPOSE FORM
+		'Close and dispose the form
 		Me.view.getViewInputs.Close()
 		Me.view.getViewInputs.Dispose()
-		'MEMORY RELEASE
+		'Memory Release
 		Me.ISapPlugin.Finish(0)
 	End Sub
 
 	Public Sub serialize() Implements ControllerInterface.serialize
+		'Call the Model's method allowing to serialize outputs into json file
 		Me.model.serialize(Me.model.getPileObjsList())
 	End Sub
+
 	Public Sub deserialize() Implements ControllerInterface.deserialize
 		Throw New NotImplementedException()
 	End Sub
+
 	Public Sub extractEtabsModelData()
 		Me.model.ExtractEtabsModelData()
 	End Sub
 
-
+	'Setters
 	Public Sub setSapModel(SapModel As cSapModel)
 		Me.SapModel = SapModel
 	End Sub
@@ -165,7 +182,7 @@ Public Class PSC_Controller
 		Me.pDispFilePath = pDispFilePath
 	End Sub
 
-
+	'Getters
 	Public Function getSapModel() As cSapModel
 		Return Me.SapModel
 	End Function

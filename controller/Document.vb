@@ -1,13 +1,12 @@
 ﻿
 ''' <summary>
-''' 
-''' ENUMERATION DOCUMENT
-''' 
-''' Enumeration made from a number of identification constants for different typologies of text document
-''' from which to extract text and data to be displayed in the UI of the application.
-''' Each Constant is then associated with a specific filepath to the corresponding document.
-''' The use of Enum constants allow to hide the filepaths to the user.
-''' 
+'''     Enumeration DOCUMENT
+'''     <remarks>
+'''         Enumeration made from a number Of identification constants For different typologies Of text document
+'''         from which to extract text and data to be displayed in the UI of the application.
+'''         Each Constant Is then associated with a specific filepath to the corresponding document.
+'''         The use of Enum constants allow to hide the filepaths from the user.
+'''     </remarks>
 ''' </summary>
 
 Public Enum Document

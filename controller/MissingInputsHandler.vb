@@ -1,5 +1,13 @@
 ﻿Imports ETABSv1
 
+''' <summary>
+'''     Concrete Class MISSINGINPUTSHANDLER
+'''     <remarks>
+'''         Concrete class inheriting from the ExceptionHandler class and specialized in creating
+'''         and displaying a Warning message when inputs are found to be missing.
+'''     </remarks>
+''' </summary>
+
 Public Class MissingInputsHandler
     Inherits ExceptionHandler
 
@@ -10,7 +18,7 @@ Public Class MissingInputsHandler
 
     'METHODS
     Public Overrides Sub execute(Optional ex As Exception = Nothing)
-
+        'Build and display warning message if exception is not null
         If ex IsNot Nothing Then
             Me.message = ex.Message
             MsgBox(Me.message, vbOKOnly + vbCritical, "WARNING - MISSING INPUTS")
