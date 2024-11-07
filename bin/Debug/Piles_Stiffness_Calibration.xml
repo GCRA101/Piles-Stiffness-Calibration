@@ -29,47 +29,107 @@ Piles_Stiffness_Calibration
 </member>
 <member name="T:Piles_Stiffness_Calibration.AudioManagerInterface">
  <summary>
-     Interface AUDIOMANAGER
      <remarks>
-         Interface that defines the methods that all the concrete classes of 
-         type AudioManager have to implement.
+         <para>Interface that defines the methods that all the concrete classes of 
+         type AudioManager have to implement.</para>
      </remarks>
  </summary>
 </member>
-<member name="M:Piles_Stiffness_Calibration.AudioManagerInterface.play(System.String)">
+<member name="T:Piles_Stiffness_Calibration.ControllerInterface">
  <summary>
-     play
- </summary>
      <remarks>
-         Interface that defines the methods that all the concrete classes of 
-         type AudioManager have to implement.
+         <para>Interface that defines the methods that all the concrete classes of 
+         type Controller have to implement.</para>
      </remarks>
+ </summary>
 </member>
 <member name="T:Piles_Stiffness_Calibration.Document">
  <summary>
- 
- ENUMERATION DOCUMENT
- 
- Enumeration made from a number of identification constants for different typologies of text document
- from which to extract text and data to be displayed in the UI of the application.
- Each Constant is then associated with a specific filepath to the corresponding document.
- The use of Enum constants allow to hide the filepaths to the user.
- 
+     <remarks>
+         Enumeration made from a number Of identification constants For different typologies Of text document
+         from which to extract text and data to be displayed in the UI of the application.
+         Each Constant Is then associated with a specific filepath to the corresponding document.
+         The use of Enum constants allow to hide the filepaths from the user.
+     </remarks>
+ </summary>
+</member>
+<member name="T:Piles_Stiffness_Calibration.EventsListener">
+ <summary>
+     <remarks>
+         Class responsible for running sound effects and calling Model's methods whenever 
+         an event gets triggered by any registered command within the UI components of the View.
+     </remarks>
  </summary>
 </member>
 <member name="T:Piles_Stiffness_Calibration.ControllerFileManager">
  <summary>
-     Static Class CONTROLLERFILEMANAGER
      <remarks>
-         Static Class responsible to provide utility methods allowing to get important information
-         regarding the files used by the controller.
+         <para>Static Class responsible to provide utility methods allowing to get important information
+         regarding the files used by the controller.</para>
      </remarks>
+ </summary>
+</member>
+<member name="T:Piles_Stiffness_Calibration.ExceptionHandler">
+ <summary>
+     <remarks>
+         Abstract Class used to define common attributes, constructor and methods to be inherited
+         by all concrete classes of type ExceptionHandler.
+     </remarks>
+ </summary>
+</member>
+<member name="T:Piles_Stiffness_Calibration.ExceptionHandlerInterface">
+ <summary>
+     <remarks>
+         Interface that defines the methods that all the concrete classes of 
+         type ExceptionHandler have to implement.
+     </remarks>
+ </summary>
+</member>
+<member name="T:Piles_Stiffness_Calibration.ExcessiveΔKHandler">
+ <summary>
+     <remarks>
+         Concrete class inheriting from the ExceptionHandler class and specialized in creating
+         and displaying a Warning message when ΔK is found to be excessive between two consecutive
+         iterations of the piles stiffnesses calibration.
+     </remarks>
+ </summary>
+</member>
+<member name="T:Piles_Stiffness_Calibration.FilePathRetriever">
+ <summary>
+     <remarks>
+         Static class used to retrieve preset filepaths based on the value of the input Document enumeration.
+         This allows to keep all the filepaths encapsuled within the getPath() method of the present class.
+         These filepaths can be directly accessed via shorter and more intuitive nicknames/short names as per 
+         the Document enumeration values, thus making the coding much better readable.
+     </remarks>
+ </summary>
+</member>
+<member name="T:Piles_Stiffness_Calibration.MissingInputsHandler">
+ <summary>
+     <remarks>
+         Concrete class inheriting from the ExceptionHandler class and specialized in creating
+         and displaying a Warning message when inputs are found to be missing.
+     </remarks>
+ </summary>
+</member>
+<member name="T:Piles_Stiffness_Calibration.PSC_Controller">
+ <summary>
+ 
+ <remarks>
+ <para> Main class of the Controller Package. </para>
+ <para> It allows the View to communicate with the Model via the MVC Pattern. </para>
+
+ <para> Desing Patterns: 
+ - MODEL-VIEW-CONTROLLER </para>
+ 
+ <para> Programming Techniques: 
+ - STREAMS </para>
+ 
+ </remarks>
  </summary>
 </member>
 <member name="T:Piles_Stiffness_Calibration.Sound">
  <summary>
- 
- ENUMERATION SOUND
  
  Enumeration made from a number of identification constants for different typologies of sound.
  Each Constant is then associated with a specific filepath to the corresponding audio file.
@@ -79,14 +139,30 @@ Piles_Stiffness_Calibration
 </member>
 <member name="T:Piles_Stiffness_Calibration.SoundManager">
  <summary>
- SOUNDSMANAGER
  
+ <para> 
  Concrete Class implementing the interface AudioManagerInterface and that is responsible 
  for playing the sound effects of the application, when active.
+ </para>
  
- Specific Techniques
-  - SINGLETON Design Pattern
-  
+ <para>
+ Design Patterns:
+  - SINGLETON
+ </para> 
+ 
+ </summary>
+</member>
+<member name="T:Piles_Stiffness_Calibration.SoundPathRetriever">
+ <summary>
+     <remarks>
+         <para>
+         Static class used to retrieve preset filepaths based on the value of the input Sound enumeration.
+         This allows to keep all the filepaths encapsuled within the getPath() method of the present class.
+         These filepaths can be directly accessed via shorter and more intuitive nicknames/short names as per 
+         the Sound enumeration values, thus making the coding much better readable.
+         </para>
+         <para>Design Patterns: - FACADE</para>
+     </remarks>
  </summary>
 </member>
 <member name="T:Piles_Stiffness_Calibration.InvalidFilePathException">
@@ -210,14 +286,26 @@ Piles_Stiffness_Calibration
  
  </summary>
 </member>
+<member name="T:Piles_Stiffness_Calibration.cPlugin">
+ <summary>
+ 
+ <remarks>
+ <para> Concrete class implementing the ETABSv1.cPluginContract interface.
+ The method <see cref="M:Piles_Stiffness_Calibration.cPlugin.Main(ETABSv1.cSapModel@,ETABSv1.cPluginCallback@)"/> gets run as soon as the 
+ user clicks on the icon of the plugin in the ETABS UI. This method is used to instantiate and initialize
+ the Controller (<see cref="T:Piles_Stiffness_Calibration.PSC_Controller"/>) of the application that, in turn, initialize the
+ Model (<see cref="T:Piles_Stiffness_Calibration.PSC_Model"/>) and the View (<see cref="T:Piles_Stiffness_Calibration.PSC_View"/>) as per MVC Pattern.
+ </para>
+ </remarks>
+ 
+ </summary>
+</member>
 <member name="T:Piles_Stiffness_Calibration.AboutBox">
  <summary>
  
- AboutBox Concrete Class
- 
  <remarks>
  <para> Concrete class representing the AboutBox of the application, highlighting important information for the user. </para>
- <para> The AboutBox window appears after the splashscreen has disappeared and its purpose </para>
+ <para> The AboutBox window appears after the splashscreen has disappeared and its purpose is to show to the user functionalities and limitations of the tool. </para>
  <para> The class implements the Observer functional interface that allows it to be updated with changes occurring in the Model
  via the Observer Pattern.</para>
  <para> The <see cref="M:Piles_Stiffness_Calibration.AboutBox.update"/> method gets called as soon as the window gets loaded, allowing it to collect the application's assembly 
@@ -234,11 +322,9 @@ Piles_Stiffness_Calibration
 <member name="T:Piles_Stiffness_Calibration.ProcessName">
  <summary>
  
- ProcessName Enum
- 
  <remarks>
  <para> Enumeration Class listing Names of Running Processes. </para>
- <para> Values of the Enumeration allow the class WindowResizer to operate on the window of a specific 
+ <para> Values of the Enumeration allow the class <see cref="T:Piles_Stiffness_Calibration.WindowResizer"/> to operate on the window of a specific 
  process running on the screen while hiding from the client the api functions dealing with it. </para>
  
  </remarks>
@@ -247,8 +333,6 @@ Piles_Stiffness_Calibration
 </member>
 <member name="T:Piles_Stiffness_Calibration.DockType">
  <summary>
- 
- DockType Enum
  
  <remarks>
  <para> Enumeration Class listing Window docking options on the screen. </para>
@@ -262,11 +346,9 @@ Piles_Stiffness_Calibration
 <member name="T:Piles_Stiffness_Calibration.ProcessNameRetriever">
  <summary>
  
- ProcessNameRetriever Static Class
- 
  <remarks>
  <para> Static Class returning the string name of the Window corresponding to a specific process. </para>
- <para> Given an input ProcessName Enumeration value, the class returns its corresponding string 
+ <para> Given an input <see cref="T:Piles_Stiffness_Calibration.ProcessName"/> Enumeration value, the class returns its corresponding string 
   </para>
  
  <para> Desing Patterns: 
@@ -278,8 +360,6 @@ Piles_Stiffness_Calibration
 </member>
 <member name="T:Piles_Stiffness_Calibration.SplashScreen">
  <summary>
- 
- SplashScreen Concrete Class
  
  <remarks>
  <para> Concrete class representing the initial splashscreen window of the application. </para>
@@ -293,18 +373,15 @@ Piles_Stiffness_Calibration
  - OBSERVER </para>
  
  </remarks>
- 
  </summary>
 </member>
 <member name="T:Piles_Stiffness_Calibration.ViewInputs">
  <summary>
  
- ViewInputs Concrete Class
- 
  <remarks>
  <para> Concrete class representing the main UI window of the application. </para>
- <para> The class implements the Observer functional interace that allows it to be updated with changes occurring in the Model
- via the Observer Pattern.
+ <para> The class implements the Observer functional interface that allows it to be updated with 
+ changes occurring in the Model (<see cref="T:Piles_Stiffness_Calibration.PSC_Model"/>) via the Observer Pattern.
   </para>
  
  <para> Desing Patterns: 
@@ -317,13 +394,11 @@ Piles_Stiffness_Calibration
 <member name="T:Piles_Stiffness_Calibration.PSC_View">
  <summary>
  
- PSC_View Concrete Class
- 
  <remarks>
  <para> Concrete class and main class of the View Package. </para>
  <para> The class contains all the main data and methods for the running the User Interface of the application.
- The View is updated based on the changes occurring in the Model via the OBSERVER Design Pattern, while the 
- Model is updated based on the actions taken by the user in the View via the Controller (MVC Pattern).
+ The View is updated based on the changes occurring in the Model (<see cref="T:Piles_Stiffness_Calibration.PSC_Model"/>) via the OBSERVER Design Pattern, while the 
+ Model is updated based on the actions taken by the user in the View (<see cref="T:Piles_Stiffness_Calibration.PSC_View"/>) via the Controller <see cref="T:Piles_Stiffness_Calibration.PSC_Controller"/> (MVC Pattern).
   </para>
  
  <para> Desing Patterns: 
@@ -337,10 +412,8 @@ Piles_Stiffness_Calibration
 <member name="T:Piles_Stiffness_Calibration.WindowResizer">
  <summary>
  
- WindowResizer Concrete Class
- 
  <remarks>
- <para> Concrete class responsible for sizing and arrangement external application windows. </para>
+ <para> Concrete class responsible for the sizing and arrangement of external application windows. </para>
  <para> The class implements functions from the Windows API assembly "user32.dll" to carry out docking and 
  resizing operations on windows belonging to external applications running in parallel to the application.
   </para>

@@ -13,12 +13,10 @@ Imports System.Windows.Forms
 
 ''' <summary>
 ''' 
-''' ViewInputs Concrete Class
-''' 
 ''' <remarks>
 ''' <para> Concrete class representing the main UI window of the application. </para>
-''' <para> The class implements the Observer functional interace that allows it to be updated with changes occurring in the Model
-''' via the Observer Pattern.
+''' <para> The class implements the Observer functional interface that allows it to be updated with 
+''' changes occurring in the Model (<see cref="PSC_Model"/>) via the Observer Pattern.
 '''  </para>
 ''' 
 ''' <para> Desing Patterns: 
@@ -31,8 +29,7 @@ Imports System.Windows.Forms
 Public Class ViewInputs
     Implements Observer
 
-    ' ATTRIBUTES ****************************************************************************************
-
+    ' ATTRIBUTES ***************************************************************************************
     Private model As PSC_Model
     Private controller As PSC_Controller
     Private pDispFilePath, jsonFilePath As String
@@ -59,25 +56,26 @@ Public Class ViewInputs
 
 
 
-    Public Sub initialize()
+    ' METHODS *******************************************************************************************
 
+    Public Sub initialize()
+        'Clear the CheckedListBoxes
         Me.cklbGroups.Items.Clear()
         Me.cklbLoadCombos.Items.Clear()
-
+        'Set Rigid Piles Option as the default one
         Me.rbRigid.Checked = True
-
+        'Set first item of each combobox as the default one
         For Each comp As Component In gbPDispInputs.Controls
             If CStr(comp.GetType().Name) = "ComboBox" Then
                 Dim cbBox = CType(comp, ComboBox)
                 cbBox.SelectedIndex = 0
             End If
         Next
-
+        'Disable/Enable Buttons and Textboxes
         tbStiffness.Enabled = False
         btnOpenJSONFile.Enabled = False
-
         Me.btnOpenPDispFile.Enabled = True
-
+        'Force window to be the top most one
         Me.TopMost = True
 
     End Sub
@@ -85,40 +83,50 @@ Public Class ViewInputs
 
     Private Sub update() Implements Observer.update
 
+        'Force window to be on top of all the other ones
         'Me.TopMost = True
 
-        'Update CheckBoxes with Group/LoadCombo Names
+        'POPULATE CHECKBOXES
 
+        'Update CheckBoxes with Group Names
         With Me.cklbGroups
             .CheckOnClick = True
             .Items.AddRange(Me.model.getEtabsGroupNames.ToArray())
             .ClearSelected()
         End With
-
+        'Update CheckBoxes with LoadCombo Names
         With Me.cklbLoadCombos
             .CheckOnClick = True
             .Items.AddRange(Me.model.getEtabsLoadComboNames.ToArray())
             .ClearSelected()
         End With
 
+        ' DOCK WINDOWS
 
+        'Dock ETABS and PDISP Windows to left and right halves of the screen
         If model.getIterationStarted() = True Then
+            'Dock ETABS Window
             WindowResizer.dockWindow(ProcessName.CSI_ETABS, DockType.LEFT)
             model.getSapModel().View.RefreshView()
+            'Dock PDISP Window
             model.getPDispModel().setVisibility(True)
             WindowResizer.dockWindow(ProcessName.OASYS_PDISP, DockType.RIGHT)
         End If
 
+        'UPDATE PROGRESS BAR
 
+        'Get input maximum number of iterations
         Dim iterNumMax As Integer = Me.model.getIterNumMax()
-
+        'Define value of progress bar step based on max number of iterations
         If iterNumMax <> 0 Then
             Me.progrBarStep = (Me.progrBar.Maximum - Me.progrBar.Minimum) \ iterNumMax
         End If
-
+        'Increment the progress bar if step has been run
         If Me.model.getStepRun() = True Then
             Me.progrBar.Increment(progrBarStep)
         End If
+
+        'ITERATION COMPLETE MESSAGE
 
         If Me.model.getIterationComplete = True Then
             Me.lblProgrBar.Text = "ITERATION COMPLETE!"
@@ -133,7 +141,7 @@ Public Class ViewInputs
 
         Me.Refresh()
 
-
+        'Prevent window from being on top of all the other ones
         'Me.TopMost = False
 
 

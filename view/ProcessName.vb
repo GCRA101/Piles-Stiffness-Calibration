@@ -1,10 +1,8 @@
 ﻿''' <summary>
 ''' 
-''' ProcessName Enum
-''' 
 ''' <remarks>
 ''' <para> Enumeration Class listing Names of Running Processes. </para>
-''' <para> Values of the Enumeration allow the class WindowResizer to operate on the window of a specific 
+''' <para> Values of the Enumeration allow the class <see cref="WindowResizer"/> to operate on the window of a specific 
 ''' process running on the screen while hiding from the client the api functions dealing with it. </para>
 ''' 
 ''' </remarks>

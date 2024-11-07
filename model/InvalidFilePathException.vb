@@ -1,5 +1,4 @@
-﻿
-''' <summary>
+﻿''' <summary>
 ''' 
 ''' InvalidFilePathException Concrete Class
 ''' 

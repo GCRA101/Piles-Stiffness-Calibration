@@ -4,6 +4,16 @@ Imports Microsoft.Office.Core
 Imports Microsoft.Office.Interop
 Imports Microsoft.Office.Interop.Excel
 
+''' <summary>
+'''     <remarks>
+'''         <para>Concrete Class responsible for carrying out editing operations on an referenced excel
+'''         workbook and worksheet.</para>
+'''         <para>The logic and the multiple calls to the Excel API functions are encapsuled within the methods
+'''         of this class, such as <see cref="ExcelDataManager.createChart()"/>.
+'''         This prevents the client to see all the multiple calls required to carry out each main editing task
+'''         on the excel file as per the FACADE PATTERN. </para>
+'''     </remarks>
+''' </summary>
 
 Public Class ExcelDataManager
 
@@ -16,14 +26,16 @@ Public Class ExcelDataManager
 
     'CONSTRUCTORS
     Public Sub New(Optional filePath As String = "")
+        'Throw an exception if the input filepath provided doesn't correspond to an excel file
         If filePath <> "" And Not (filePath.Contains(".xlsx") Or filePath.Contains(".xlsm") Or filePath.Contains(".xls")) Then
             Throw New InvalidFilePathException("The filepath provided doesn't correspond to an excel file.")
         End If
+        'Assign the filePath attribute with the filePath string input if this corresponds to an excel file
         Me.filePath = filePath
     End Sub
 
-    'METHODS
 
+    'METHODS
     Public Sub initialize()
         '1. INITIALIZE EXCEL APPLICATION
         ExcelApp = New Excel.Application
@@ -62,14 +74,21 @@ Public Class ExcelDataManager
         '3. WRITE DATA IN THE WORKSHEET
         For i As Integer = 0 To data.Count() - 1 Step 1
 
+            '3.1 Get PileObject Data
+
+            'Get pile object attribute names and values in a dictionary format
             Dim pileObjData As Dictionary(Of String, String) = data(i).toDictionary()
 
+            '3.2 Create Headers
+
             If i = 0 Then
+                'Create Secondary Excel Headers with the names of the pile object attributes
                 Dim k As Integer = 0
                 pileObjData.Keys().ToList().ForEach(Sub(key)
                                                         ExcelApp.ActiveCell.Offset(0, k).Value = CStr(key)
                                                         k += 1
                                                     End Sub)
+                'Create Primary Excel Header with input header title if provided
                 If headerTitle <> "" Then
                     Dim headerRange As Range
                     headerRange = ExcelApp.Range(ExcelApp.ActiveCell.Offset(-1, 0),
@@ -78,12 +97,14 @@ Public Class ExcelDataManager
                     headerRange.Value = headerTitle
                     formatRange(headerRange, ExcelRangeType.HEADER_PRIMARY)
                 End If
-
+                'Assign Range Format to Secondary Excel Headers
                 Dim subHeaderRange As Range = ExcelApp.Range(ExcelApp.ActiveCell,
                                                 ExcelApp.ActiveCell.End(Excel.XlDirection.xlToRight))
                 formatRange(subHeaderRange, ExcelRangeType.HEADER_SECONDARY)
 
             End If
+
+            '3.3 Write PileObject Data into the cells below the headers
 
             For j As Integer = 0 To pileObjData.Count() - 1 Step 1
                 ExcelApp.ActiveCell.Offset(i + 1, j).Value = pileObjData.Values(j)
@@ -111,15 +132,18 @@ Public Class ExcelDataManager
 
 
     Public Sub formatRange(range As Range, excelRangeType As ExcelRangeType)
-
+        'Assign specific Range Format based on input ExcelRangeType Enum value
         Select Case excelRangeType
             Case ExcelRangeType.HEADER_PRIMARY
+                'Call private formatRange() method with pre-set inputs
                 formatRange(range, "Segoe UI", 10, True, Excel.XlHAlign.xlHAlignCenter, Excel.XlVAlign.xlVAlignCenter, Excel.XlLineStyle.xlContinuous,
                             Excel.XlBorderWeight.xlMedium, Excel.XlColorIndex.xlColorIndexNone, Excel.XlPattern.xlPatternLinearGradient, 90,
                             Excel.XlThemeColor.xlThemeColorAccent6, False)
             Case ExcelRangeType.HEADER_SECONDARY
+                'Call private formatRange() method with pre-set inputs
                 formatRange(range:=range, interiorColor:=19)
             Case ExcelRangeType.NORMAL
+                'Call private formatRange() method with pre-set inputs
                 formatRange(range:=range)
         End Select
 
@@ -132,19 +156,20 @@ Public Class ExcelDataManager
                             Optional gradientDegree As Integer = 0, Optional gradientThemeColor As Excel.XlThemeColor = Excel.XlThemeColor.xlThemeColorDark1,
                             Optional autoFit As Boolean = True)
 
-
+        'Font
         With range.Font
             .Name = fontName
             .Bold = fontBold
             .Size = fontSize
         End With
 
+        'Text Alignment
         With range
             .HorizontalAlignment = textHorAlignment
             .VerticalAlignment = textVertAlignment
         End With
 
-
+        'Color Pattern
         If interiorPattern <> XlPattern.xlPatternNone Then
             With range.Interior
                 .ColorIndex = interiorColor
@@ -155,6 +180,7 @@ Public Class ExcelDataManager
             End With
         End If
 
+        'Edges
         Dim edgeTypes As String() = {XlBordersIndex.xlEdgeLeft, XlBordersIndex.xlEdgeTop,
                                      XlBordersIndex.xlEdgeRight, XlBordersIndex.xlEdgeBottom}
 
@@ -164,7 +190,7 @@ Public Class ExcelDataManager
                                            .Weight = borderLineWeight
                                        End With
                                    End Sub)
-
+        'Autofit
         If autoFit Then range.EntireColumn.AutoFit()
 
     End Sub

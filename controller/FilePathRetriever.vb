@@ -1,5 +1,4 @@
 ﻿''' <summary>
-'''     Static Class FILEPATHRETRIEVER
 '''     <remarks>
 '''         Static class used to retrieve preset filepaths based on the value of the input Document enumeration.
 '''         This allows to keep all the filepaths encapsuled within the getPath() method of the present class.

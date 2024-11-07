@@ -2,6 +2,28 @@
 Imports Microsoft.Office.Interop
 Imports Microsoft.Office.Interop.Excel
 
+
+''' <summary>
+''' 
+''' <remarks>
+''' <para> Concrete class responsible for creating Excel Charts. </para>
+''' <para> The class is assigned with the reference to an excel workbook file and creates charts
+''' inside of it based on multiple input criteria. 
+''' All the utility methods required to create the chart and assign specific properties to it
+''' are hidden within the public method <see cref="ExcelChartFactory.create(Excel.XlChartType, 
+''' String, String, Range, String, List(Of String), String, String, Excel.XlColorIndex)"/> 
+''' in line with the FACADE Pattern </para>
+''' 
+''' <para>Design Patterns:
+''' - FACTORY PATTERN
+''' - FACADE PATTERN </para>
+''' 
+''' 
+''' </remarks>
+''' </summary>
+
+
+
 Public Class ExcelChartFactory
     Implements ExcelChartFactoryInterface
 

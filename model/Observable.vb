@@ -1,8 +1,6 @@
 ﻿
 ''' <summary>
 ''' 
-''' Interface OBSERVABLE
-''' 
 ''' <remarks>
 ''' <para>
 ''' Essential Interface of the Observer Pattern and that, once implemented in the Model,

@@ -1,6 +1,5 @@
 ﻿
 ''' <summary>
-'''     Abstract Class EXCEPTIONHANDLER
 '''     <remarks>
 '''         Abstract Class used to define common attributes, constructor and methods to be inherited
 '''         by all concrete classes of type ExceptionHandler.

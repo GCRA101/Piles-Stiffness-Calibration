@@ -1,7 +1,5 @@
 ﻿''' <summary>
 ''' 
-''' DockType Enum
-''' 
 ''' <remarks>
 ''' <para> Enumeration Class listing Window docking options on the screen. </para>
 ''' <para> Values of the Enumeration allow the class WindowResizer to place the window in the correct location

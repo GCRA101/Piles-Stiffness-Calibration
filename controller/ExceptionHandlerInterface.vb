@@ -1,5 +1,4 @@
 ﻿''' <summary>
-'''     Interface EXCEPTIONHANDLERINTERFACE
 '''     <remarks>
 '''         Interface that defines the methods that all the concrete classes of 
 '''         type ExceptionHandler have to implement.

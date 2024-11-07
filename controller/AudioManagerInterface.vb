@@ -1,8 +1,7 @@
 ﻿''' <summary>
-'''     Interface AUDIOMANAGER
 '''     <remarks>
-'''         Interface that defines the methods that all the concrete classes of 
-'''         type AudioManager have to implement.
+'''         <para>Interface that defines the methods that all the concrete classes of 
+'''         type AudioManager have to implement.</para>
 '''     </remarks>
 ''' </summary>
 

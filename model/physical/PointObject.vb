@@ -1,4 +1,15 @@
-﻿Public Class PointObject
+﻿''' <summary>
+''' 
+''' <remarks>
+''' <para> 
+''' Concrete class defining a point object based on name and cardinal coordinates. 
+''' Hashing, Equals and CompareTo methods are properly overwritten to allow sorting of class instances
+''' in any kind of data structure.
+''' </para>
+''' </remarks>
+''' </summary>
+
+Public Class PointObject
     Implements IComparable
 
     'ATTRIBUTES  **********************************************************************
@@ -7,7 +18,6 @@
 
 
     'CONSTRUCTOR  *********************************************************************
-
     'Default
     Public Sub New()
     End Sub

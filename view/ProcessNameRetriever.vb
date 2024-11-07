@@ -1,10 +1,8 @@
 ﻿''' <summary>
 ''' 
-''' ProcessNameRetriever Static Class
-''' 
 ''' <remarks>
 ''' <para> Static Class returning the string name of the Window corresponding to a specific process. </para>
-''' <para> Given an input ProcessName Enumeration value, the class returns its corresponding string 
+''' <para> Given an input <see cref="ProcessName"/> Enumeration value, the class returns its corresponding string 
 '''  </para>
 ''' 
 ''' <para> Desing Patterns: 
@@ -16,7 +14,7 @@
 
 Public Module ProcessNameRetriever
 
-    Public Function getName(processName As ProcessName)
+    Public Function getName(processName As ProcessName) As String
         Select Case processName
             Case ProcessName.AUTODESK_REVIT
                 Return "Revit"

@@ -1,7 +1,6 @@
 ﻿Imports ETABSv1
 
 ''' <summary>
-'''     Concrete Class MISSINGINPUTSHANDLER
 '''     <remarks>
 '''         Concrete class inheriting from the ExceptionHandler class and specialized in creating
 '''         and displaying a Warning message when inputs are found to be missing.

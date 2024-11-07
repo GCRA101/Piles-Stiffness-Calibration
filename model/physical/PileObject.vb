@@ -1,5 +1,19 @@
 ﻿Imports Newtonsoft.Json
 
+
+''' <summary>
+''' 
+''' <remarks>
+''' <para> Concrete class describing the Pile Object. </para>
+''' <para> Name, location, loads, displacements and any other relevant parameter describing the pile
+''' are recorded as attributes of this class.
+''' The Class is also provided with specifically overwritten Hashing, Equals and CompareTo methods allowing
+''' any instance of the class to be properly stored and sorted in whatever sortable data structure. </para>
+''' 
+''' </remarks>
+''' </summary>
+
+
 Public Class PileObject
     Implements IComparable
 

@@ -1,5 +1,4 @@
 ﻿''' <summary>
-'''     Concrete Class EXCESSIVEΔKHANDLER
 '''     <remarks>
 '''         Concrete class inheriting from the ExceptionHandler class and specialized in creating
 '''         and displaying a Warning message when ΔK is found to be excessive between two consecutive

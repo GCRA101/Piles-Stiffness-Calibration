@@ -3,11 +3,9 @@ Imports System.Reflection
 
 ''' <summary>
 ''' 
-''' AboutBox Concrete Class
-''' 
 ''' <remarks>
 ''' <para> Concrete class representing the AboutBox of the application, highlighting important information for the user. </para>
-''' <para> The AboutBox window appears after the splashscreen has disappeared and its purpose </para>
+''' <para> The AboutBox window appears after the splashscreen has disappeared and its purpose is to show to the user functionalities and limitations of the tool. </para>
 ''' <para> The class implements the Observer functional interface that allows it to be updated with changes occurring in the Model
 ''' via the Observer Pattern.</para>
 ''' <para> The <see cref="update"/> method gets called as soon as the window gets loaded, allowing it to collect the application's assembly 
@@ -25,10 +23,10 @@ Imports System.Reflection
 Public NotInheritable Class AboutBox
     Implements Observer
 
-    'ATTRIBUTES
+    'ATTRIBUTES *******************************************************************************************
     Private model As PSC_Model
 
-    'CONSTRUCTOR
+    'CONSTRUCTOR ******************************************************************************************
     'Overloaded
     Public Sub New(model As PSC_Model)
         ' This call is required by the designer.
@@ -37,6 +35,7 @@ Public NotInheritable Class AboutBox
         Me.model = model
     End Sub
 
+    'METHODS **********************************************************************************************
     Private Sub aboutBox_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         ' Set the title of the form.
         Dim ApplicationTitle As String

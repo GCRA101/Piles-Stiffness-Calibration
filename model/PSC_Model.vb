@@ -86,10 +86,11 @@ Public Class PSC_Model
 
     ' METHDOS
     Public Sub registerObserver(o As Observer) Implements Observable.registerObserver
+        'Add a new observer
         Me.observers.Add(o)
     End Sub
-
     Public Sub removeObserver(o As Observer) Implements Observable.removeObserver
+        'Remove and observer
         Me.observers.Remove(o)
     End Sub
     Public Sub notifyObservers() Implements Observable.notifyObservers
@@ -100,9 +101,9 @@ Public Class PSC_Model
 
     Public Sub initialize(sapModel As ETABSv1.cSapModel, pDispFilePath As String, selEtabsLoadComboName As String,
                           selEtabsGroupName As String, iterNumMax As Integer, convergenceFactor As Double)
-
+        'Check validity of inputs
         Me.checkInputsData(sapModel, pDispFilePath, selEtabsLoadComboName, selEtabsGroupName, iterNumMax, convergenceFactor)
-
+        'Assign Model attributes
         Me.sapModel = sapModel
         Me.pDispModel = New PDispModel(pDispFilePath)
         Me.selEtabsLoadComboName = selEtabsLoadComboName
@@ -111,11 +112,11 @@ Public Class PSC_Model
         Me.convergenceFactor = convergenceFactor
         Me.sapModelInitialPath = Me.sapModel.GetModelFilename(True)
         Me.pDispInitialPath = pDispFilePath
+        'Create Output Directories
         Me.resultsFolderPath = FileManager.setDatedFolderPath(Path.GetDirectoryName(Me.sapModelInitialPath), "PSCT_Results")
         Me.sapModelsFolderPath = Me.resultsFolderPath + "\ETABS_Models"
         Me.pDispModelsFolderPath = Me.resultsFolderPath + "\PDISP_Models"
         Me.jsonFilesFolderPath = Me.resultsFolderPath + "\JSON_Files"
-
         Directory.CreateDirectory(Me.sapModelsFolderPath)
         Directory.CreateDirectory(Me.pDispModelsFolderPath)
         Directory.CreateDirectory(Me.jsonFilesFolderPath)
@@ -125,27 +126,36 @@ Public Class PSC_Model
     Private Sub checkInputsData(sapModel As ETABSv1.cSapModel, pDispFilePath As String, selEtabsLoadComboName As String,
                                 selEtabsGroupName As String, iterNumMax As Integer, convergenceFactor As Double)
 
+        ' BUILD EXCEPTION MESSAGE
         Dim exceptionMessage As String = ""
-
+        ' ETABS Model
         If (sapModel Is Nothing) Then exceptionMessage += "ETABS Model is missing/not valid." + vbNewLine
+        ' PDisp Model
         If pDispFilePath Is Nothing Then
             exceptionMessage += "PDisp Model is missing." + vbNewLine
         ElseIf Not pDispFilePath.Contains(".pdd") Then
             exceptionMessage += "PDisp Model is not valid." + vbNewLine
         End If
+        ' ETABS Group Name
         If (selEtabsGroupName = "") Then exceptionMessage += "ETABS Group Name missing." + vbNewLine
+        ' ETABS Load Combo Name
         If (selEtabsLoadComboName = "") Then exceptionMessage += "ETABS Load Combo Name missing." + vbNewLine
+        ' Max Number of Iterations
         If (iterNumMax < 2) Then exceptionMessage += "Maximum Number of Iterations is too low." + vbNewLine
+        ' Convergence Factor
         If (convergenceFactor < 0) Then exceptionMessage += "Convergence Factor is not valid."
 
+        ' THROW EXCEPTION MESSAGE
         If exceptionMessage <> "" Then Throw New MissingInputsException(exceptionMessage)
     End Sub
 
     Public Sub setSapModel(sapModel As ETABSv1.cSapModel)
+        'Throw exception if SapModel is not valid/existing
         If (sapModel Is Nothing) Then Throw New MissingInputsException("ETABS Model is missing/not valid")
         Me.sapModel = sapModel
     End Sub
     Public Sub setPDispModel(pdispModel As PDispModel)
+        'Throw exception if PDispModel is not valid/existing
         If (pdispModel Is Nothing) Then Throw New MissingInputsException("PDisp Model is missing/not valid")
         Me.pDispModel = pdispModel
     End Sub
@@ -181,9 +191,8 @@ Public Class PSC_Model
     End Sub
 
     Public Sub setPointRestraints(restraintBools As Boolean())
-
+        'Throw exception if piles restraints are missing
         If restraintBools Is Nothing Then Throw New MissingInputsException("Piles Restraint Boolean Arrays missing")
-
         'Unlock Etabs Model
         Me.sapModel.SetModelIsLocked(False)
         'Set Point Restraints via Streams...
@@ -193,9 +202,8 @@ Public Class PSC_Model
     End Sub
 
     Public Sub setPointStiffnessesFromValues(stiffnessValues As Double())
-
+        'Throw exception if piles stiffnesses are missing
         If stiffnessValues Is Nothing Then Throw New MissingInputsException("Piles Stiffness Value missing")
-
         'Unlock Etabs Model
         Me.sapModel.SetModelIsLocked(False)
         'Set Point Springs via Streams...
@@ -224,10 +232,12 @@ Public Class PSC_Model
 
     Public Sub runIteration()
 
+        'Turn on iteration control parameter
         Me.iterationStarted = True
-
+        'Notify all Observers - OBSERVER PATTERN
         Me.notifyObservers()
 
+        'MAIN ROUTINE
         Do
             'Save ETABS Model
             sapModel.File.Save(FileManager.setNewFilePath(Me.sapModelInitialPath, Me.sapModelsFolderPath, Me.iterNum))
@@ -243,25 +253,28 @@ Public Class PSC_Model
             Me.notifyObservers()
             'Increment iter count
             Me.iterNum += 1
+            'Loop until iteration number gets equal to max or results reach convergence
         Loop While Me.iterNum < iterNumMax And isConvergent(pileObjsQueue) = False
 
-        'Create Summarizing Excel Spreadsheet
+        'EXCEL OUTPUTS
+        'Initialize ExcelDataManager
         Dim excelDataManager = New ExcelDataManager() '(Me.resultsFolderPath + "\Outputs.xlsx")
         excelDataManager.initialize()
+        'Retrieve data from output json files
         Dim jsonFilePaths As String() = IO.Directory.GetFiles(Me.jsonFilesFolderPath)
         jsonFilePaths.ToList().Sort()
         jsonFilePaths.ToList().ToDictionary(Function(filePath) filePath.Substring(filePath.IndexOf("Iteration")).Replace(".json", ""),
                                             Function(filePath) jsonSerializer.deserialize(filePath)).ToList().
                                ForEach(Sub(kvpair) excelDataManager.write("Piles Stiffness Calibration", kvpair.Value, kvpair.Key))
-
+        'Create Charts in Excel SpreadSheet
         excelDataManager.createChart()
-
+        'Destroy the Excel Data Manager object
         excelDataManager.dispose()
-
+        'Turn On control parameter iterationComplete
         Me.iterationComplete = True
-
+        'Notify all the Observers - OBSERVER PATTERN
         Me.notifyObservers()
-
+        'Close the PDisp Model
         Me.pDispModel.close()
 
     End Sub
@@ -356,7 +369,6 @@ Public Class PSC_Model
 
         'EXTRACT BASE POINT REACTIONS
 
-        'Get reactions from points and assign them to PileObjs
         Dim itemTypeElm As ETABSv1.eItemTypeElm
         Dim numRes As Integer
         Dim obj, elm, loadCase, stepType As String()
@@ -366,14 +378,15 @@ Public Class PSC_Model
         Dim ppX, ppY, ppZ As Double
 
         For i = 0 To etabsPointNames.Count - 1 Step 1
+            'Get reactions and coordinates from etabs points
             ret = sapModel.Results.JointReact(etabsPointNames(i), itemTypeElm, numRes, obj, elm, loadCase,
                                              stepType, stepNum, f1, f2, f3, m1, m2, m3)
             ret = sapModel.PointObj.GetCoordCartesian(etabsPointNames(i), ppX, ppY, ppZ)
-
+            'Format reactions
             f_1 = f1.Select(Of Double)(Function(force) (Math.Round(force, 0))).First()
             f_2 = f2.Select(Of Double)(Function(force) (Math.Round(force, 0))).First()
             f_3 = f3.Select(Of Double)(Function(force) (Math.Round(force, 0))).First()
-
+            'Assign reactions and coordinates to PileObjects
             pileObjs.Add(New PileObject(etabsPointNames(i), New PointObject(etabsPointNames(i), ppX, ppY, ppZ),,
                          New PointLoads(New Double() {f_1, f_2, f_3})))
         Next
@@ -525,10 +538,11 @@ Public Class PSC_Model
     End Sub
 
     Public Function deserialize(jsonFilePath As String) As List(Of PileObject)
+        ' DESERIALIZE JSON FILE IN A LIST OF PILEOBJECTS
         Return Me.jsonSerializer.deserialize(jsonFilePath)
     End Function
 
-
+    'Setters
     Public Sub setPileObjs(pileObjs As List(Of PileObject))
         Me.pileObjs = pileObjs
     End Sub
@@ -560,7 +574,7 @@ Public Class PSC_Model
         Me.stepRun = stepRun
     End Sub
 
-
+    'Getters
     Public Function getSapModel() As cSapModel
         Return Me.sapModel
     End Function

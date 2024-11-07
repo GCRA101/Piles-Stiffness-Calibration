@@ -1,8 +1,6 @@
 ﻿
 ''' <summary>
 ''' 
-''' Interface OBSERVER
-''' 
 ''' <remarks>
 ''' <para>
 ''' Essential functional interface of the Observer Pattern.

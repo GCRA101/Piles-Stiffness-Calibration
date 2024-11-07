@@ -50,10 +50,8 @@ Public Class JSONSerializer(Of T)
 
     'Deserialize
     Public Function deserialize(jsonFilePath As String) As T
-
         Dim jsonText As String = File.ReadAllText(jsonFilePath)
         Return JsonConvert.DeserializeObject(Of T)(jsonText, jsonSettings)
-
     End Function
 
 End Class

@@ -5,13 +5,11 @@ Imports Piles_Stiffness_Iteration.model
 
 ''' <summary>
 ''' 
-''' PSC_View Concrete Class
-''' 
 ''' <remarks>
 ''' <para> Concrete class and main class of the View Package. </para>
 ''' <para> The class contains all the main data and methods for the running the User Interface of the application.
-''' The View is updated based on the changes occurring in the Model via the OBSERVER Design Pattern, while the 
-''' Model is updated based on the actions taken by the user in the View via the Controller (MVC Pattern).
+''' The View is updated based on the changes occurring in the Model (<see cref="PSC_Model"/>) via the OBSERVER Design Pattern, while the 
+''' Model is updated based on the actions taken by the user in the View (<see cref="PSC_View"/>) via the Controller <see cref="PSC_Controller"/> (MVC Pattern).
 '''  </para>
 ''' 
 ''' <para> Desing Patterns: 

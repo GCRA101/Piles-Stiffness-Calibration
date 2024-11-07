@@ -4,16 +4,15 @@ Imports System.Reflection
 Imports System.Reflection.Emit
 
 ''' <summary>
-''' SOUNDSMANAGER
-'''
+''' 
 ''' <para> 
 ''' Concrete Class implementing the interface AudioManagerInterface and that is responsible 
 ''' for playing the sound effects of the application, when active.
 ''' </para>
 ''' 
 ''' <para>
-''' Specific Techniques
-'''  - SINGLETON Design Pattern
+''' Design Patterns:
+'''  - SINGLETON
 ''' </para> 
 ''' 
 ''' </summary>

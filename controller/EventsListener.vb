@@ -7,7 +7,6 @@ Imports Piles_Stiffness_Calibration.view
 
 
 ''' <summary>
-'''     Concrete Class EVENTSLISTENER
 '''     <remarks>
 '''         Class responsible for running sound effects and calling Model's methods whenever 
 '''         an event gets triggered by any registered command within the UI components of the View.

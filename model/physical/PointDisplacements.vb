@@ -1,8 +1,15 @@
-﻿Public Class PointDisplacements
+﻿''' <summary>
+''' 
+''' <remarks>
+''' <para> Concrete class containing sets of translational displacement values u1,u2,u3 in mm. </para>
+''' </remarks>
+''' </summary>
+
+Public Class PointDisplacements
     Implements IComparable
 
     'ATTRIBUTES **********************************************************
-    Protected values_mm As Double()
+    Private values_mm As Double()
 
 
     'CONSTRUCTOR ************************************************************

@@ -4,14 +4,13 @@ Imports Newtonsoft.Json
 
 
 ''' <summary>
-''' PSC_Controller Concrete Class
 ''' 
 ''' <remarks>
 ''' <para> Main class of the Controller Package. </para>
 ''' <para> It allows the View to communicate with the Model via the MVC Pattern. </para>
 '''
 ''' <para> Desing Patterns: 
-''' - MODEL-VIEW-CONTROLLER
+''' - MODEL-VIEW-CONTROLLER </para>
 ''' 
 ''' <para> Programming Techniques: 
 ''' - STREAMS </para>

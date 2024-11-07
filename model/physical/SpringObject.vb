@@ -1,4 +1,15 @@
-﻿Public Class SpringObject
+﻿''' <summary>
+''' 
+''' <remarks>
+''' <para> 
+''' Concrete class defining a spring object based on name and stiffness values u1,u2,u3 in N/mm. 
+''' Hashing, Equals and CompareTo methods are properly overwritten to allow sorting of class instances
+''' in any kind of data structure.
+''' </para>
+''' </remarks>
+''' </summary>
+
+Public Class SpringObject
     Implements IComparable
 
     'ATTRIBUTES

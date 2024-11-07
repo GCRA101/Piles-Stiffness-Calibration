@@ -1,8 +1,15 @@
-﻿Public Class PointLoads
+﻿''' <summary>
+''' 
+''' <remarks>
+''' <para> Concrete class containing sets of point loads values F1,F2,F3 in N. </para>
+''' </remarks>
+''' </summary>
+
+Public Class PointLoads
     Implements IComparable
 
     'ATTRIBUTES **********************************************************
-    Protected values_N As Double()
+    Private values_N As Double()
 
 
     'CONSTRUCTOR ************************************************************
@@ -106,8 +113,8 @@
         End If
 
         '2. Down-Cast the input object to the current Class
-        Dim nForcesObj As NodalForces
-        nForcesObj = CType(obj, NodalForces)
+        Dim nForcesObj As PointLoads
+        nForcesObj = CType(obj, PointLoads)
 
         '3. Check if main attributes are equal
         ' - Note : Equals method has to be used to compare all attributes since they are all Arrays/Lists so...other 

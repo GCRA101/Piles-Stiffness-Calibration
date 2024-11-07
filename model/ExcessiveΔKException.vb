@@ -1,4 +1,23 @@
-﻿Public Class ExcessiveΔKException
+﻿''' <summary>
+''' 
+''' <remarks>
+''' <para> Exception Concrete Class thrown when the difference between the pile stiffness calculated at the current
+''' iteration step and the previous one is bigger than the maximum value specified by the user. </para>
+''' <para> The class inherits from the Exception class and it gets thrown by the following classes.
+''' <see cref="PSC_Model"/>
+''' <see cref="PSC_Controller"/>
+''' <see cref="EventsListener"/>
+'''  </para>
+''' 
+''' <para> Programming Techniques: 
+''' - EXCEPTIONS HANDLING </para>
+''' 
+''' </remarks>
+''' 
+''' </summary>
+
+
+Public Class ExcessiveΔKException
     Inherits Exception
 
     'ATTRIBUTES

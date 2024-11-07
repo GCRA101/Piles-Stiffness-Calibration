@@ -1,6 +1,5 @@
 ﻿
 ''' <summary>
-'''     Enumeration DOCUMENT
 '''     <remarks>
 '''         Enumeration made from a number Of identification constants For different typologies Of text document
 '''         from which to extract text and data to be displayed in the UI of the application.

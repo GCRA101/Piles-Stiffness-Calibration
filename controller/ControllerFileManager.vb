@@ -5,10 +5,9 @@ Imports System.Reflection
 Imports System.Windows.Forms
 
 ''' <summary>
-'''     Static Class CONTROLLERFILEMANAGER
 '''     <remarks>
-'''         Static Class responsible to provide utility methods allowing to get important information
-'''         regarding the files used by the controller.
+'''         <para>Static Class responsible to provide utility methods allowing to get important information
+'''         regarding the files used by the controller.</para>
 '''     </remarks>
 ''' </summary>
 

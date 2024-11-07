@@ -107,7 +107,6 @@
     <Compile Include="controller\Sound.vb" />
     <Compile Include="controller\SoundManager.vb" />
     <Compile Include="controller\SoundPathRetriever.vb" />
-    <Compile Include="model\etabs\Group.vb" />
     <Compile Include="model\IncludePrivateResolver.vb" />
     <Compile Include="model\InvalidFilePathException.vb" />
     <Compile Include="model\JSONSerializer.vb" />
@@ -121,17 +120,12 @@
     <Compile Include="model\Observable.vb" />
     <Compile Include="model\Observer.vb" />
     <Compile Include="model\pdisp\PDispAnalysisMethod.vb" />
-    <Compile Include="model\etabs\Color.vb" />
-    <Compile Include="model\etabs\ColorInterface.vb" />
     <Compile Include="Plugin\cPlugin.vb" />
-    <Compile Include="model\etabs\ETABSData.vb" />
-    <Compile Include="model\etabs\ETABSProperty.vb" />
     <Compile Include="model\physical\PileObject.vb" />
     <Compile Include="model\physical\PointDisplacements.vb" />
     <Compile Include="model\physical\PointLoads.vb" />
     <Compile Include="model\physical\PointObject.vb" />
     <Compile Include="model\physical\SpringObject.vb" />
-    <Compile Include="model\etabs\PointResults.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -148,7 +142,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="model\etabs\NodalForces.vb" />
     <Compile Include="model\pdisp\PDispBSQDispResult.vb" />
     <Compile Include="model\pdisp\PDispBSQLoadResult.vb" />
     <Compile Include="model\pdisp\PDispBSQResult.vb" />
@@ -164,9 +157,6 @@
     <Compile Include="model\pdisp\PDispPolyLoad.vb" />
     <Compile Include="model\pdisp\PDispRectLoad.vb" />
     <Compile Include="model\pdisp\PDispResult.vb" />
-    <Compile Include="model\etabs\PointDataSet.vb" />
-    <Compile Include="model\etabs\PointObj.vb" />
-    <Compile Include="model\etabs\PointReactions.vb" />
     <Compile Include="model\pdisp\PullBehaviour.vb" />
     <Compile Include="model\pdisp\PullBSQDispResults.vb" />
     <Compile Include="model\pdisp\PullBSQLoadResults.vb" />
@@ -186,7 +176,6 @@
     <Compile Include="model\pdisp\PushPolyLoads.vb" />
     <Compile Include="model\pdisp\PushRectLoads.vb" />
     <Compile Include="model\pdisp\ResultsPuller.vb" />
-    <Compile Include="model\etabs\SpringProperty.vb" />
     <Compile Include="view\AboutBox.Designer.vb">
       <DependentUpon>AboutBox.vb</DependentUpon>
     </Compile>

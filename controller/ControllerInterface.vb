@@ -1,8 +1,7 @@
 ﻿''' <summary>
-'''     Interface CONTROLLERINTERFACE
 '''     <remarks>
-'''         Interface that defines the methods that all the concrete classes of 
-'''         type Controller have to implement.
+'''         <para>Interface that defines the methods that all the concrete classes of 
+'''         type Controller have to implement.</para>
 '''     </remarks>
 ''' </summary>
 
